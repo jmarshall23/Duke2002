@@ -1,0 +1,35 @@
+glprog shaderpasses/generic
+{
+	vertex
+	{
+		uniform mat4 textureMatrix;
+
+		varying vec2 diffuseST;
+		varying vec4 vColor;
+
+		void main() {
+			 // Fetch fixed-function attributes
+			vec4 texCoord = gl_MultiTexCoord0;
+			vec4 color = gl_Color;
+
+			vec4 texST = gl_TextureMatrix[0] * vec4(texCoord.x, texCoord.y, 0.0, 1.0);
+			diffuseST = texST.xy;
+			vColor = color;
+			
+			// Position
+			gl_Position = ftransform();
+		}
+	}
+	
+	pixel
+	{
+		varying vec2 diffuseST;
+		varying vec4 vColor;
+
+		uniform sampler2D diffuseImage;		
+		void main() {
+			vec4 Cd = texture(diffuseImage, diffuseST);
+			gl_FragColor = Cd * vColor;
+		}
+	}
+}

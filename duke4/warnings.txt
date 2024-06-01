@@ -1,0 +1,40 @@
+------------- Warnings ---------------
+
+during game/demo_mc_underground...
+WARNING: 'player1' telefragged 'moveable_chair2_1'
+WARNING: AAS file 'maps/game/demo_mc_underground.aas48' is out of date
+WARNING: Couldn't load image: addnormals( models/weapons/grenades/grenades3_local, heightmap( models/weapons/grenades/grenades3_h, 7))
+WARNING: Couldn't load image: addnormals( models/weapons/plasmagun/plasmagun_local, heightmap( models/weapons/plasmagun/plasmagun_h, 5))
+WARNING: Couldn't load image: models/weapons/grenades/grenades3
+WARNING: Couldn't load image: models/weapons/grenades/grenades3_s
+WARNING: Couldn't load image: models/weapons/grenades/grenades3fx
+WARNING: Couldn't load image: models/weapons/plasmagun/pl_can_blue
+WARNING: Couldn't load image: models/weapons/plasmagun/pl_can_d
+WARNING: Couldn't load image: models/weapons/plasmagun/pl_can_local
+WARNING: Couldn't load image: models/weapons/plasmagun/pl_can_s
+WARNING: Couldn't load image: models/weapons/plasmagun/plasmagun_d
+WARNING: Couldn't load image: models/weapons/plasmagun/plasmagun_s
+WARNING: Couldn't load image: models/weapons/rocketlauncher/rocketlauncher_fx
+WARNING: Couldn't load sound 'guisounds.wav' using default
+WARNING: Couldn't load sound 'sound/ed/gui/air.wav' using default
+WARNING: Non-portable: path contains uppercase characters: base/C:\Projects\IcedTech\base\guis/guis/pda
+WARNING: Non-portable: path contains uppercase characters: base/sound/VO/video
+WARNING: Non-portable: path contains uppercase characters: ice3/C:\Projects\IcedTech\base\guis/guis/pda
+WARNING: Non-portable: path contains uppercase characters: ice3/sound/VO/video
+WARNING: script\map_mc_underground.script(1944): Thread 'map_mc_underground::after_invasion': teleported 'crane_main' which has the pushing mover 'crane_carrier' bound to it
+
+WARNING: script\map_mc_underground.script(1944): Thread 'map_mc_underground::after_invasion': teleported 'crane_main' which has the pushing mover 'func_static_199' bound to it
+
+WARNING: sound shader 'sound/ambient/loop_rumble_01' has shakes and uses OGG file 'sound/ambient/loop_rumble_01.wav'
+WARNING: sound shader 'sound/ambient/thuds/1shot_thud_01' has shakes and uses OGG file 'sound/ambient/thuds/1shot_thud_01.wav'
+WARNING: sound shader 'sound/impact/ambient_impacts/emetal_04' has shakes and uses OGG file 'sound/impact/ambient_impacts/emetal_04.wav'
+WARNING: sound shader 'sound/levels/mc_underground/invasion/creep_02' has shakes and uses OGG file 'sound/levels/mc_underground/invasion/creep_02.wav'
+WARNING: sound shader 'sound/levels/mc_underground/invasion/hellblast_02' has shakes and uses OGG file 'sound/levels/mc_underground/invasion/hellblast_02.wav'
+WARNING: sound shader 'sound/xian/seq_suspense/matts_short_stinger' has shakes and uses OGG file 'sound/xian/seq_suspense/matts_short_stinger.wav'
+WARNING: Unknown string id #str_07183
+
+29 warnings.
+
+
+-------------- Errors ---------------
+

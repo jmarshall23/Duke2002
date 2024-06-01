@@ -1,0 +1,102 @@
+glprog depthfill
+{
+	vertex
+	{
+		uniform mat4 textureMatrix;
+		
+		varying vec2 diffuseST;
+	
+		// Attributes
+		attribute vec4 aPosition;
+		attribute vec4 aTexCoord;
+		attribute vec3 aNormal;
+		attribute vec3 aTangent0;
+		attribute vec3 aTangent1;
+		attribute vec4 aColor;
+		
+		void main() {
+			 // Fetch fixed-function attributes
+			vec4 position = gl_Vertex;
+			vec4 texCoord = aTexCoord;
+			vec3 normal   = aNormal;
+			vec3 tangent0 = aTangent0;
+			vec3 tangent1 = aTangent1;
+			vec4 color = aColor;
+			
+			// Diffuse map texgen
+			vec4 tex = textureMatrix * vec4(aTexCoord.x, aTexCoord.y, 0.0, 1.0);
+			diffuseST = tex.xy;
+			
+			// Position
+			gl_Position = ftransform();
+		}
+	}
+	
+	pixel
+	{
+		varying vec2 diffuseST;
+		
+		uniform sampler2D diffuseImage;
+		uniform vec4 ambientLightColor;
+		
+		void main() {
+			vec4 Cd = texture(diffuseImage, diffuseST);
+
+			gl_FragColor.xyz = Cd.xyz * ambientLightColor.xyz;
+			gl_FragColor.w = Cd.a;
+		}
+	}
+}
+
+glprog shadowfill
+{
+	vertex
+	{
+		uniform mat4 textureMatrix;
+		
+		varying vec2 diffuseST;
+	
+		// Attributes
+		attribute vec4 aPosition;
+		attribute vec4 aTexCoord;
+		attribute vec3 aNormal;
+		attribute vec3 aTangent0;
+		attribute vec3 aTangent1;
+		attribute vec4 aColor;
+		
+		void main() {
+			 // Fetch fixed-function attributes
+			vec4 position = gl_Vertex;
+			vec4 texCoord = aTexCoord;
+			vec3 normal   = aNormal;
+			vec3 tangent0 = aTangent0;
+			vec3 tangent1 = aTangent1;
+			vec4 color = aColor;
+			
+			// Diffuse map texgen
+			vec4 tex = textureMatrix * vec4(aTexCoord.x, aTexCoord.y, 0.0, 1.0);
+			diffuseST = tex.xy;
+			
+			// Position
+			gl_Position = ftransform();
+		}
+	}
+	
+	pixel
+	{
+		varying vec2 diffuseST;
+		
+		uniform sampler2D diffuseImage;
+		uniform vec4 ambientLightColor;
+		
+		void main() {
+			vec4 Cd = texture(diffuseImage, diffuseST);
+
+			if(Cd.a < 0.5)
+				discard;
+
+			gl_FragColor.xyz = Cd.xyz * ambientLightColor.xyz;
+			gl_FragColor.w = Cd.a;
+		}
+	}
+}

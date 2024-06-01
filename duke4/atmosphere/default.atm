@@ -1,0 +1,15 @@
+atmosphere doom/default {
+    fogColor 0.3 0.15 0.1
+    fogDensity 0.02
+	fogStart 0.98
+    fogEnd 1.0
+    ambientLightColor 0.15 0.075 0.05
+}
+
+doom/mars_city1 {
+    fogColor 0.2 0.125 0.08  // Averaged warmer tone
+    fogDensity 0.015         // Slightly less dense fog
+    fogStart 0.98            // Adjusted start for a smoother transition
+    fogEnd 1.0
+    ambientLightColor 0.225 0.1375 0.075  // Averaged warmer ambient light
+}

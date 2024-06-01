@@ -1,0 +1,70 @@
+glprog postprocess/fog
+{
+	vertex
+	{
+		uniform float fogStart;
+		uniform float fogEnd;		
+		uniform float fogDensity;
+		
+		varying vec2 diffuseST;
+		
+		void main() {		
+			diffuseST = gl_MultiTexCoord0.xy;
+			diffuseST.y = 1.0 - diffuseST.y;
+			
+			gl_Position = ftransform();
+		}
+	}
+	
+	pixel
+	{
+		uniform float fogStart;
+		uniform float fogEnd;		
+		uniform float fogDensity;
+		uniform vec4 fogColor;
+		uniform float near;    
+		uniform mat4 invProjectionMatrix;		
+		
+		varying vec2 diffuseST;
+		
+		uniform sampler2D depthTexture;
+		uniform sampler2D colorTexture;
+		
+		float LinearizeDepth(float depth)
+		{
+			// Convert depth from [0, 1] range to NDC [-1, 1] and then to linear depth
+			float z = depth;
+			return 2.0 * near / (1.0 - z);
+		}
+		
+		void main()
+		{
+			float depth = texture(depthTexture, diffuseST).r;
+			float linearDepth = LinearizeDepth(depth);
+			vec4 sceneColor = texture(colorTexture, diffuseST);
+
+			// Apply sepia tone and enhance contrast
+			vec3 color = sceneColor.rgb;
+			vec3 sepia = vec3(0.393 * color.r + 0.769 * color.g + 0.189 * color.b,
+			                  0.349 * color.r + 0.686 * color.g + 0.168 * color.b,
+			                  0.272 * color.r + 0.534 * color.g + 0.131 * color.b);
+
+			// Blend the sepia tone subtly with the original color
+			color = mix(color, sepia, 0.2);
+
+			// Enhance contrast
+			vec3 enhancedColor = pow(color, vec3(1.1));
+			
+			// Compute fog factor based on view space depth
+			float fogFactor =  clamp((depth - fogStart) / (fogEnd - fogStart), 0.0, 1.0);
+			fogFactor = fogFactor * fogFactor; // Apply an exponential falloff to the fog
+
+			// Calculate the brightness of the scene color (using the luminance formula)
+			float brightness = dot(enhancedColor.rgb, vec3(0.299, 0.587, 0.114));
+
+			vec3 finalColor = mix(enhancedColor.rgb + (brightness * 0.05), fogColor.rgb, clamp(fogFactor - (0.5 * brightness), 0.0, 1.0));
+
+			gl_FragColor = vec4(finalColor, 1);
+		}
+	}
+}

@@ -1,0 +1,6 @@
+models/props/utilitypole/utilitypole
+{
+    bumpmap     models/props/utilitypole/utilitypole_n.tga
+    diffusemap  models/props/utilitypole/utilitypole.tga
+    specularmap models/props/utilitypole/utilitypole_s.tga
+}

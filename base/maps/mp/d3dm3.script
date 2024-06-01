@@ -1,0 +1,657 @@
+// =================================================
+// Map: D3DM3 ( FragChamber )
+// =================================================
+
+//--------------------------------------------------
+// Script definitions and global variables
+//--------------------------------------------------
+float powerupExists = 0;
+float powerupTimerFinished = 0;
+float soundKlaxon = 0;
+
+//--------------------------------------------------
+// Sound Functions
+//--------------------------------------------------
+void sound_berserk_spawn()
+{
+	float soundBerserkSpawn;
+
+	//sys.wait( 5 );
+	soundBerserkSpawn = $mrdr_speaker_berserk.startSound( "snd_berserkSpawn", SND_CHANNEL_ANY, true );
+	sys.wait( 3 );
+	$mrdr_speaker_berserk.startSound( "snd_berserkLoop", SND_CHANNEL_ANY, true );
+}
+
+// function for klaxon sounds
+void sound_klaxon( entity mrdr_klaxon )
+{
+	float soundKlaxonLength;
+
+	while ( soundKlaxon ) {
+		soundKlaxonLength = mrdr_klaxon.startSound( "snd_klaxon", SND_CHANNEL_ANY, true );
+		sys.wait( soundKlaxonLength + 1.2 );
+	}
+}
+
+// function for flickering lights sounds
+void sound_lights_flicker( entity mrdr_lights_flicker )
+{
+	mrdr_lights_flicker.stopSound( SND_CHANNEL_ANY, true );
+	mrdr_lights_flicker.startSound( "snd_lightsFlicker", SND_CHANNEL_ANY, true );
+}
+
+void sound_lights_steady( entity mrdr_lights_hum )
+{
+	mrdr_lights_hum.stopSound( SND_CHANNEL_ANY, true );
+	mrdr_lights_hum.startSound( "snd_lightsHum", SND_CHANNEL_ANY, true );
+}
+
+void sound_lights_flickering()
+{
+	thread sound_lights_flicker( $mrdr_speaker_lights_01 );
+	thread sound_lights_flicker( $mrdr_speaker_lights_02 );
+	thread sound_lights_flicker( $mrdr_speaker_lights_03 );
+	thread sound_lights_flicker( $mrdr_speaker_lights_04 );
+	sys.wait( 12 );
+	thread sound_lights_steady( $mrdr_speaker_lights_01 );
+	thread sound_lights_steady( $mrdr_speaker_lights_02 );
+	thread sound_lights_steady( $mrdr_speaker_lights_03 );
+	thread sound_lights_steady( $mrdr_speaker_lights_04 );
+}
+
+void sound_lights()
+{
+	thread sound_lights_steady( $mrdr_speaker_lights_01 );
+	thread sound_lights_steady( $mrdr_speaker_lights_02 );
+	thread sound_lights_steady( $mrdr_speaker_lights_03 );
+	thread sound_lights_steady( $mrdr_speaker_lights_04 );
+}
+
+//--------------------------------------------------
+// Power Light flick0r
+//--------------------------------------------------
+void setup_powerlights ()
+{
+	sys.setShaderParm(0,1); // Default value ON
+	sys.setShaderParm(1,1);
+	sys.setShaderParm(2,1);	
+}
+
+//--------------------------------------------------
+void light_ramp( float rgb_start, float rgb_end, float time_val ) 
+{
+	float i, t, v;
+
+	t = time_val * 60;
+	for ( i = 0; i < t; i++ ) {
+		v = rgb_start + ( rgb_end - rgb_start ) * ( i / t ); // Base light value
+
+		sys.setShaderParm( 0, v );
+		sys.setShaderParm( 1, v );
+		sys.setShaderParm( 2, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( 0, rgb_end ); // Final light value
+	sys.setShaderParm( 1, rgb_end );
+	sys.setShaderParm( 2, rgb_end );	
+}
+
+//--------------------------------------------------
+void power_flux(float total_time)
+{
+	float i, pfstart, pfend, pftime;
+
+	pfstart = 1; // Initial value
+	while (total_time>0) {
+		pfend = sys.random(1); // Brightest point
+		pftime = sys.random(1); // Flicker interval
+		light_ramp( pfstart, pfend, pftime);
+		pfstart = pfend;
+		total_time = total_time - pftime;
+	}
+	light_ramp( pfend, 1, 0.3 ); // Move back to default
+	setup_powerlights (); // Reset lights to intial values
+}
+
+//--------------------------------------------------
+// Setup klax lights
+//--------------------------------------------------
+void setup_klaxlights ()
+{
+	float i,j;
+	entity klit, klit_base;
+	
+	for ( i = 1; i<5; i++ ) {
+		klit_base = sys.getEntity("rotlight"+i+"_base");
+		for ( j = 1; j<3; j++ ) {
+			klit = sys.getEntity("rotlight"+i+"_light"+j);
+			klit.bind(klit_base);
+		}
+	}
+}
+
+//--------------------------------------------------
+// Switch klax lights ON/OFF
+//--------------------------------------------------
+void switchrgb_klaxlights (vector rgb_val)
+{
+	float i,j;
+	entity klit;
+	
+	for ( i = 1; i<5; i++ ) {
+		for ( j = 1; j<3; j++ ) {
+			klit = sys.getEntity("rotlight"+i+"_light"+j);
+			klit.setColor(rgb_val_x,rgb_val_y,rgb_val_z);
+		}
+	}	
+}
+
+//--------------------------------------------------
+// Spin UP/DOWN klax lights
+//--------------------------------------------------
+void spin_klaxlights ( entity klit, float final_speed, float total_time, float total_step, float direction )
+{
+	float i, s, t, spinpause;
+	vector	klitvec;	
+
+	t = total_time / total_step ; // Loop step value
+	s = final_speed / total_step ; // Rotation loop steps
+	klitvec_x=0; // Start value
+	klitvec_z=0;
+
+	if (direction==0) {
+		klitvec_y=0;
+		for ( i = 0; i < total_time; i=i+t ) {
+			klitvec_y=klitvec_y+s; // Increase spin up speed
+			klit.rotate (klitvec); // Set new speed
+			sys.wait(t); // Spin up pause
+		}
+		klitvec_y=final_speed;
+	}
+	else {
+		klitvec_y=final_speed;
+		for ( i = total_time; i > 0; i=i-t ) {
+			klitvec_y=klitvec_y-s; // Increase spin up speed
+			klit.rotate (klitvec); // Set new speed
+			sys.wait(t); // Spin up pause
+		}
+		klitvec_y=0;
+	}
+
+	klit.rotate (klitvec); // Final speed
+}
+
+//--------------------------------------------------
+// Start klax lights
+//--------------------------------------------------
+void start_klaxlights ()
+{
+	float thread1;
+
+	// klaxon sound on
+	soundKlaxon = 1;
+	thread sound_klaxon( $mrdr_speaker_klaxon_01 );
+	thread sound_klaxon( $mrdr_speaker_klaxon_02 );
+	thread sound_klaxon( $mrdr_speaker_klaxon_03 );
+	thread sound_klaxon( $mrdr_speaker_klaxon_04 );
+
+	$klaxlight_1_particle.show();
+
+	$klaxlight_2_particle.show();
+	$klaxlight_3_particle.show();
+	$klaxlight_4_particle.show();
+	sys.trigger ($klaxlight_1_particle);
+
+	sys.trigger ($klaxlight_2_particle);
+
+	sys.trigger ($klaxlight_3_particle);
+
+	sys.trigger ($klaxlight_4_particle);
+	$rotlight1_base.setColor( 0.6, 0, 0 );
+	$rotlight2_base.setColor( 0.6, 0, 0 );
+	$rotlight3_base.setColor( 0.6, 0, 0 );
+	$rotlight4_base.setColor( 0.6, 0, 0 );
+	thread switchrgb_klaxlights ('2 0 0');
+	
+	thread spin_klaxlights ($rotlight1_base, 180, 2, 32, 0);
+	thread spin_klaxlights ($rotlight2_base, 180, 2, 32, 0);
+	thread spin_klaxlights ($rotlight3_base, 180, 2, 32, 0);
+	thread1= thread spin_klaxlights ($rotlight4_base, 180, 2, 32, 0);
+	sys.waitForThread(thread1);
+
+	$rotlight1_base.rotate ( '0 180 0' );
+	$rotlight2_base.rotate ( '0 180 0' );
+	$rotlight3_base.rotate ( '0 180 0' );
+	$rotlight4_base.rotate ( '0 180 0' );
+}
+
+//--------------------------------------------------
+// Stop klax lights
+//--------------------------------------------------
+void stop_klaxlights ()
+{
+	float thread1;
+
+	// klaxon sound off
+	soundKlaxon = 0;
+	
+	thread spin_klaxlights ($rotlight1_base, 180, 2, 32, 1);
+	thread spin_klaxlights ($rotlight2_base, 180, 2, 32, 1);
+	thread spin_klaxlights ($rotlight3_base, 180, 2, 32, 1);
+	thread1 = thread spin_klaxlights ($rotlight4_base, 180, 2, 32, 1);
+	sys.waitForThread(thread1);
+
+	$klaxlight_1_particle.hide();
+	$klaxlight_2_particle.hide();
+	$klaxlight_3_particle.hide();
+	$klaxlight_4_particle.hide();
+	sys.trigger ($klaxlight_1_particle);
+
+	sys.trigger ($klaxlight_2_particle);
+	sys.trigger ($klaxlight_3_particle);
+
+	sys.trigger ($klaxlight_4_particle);
+	$rotlight1_base.setColor( 0, 0, 0 );
+	$rotlight2_base.setColor( 0, 0, 0 );
+	$rotlight3_base.setColor( 0, 0, 0 );
+	$rotlight4_base.setColor( 0, 0, 0 );	
+	thread switchrgb_klaxlights ('0 0 0');
+	
+	$rotlight1_base.rotate ( '0 0 0' );
+	$rotlight2_base.rotate ( '0 0 0' );
+	$rotlight3_base.rotate ( '0 0 0' );
+	$rotlight4_base.rotate ( '0 0 0' );
+}
+
+//--------------------------------------------------
+// Chamber's GUI controls
+//--------------------------------------------------
+void chamber_guicontrol(float gui_status)
+{
+	// Chamber can be activated
+	if (gui_status == 1) {
+		$chamber_gui_console.setGuiParm ( "gui_parm2" , 1);
+	}
+	// Chamber is full of gas/creating power up
+	else if (gui_status == 2) {
+		$chamber_gui_console.setGuiParm ( "gui_parm2" , 2);
+	}
+	// The PowerUp is waiting in the chamber
+	else if (gui_status == 3) {
+		$chamber_gui_console.setGuiParm ( "gui_parm2" , 3);
+	}	
+}
+
+// -------------------------------------------------
+// Thread that gets called by the trigger relay
+// -------------------------------------------------
+void chamber_guiblocked_trigger()
+{
+	powerupExists = 0;
+		
+	if( powerupTimerFinished ) {
+		thread chamber_guicontrol(1);
+	}
+
+	sys.wait(0.1);
+}
+
+// -------------------------------------------------
+// Run a timer
+// -------------------------------------------------
+void powerup_timer()
+{
+	powerupTimerFinished = 0;	
+	sys.wait( 60 );
+	powerupTimerFinished = 1;
+	
+	if( powerupExists == 0 ) {
+		thread chamber_guicontrol(1);
+	}
+}
+
+// -------------------------------------------------
+// Spawn the PowerUP
+// -------------------------------------------------
+void spawn_powerup()
+{
+	powerupExists = 1;
+	
+	thread powerup_timer();
+	
+	$powerup_berserk_triggered.respawn();
+}
+
+// -------------------------------------------------
+// Shaking machines
+// -------------------------------------------------
+void llm_shaker1_move()
+{
+	$llm_shaker1.time (.075);
+
+	while(1){
+		$llm_shaker1.rotateOnce ( '.8 1.1 1' );
+		sys.waitFor ($llm_shaker1);
+		$llm_shaker1.rotateOnce ( '-.8 -1.1 -1' );
+		sys.waitFor ($llm_shaker1);
+	}
+}
+
+/*--------------------------------------------------------------------
+
+	F r a g c h a m b e r    scripting START
+
+--------------------------------------------------------------------*/
+
+// -------------------------------------------------
+// Chamber Core DOWN
+// -------------------------------------------------
+void chamber_core_down()
+{
+	$chamber_core.time(5);
+	$chamber_core.accelTime(1);
+	$chamber_core.decelTime(1.5);
+	$chamber_core.moveTo($chamber_core_down);
+
+	sys.trigger ($chamber_core_down_speaker);
+	
+	sys.waitFor ($chamber_core);
+	
+
+	sys.trigger ($chamber_core_shaker_speaker);
+}
+
+// -------------------------------------------------
+// Chamber Core UP
+// -------------------------------------------------
+void chamber_core_up()
+{
+	$chamber_core.time(3);
+	$chamber_core.accelTime(2.5);
+	$chamber_core.decelTime(.5);
+	$chamber_core.moveTo($chamber_core_up);
+
+	sys.trigger ($chamber_core_down_speaker);
+
+	sys.waitFor ($chamber_core);	
+}
+
+// -------------------------------------------------
+// Chamber Rods DOWN
+// -------------------------------------------------
+void chamber_rods_down()
+{
+	$chamber_rods.time(4);
+	$chamber_rods.accelTime(1);
+	$chamber_rods.decelTime(.5);
+	$chamber_rods.moveTo($chamber_rod_down);
+
+	sys.trigger ($chamber_rods_down_speaker);
+
+	sys.waitFor ($chamber_rods);
+}
+
+// -------------------------------------------------
+// Chamber Rods UP
+// -------------------------------------------------
+void chamber_rods_up()
+{
+	$chamber_rods.time(3);
+	$chamber_rods.accelTime(1);
+	$chamber_rods.decelTime(.5);
+	$chamber_rods.moveTo($chamber_rod_up);
+
+	sys.trigger ($chamber_rods_up_speaker);
+
+	sys.waitFor ($chamber_rods);
+}
+
+// -------------------------------------------------
+// Chamber Sockets OUT
+// -------------------------------------------------
+void chamber_sockets_out()
+{
+	$chamber_socket1.time(2);
+	$chamber_socket1.moveTo($chamber_socket1_out);
+	$chamber_socket2.time(2);
+	$chamber_socket2.moveTo($chamber_socket2_out);
+	$chamber_socket3.time(2);
+	$chamber_socket3.moveTo($chamber_socket3_out);
+	$chamber_socket4.time(2);
+	$chamber_socket4.moveTo($chamber_socket4_out);
+
+	sys.trigger ($chamber_sockets_out_speaker);
+
+	sys.waitFor ($chamber_socket4);
+}
+
+// -------------------------------------------------
+// Chamber Sockets IN
+// -------------------------------------------------
+void chamber_sockets_in()
+{
+	$chamber_socket1.time(2);
+	$chamber_socket1.moveTo($chamber_socket1_in);
+	$chamber_socket2.time(2);
+	$chamber_socket2.moveTo($chamber_socket2_in);
+	$chamber_socket3.time(2);
+	$chamber_socket3.moveTo($chamber_socket3_in);
+	$chamber_socket4.time(2);
+	$chamber_socket4.moveTo($chamber_socket4_in);
+
+	sys.trigger ($chamber_sockets_in_speaker);
+
+	sys.waitFor ($chamber_socket4);
+}
+
+// -------------------------------------------------
+// fog up
+// -------------------------------------------------
+void fog_up()
+{
+	$chamber_foglight_mover.time(12);
+	$chamber_foglight_mover.moveTo($chamber_foglight_up);
+}
+
+// -------------------------------------------------
+// fog down
+// -------------------------------------------------
+void fog_down()
+{
+	$chamber_foglight_mover.time(12);
+	$chamber_foglight_mover.moveTo($chamber_foglight_down);
+}
+
+// -------------------------------------------------
+// Trigger the Chamber into action!
+// -------------------------------------------------
+void chamber_trigger()
+{
+	float moverthread;
+
+	// Switches gui to non-interactive mode
+	chamber_guicontrol(2);
+	sys.wait(0.1);
+	
+	// doors CLOSE
+	$chamber_door1a.close();
+	$chamber_door1b.close();
+	$chamber_door2a.close();
+	$chamber_door2b.close();
+	$chamber_door3a.close();
+	$chamber_door3b.close();
+	$chamber_door4a.close();
+	$chamber_door4b.close();
+	
+	sys.waitFor($chamber_door1a);
+	sys.waitFor($chamber_door2a);
+	sys.waitFor($chamber_door3a);
+	sys.waitFor($chamber_door4a);
+
+	//trigger the hurt on
+	sys.trigger ( $chamber_hurt );
+
+	// Klax lights START
+	thread start_klaxlights();	
+
+	
+	// flicker lights
+	thread power_flux(14);
+	
+	// secret steam sounds	
+	//thread sound_secret_steam_on();
+	//sys.trigger ($greensteam01);
+	//sys.trigger ($greensteam02);
+	//sys.trigger ($greensteam03);
+	//$secretsteam.moveTo ($secretsteam_pos2);
+
+	// fog & trigger_hurt move UP
+	//thread fog_up();
+		
+	//bridges up
+	sys.trigger ($bridge_up_speaker);
+	$chamber_bridge1.rotateOnce( '0 0 -61' );
+	$chamber_bridge2.rotateOnce( '107.5 0 0' );
+	$chamber_bridge3.rotateOnce( '0 0 61' );
+	$chamber_bridge4.rotateOnce( '-107.5 0 0' );
+	
+	//core DOWN
+	thread chamber_core_down();
+	
+	//sockets OUT
+	sys.waitFor($chamber_bridge1);
+	moverthread = thread chamber_sockets_out();
+	sys.waitForThread ( moverthread );		
+
+	//rods DOWN
+	moverthread = thread chamber_rods_down();
+	sys.waitForThread ( moverthread );
+	sys.wait(1);
+
+	// powerup goodness ...
+	thread spawn_powerup();	
+	thread sound_berserk_spawn();
+	
+	// ... Dramatic pause ...
+	sys.wait(3);
+	
+	//rods up and sockets in
+	thread chamber_rods_up();
+	sys.wait (1);
+	moverthread = thread chamber_sockets_in();
+	sys.waitForThread ( moverthread );	
+	
+
+	//bridges DOWN
+	sys.trigger ($bridge_down_speaker);
+	$chamber_bridge1.rotateOnce( '0 0 61' );
+	$chamber_bridge2.rotateOnce( '-107.5 0 0' );
+	$chamber_bridge3.rotateOnce( '0 0 -61' );
+	$chamber_bridge4.rotateOnce( '107.5 0 0' );
+
+	//core up
+	moverthread = thread chamber_core_up();
+	sys.waitForThread ( moverthread );	
+	
+	// secret steam sounds	
+	//thread sound_secret_steam_off();
+	//sys.trigger ($greensteam01);
+	//sys.trigger ($greensteam02);
+	//sys.trigger ($greensteam03);
+	//$secretsteam.moveTo ($secretsteam_pos1);	
+
+	// Klax lights STOP
+	thread stop_klaxlights();	
+
+	// fog & trigger_hurt go DOWN
+	sys.wait(1.5);
+	//thread fog_down();
+	
+	// turn off flickering lights sound
+	thread sound_lights_steady( $mrdr_speaker_lights_01 );
+	thread sound_lights_steady( $mrdr_speaker_lights_02 );
+
+	// doors OPEN
+	sys.wait(1);
+	
+	// set gui to standby mode
+	chamber_guicontrol(3);
+	sys.wait(0.1);
+	
+	$chamber_door1a.open();
+	$chamber_door1b.open();
+	$chamber_door2a.open();
+	$chamber_door2b.open();
+	$chamber_door3a.open();
+	$chamber_door3b.open();
+	$chamber_door4a.open();
+	$chamber_door4b.open();
+	
+	sys.waitFor($chamber_door1a);
+	sys.waitFor($chamber_door2a);
+	sys.waitFor($chamber_door3a);
+	sys.waitFor($chamber_door4a);
+
+	//trigger the hurt on
+	sys.trigger ( $chamber_hurt );
+}
+
+/*--------------------------------------------------------------------
+
+	F r a g c h a m b e r    scripting END
+
+--------------------------------------------------------------------*/
+
+//--------------------------------------------------
+// Set initial states
+//--------------------------------------------------
+void setup_objects()
+{	
+		setup_powerlights (); // Reset lights to intial values
+		thread setup_klaxlights(); // Red klaxons that spin when chamber is active
+		thread switchrgb_klaxlights ('0 0 0');
+		thread llm_shaker1_move();
+
+		// fog mover
+		$chamber_foglight_mover.time(0.1);
+		$chamber_foglight_mover.moveTo($chamber_foglight_down);
+
+		// Chamber bridges
+		$chamber_bridge1.setAngles( '0 0 -24' );
+		$chamber_bridge2.setAngles( '-22.5 0 0' );
+		$chamber_bridge3.setAngles( '0 0 24' );
+		$chamber_bridge4.setAngles( '22.5 0 0' );
+
+		// Switches gui to interactive mode
+		chamber_guicontrol(1);
+		sys.wait(0.1);
+		
+		// Central Chamber doors
+		$chamber_door1a.disable();
+		$chamber_door1a.open();
+		$chamber_door1b.disable();
+		$chamber_door1b.open();	
+		$chamber_door2a.disable();
+		$chamber_door2a.open();
+		$chamber_door2b.disable();
+		$chamber_door2b.open();	
+		$chamber_door3a.disable();
+		$chamber_door3a.open();	
+		$chamber_door3b.disable();
+		$chamber_door3b.open();
+		$chamber_door4a.disable();
+		$chamber_door4a.open();	
+		$chamber_door4b.disable();
+		$chamber_door4b.open();		
+}
+
+// -------------------------------------------------
+// Main
+// -------------------------------------------------
+void main()
+{
+	sys.wait(1);
+	setup_objects();
+
+	thread sound_lights();
+}

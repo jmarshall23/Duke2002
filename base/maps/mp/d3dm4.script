@@ -1,0 +1,294 @@
+// =================================================
+// Map: D3DM4 ( The Edge 2 )
+// =================================================
+
+// 0 = lightswitch guis OFF
+// 1 = lightswitch guis ON
+float complab_lights;
+float teleroom_lights;
+
+// -------------------------------------------------
+// Sound Functions
+// -------------------------------------------------
+
+// function for random steamblasts
+void sound_steamblasts()
+{
+	while( 1 ) {
+		sys.wait( 8 + sys.random( 4 ) );
+		sys.trigger( $mrdr_speaker_36 );
+	}
+}
+
+// -------------------------------------------------
+// Setup Small Crankshaft binds and times
+// -------------------------------------------------
+void setup_sm_crankshaft()
+{
+	$sm_pistonrod01.bind($sm_piston01);
+	$sm_pistonrod02.bind($sm_piston02);
+	$sm_pistonrod03.bind($sm_piston03);
+
+	$sm_piston01.time(0.25);
+	$sm_pistonrod01.time(0.25);
+	$sm_piston02.time(0.25);
+	$sm_pistonrod02.time(0.25);
+	$sm_piston03.time(0.25);
+	$sm_pistonrod03.time(0.25);
+	$sm_crankshaft.time(0.25);		
+}
+
+// -------------------------------------------------
+// grate light mover 
+// -------------------------------------------------
+void gratelight_move()
+{
+	$gratelight_mover.time( 1 );
+	$gratelight_mover.accelTime( .25 );
+	$gratelight_mover.decelTime( .25 );
+
+	float ran1;
+
+	while(1) //begin main while
+	{
+	ran1=sys.random(3);
+
+	if(ran1<1){
+		$gratelight_mover.moveTo($gratelightpoint_1);
+		sys.waitFor($gratelight_mover);
+	} else if(ran1<2) {
+		$gratelight_mover.moveTo($gratelightpoint_2);
+		sys.waitFor($gratelight_mover);
+	} else {
+		$gratelight_mover.moveTo($gratelightpoint_3);
+		sys.waitFor($gratelight_mover);
+	}
+
+	} //end main while
+}
+
+/*
+// -------------------------------------------------
+// Shaking machine
+// -------------------------------------------------
+void qfraggel_shaker1_move()
+{
+	$qfraggel_func_mover_7.time(.075);
+
+	while(1){
+		$qfraggel_func_mover_7.rotateOnce( '.8 1.1 .4' );
+		sys.waitFor($qfraggel_func_mover_7);
+		$qfraggel_func_mover_7.rotateOnce( '-.8 -1.1 -.4' );
+		sys.waitFor($qfraggel_func_mover_7);
+	}
+}
+*/
+
+// -------------------------------------------------
+// Global Parm(parm) from 1 to 0 in a specific time(time)
+// -------------------------------------------------
+void globalparm_1to0(float parm, float blendtime)
+{
+	float i,v,t;
+
+	t = blendtime * 60;
+
+	for( i = t; i > 0; i-- ) {
+		v =( i / t );
+		sys.setShaderParm( parm, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( parm, 0 );
+}
+
+// -------------------------------------------------
+// Global Parm(parm) from 0 to 1 in a specific time(time)
+// -------------------------------------------------
+void globalparm_0to1(float parm, float blendtime)
+{
+	float i,v,t;
+
+	t = blendtime * 60;
+
+	for( i = 0; i < t; i++ ) {
+		v =( i / t );
+		sys.setShaderParm( parm, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( parm, 1 );
+}
+
+// -------------------------------------------------
+// Teleporter Room - Lights off
+// -------------------------------------------------
+void teleroom_off()
+{
+	float i, t, v;
+
+	//sound for lights off
+	sys.trigger($teleroom_lightsoff_speaker);
+	
+	$teleroom_lightswitch.setGuiParm( "gui_parm3", 1 );
+
+	t =( .75 * 60 );
+	for( i = t; i > 0; i-- ) {
+		v =( i / t );
+		sys.setShaderParm( 0, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( 0, 0 );
+
+	//$teleroom_lightswitch.setShaderParm(7, 0);
+	$teleroom_lightswitch_light.setColor(.84, .34, .20);
+
+	teleroom_lights = 0;	
+}
+
+// -------------------------------------------------
+// Teleporter Room - Lights on
+// -------------------------------------------------
+void teleroom_on()
+{
+	float i, t, v;
+
+	//sound for lights on
+	sys.trigger($teleroom_lightson_speaker);
+	
+	$teleroom_lightswitch.setGuiParm( "gui_parm3", 0 );
+
+	t = .75 * 60;
+	for( i = 0; i < t; i++ ) {
+		v =( i / t );
+		sys.setShaderParm( 0, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( 0, 1 );
+
+	//$teleroom_lightswitch.setShaderParm(7, 1);
+	$teleroom_lightswitch_light.setColor(.52, .84, .73);
+
+	teleroom_lights = 1;
+}
+
+// -------------------------------------------------
+// Teleport room lights
+// -------------------------------------------------
+void teleroom_switch()
+{
+	// 0 = lightswitch guis OFF
+	// 1 = lightswitch guis ON
+	if ( teleroom_lights == 0 ) {
+		thread teleroom_on();
+	}
+	
+	if ( teleroom_lights == 1 ) {
+		thread teleroom_off();
+	}
+}
+
+// -------------------------------------------------
+// Computer Lab - Lights off
+// -------------------------------------------------
+void complab_off()
+{	
+
+	float i, t, v;
+
+	//sound for lights off
+	sys.trigger($complab_lightsoff_speaker);
+	
+	$complab_lightswitch01.setGuiParm( "gui_parm3", 1 );
+	$complab_lightswitch02.setGuiParm( "gui_parm3", 1 );
+
+	t =( .75 * 60 );
+	for( i = t; i > 0; i-- ) {
+		v =( i / t );
+		sys.setShaderParm( 1, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( 1, 0 );
+
+	$complab_lightswitch_light01.setColor(.84, .34, .20);
+	
+	$complab_lightswitch_light02.setColor(.84, .34, .20);
+	
+	// 0 = lightswitch guis OFF
+	// 1 = lightswitch guis ON
+	complab_lights = 0;	
+}
+
+// -------------------------------------------------
+// Computer Lab - Lights on
+// -------------------------------------------------
+void complab_on()
+{
+	float i, t, v;
+
+	//sound for lights on
+	sys.trigger($complab_lightson_speaker);
+	
+	$complab_lightswitch01.setGuiParm( "gui_parm3", 0 );
+	$complab_lightswitch02.setGuiParm( "gui_parm3", 0 );
+
+	t = .75 * 60;
+	for( i = 0; i < t; i++ ) {
+		v =( i / t );
+		sys.setShaderParm( 1, v );
+		sys.wait( 1 / 60 );
+	}
+	sys.setShaderParm( 1, 1 );
+
+	$complab_lightswitch_light01.setColor( .52, .84, .73 );
+	
+	$complab_lightswitch_light02.setColor( .52, .84, .73 );
+	
+	// 0 = lightswitch guis OFF
+	// 1 = lightswitch guis ON
+	complab_lights = 1;	
+}
+
+// -------------------------------------------------
+// Checker for Computer Lab light switches
+// -------------------------------------------------
+void complab_switch()
+{
+	// 0 = lightswitch guis OFF
+	// 1 = lightswitch guis ON
+	if ( complab_lights == 0 ) {
+		thread complab_on();
+	}
+	
+	if ( complab_lights == 1 ) {
+		thread complab_off();
+	}
+}
+
+// -------------------------------------------------
+// Setup the switchable lights in the Teleporter Room
+// and Computer Lab
+// -------------------------------------------------
+void setup_switchable_lights()
+{
+	sys.setShaderParm( 0, 1 );
+	sys.setShaderParm( 1, 1 );
+	sys.setShaderParm( 2, 1 );
+	
+	// 0 = lightswitch guis OFF
+	// 1 = lightswitch guis ON
+	complab_lights = 1;
+	teleroom_lights = 1;
+}
+
+// -------------------------------------------------
+// Main
+// -------------------------------------------------
+void main()
+{
+	sys.wait(1);
+	
+	setup_switchable_lights();
+	
+	//thread qfraggel_shaker1_move();
+	thread gratelight_move();
+	thread sound_steamblasts();
+}

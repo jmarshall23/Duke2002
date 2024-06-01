@@ -1,0 +1,1037 @@
+// =================================================
+// Map: D3DM5 ( Lights Out )
+// =================================================
+
+
+//--------------------------------------------------
+// Script definitions and global variables
+//--------------------------------------------------
+
+// Window status:  1:Closed, 2:Open, 3:Opening, 4:Closing
+float windstatus1, windstatus2;
+float powerupExists = 0;
+
+//--------------------------------------------------
+// Sound Functions
+//--------------------------------------------------
+
+// berserk powerup
+void sound_powerup_berserk()
+{
+	if( powerupExists == 1 ) {
+		$mrdr_speaker_berserk.startSoundShader ( "snd_berserkSpawn", SND_CHANNEL_ANY );
+	}
+	
+	else if( powerupExists == 0 ) {
+		$mrdr_speaker_berserk.stopSound( SND_CHANNEL_ANY, true );
+	}
+}
+
+// functions for generator sounds
+void sound_generator_startup()
+{
+	$mrdr_speaker_gen.startSound( "snd_genOn", SND_CHANNEL_ANY, true );
+}
+
+void sound_generator_shutdown()
+{
+	$mrdr_speaker_gen.stopSound( SND_CHANNEL_ANY, true );
+	$mrdr_speaker_gen.startSound( "snd_genOff", SND_CHANNEL_ANY, true );
+}
+
+// start wind sounds
+void sound_wind_init()
+{
+	$mrdr_speaker_51.startSound( "snd_wind", SND_CHANNEL_ANY, true );
+	$mrdr_speaker_52.startSound( "snd_wind", SND_CHANNEL_ANY, true );
+}
+
+//--------------------------------------------------
+// Berserk Trigger
+//--------------------------------------------------
+void powerup_berserk_remove()
+{
+	powerupExists = 0;
+
+	thread sound_powerup_berserk();
+}
+
+void powerup_berserk_spawn()
+{
+	powerupExists = 1;
+	
+	thread sound_powerup_berserk();
+	
+	$powerup_invisibility_1.respawn();
+}
+
+
+//--------------------------------------------------
+// Setup of the Window Shutters
+//--------------------------------------------------
+void windshutter_setup(float wind_no, float wind_seg)
+{
+	string windvar;
+	entity windent;
+	
+	windvar = "windshutter"+wind_no+"_"+wind_seg;
+	windent = sys.getEntity( windvar );
+	
+	windent.accelTime(2);
+	windent.decelTime(2);
+	windent.time(3);
+}
+
+//--------------------------------------------------
+void windshutter1_thread()
+{
+	$windshutter1_gui.setGuiParm( "networkState" , windstatus1);
+
+	// ********* OPENING **********
+	if(windstatus1 == 3) {
+		// Fade light up
+		$wils_light_120.fadeInLight(1.5);
+		$wils_light_106.fadeInLight(2);
+		$wils_light_23.fadeInLight(2.5); 
+		$wils_light_67.fadeInLight(2);
+		$wils_light_86.fadeInLight(2);
+
+		// Going up
+		$mrdr_speaker_51.startSound( "snd_wind", SND_CHANNEL_ANY, true );
+		sys.trigger( $mrdr_speaker_shutter11 );
+		$windshutter1_1.rotateOnce( '180 0 0' ); 
+		sys.wait(0.5);
+		sys.trigger( $mrdr_speaker_shutter12 );
+		$windshutter1_2.rotateOnce( '180 0 0' ); 
+		sys.waitFor($windshutter1_2);
+		windstatus1 = 2; // Open
+		$windshutter1_gui.setGuiParm( "networkState" , windstatus1);
+	}
+
+	// ********* CLOSING **********
+	else if(windstatus1 == 4) {
+		// Fade light
+		$wils_light_120.fadeOutLight(3.25);
+		$wils_light_106.fadeOutLight(3);
+		$wils_light_23.fadeOutLight(2.75); 
+		$wils_light_67.fadeOutLight(3);
+		$wils_light_86.fadeOutLight(3);
+
+		// Going down
+		sys.trigger( $mrdr_speaker_shutter11 );
+		$windshutter1_1.rotateOnce( '-180 0 0' );
+		sys.wait(0.25);
+		sys.trigger( $mrdr_speaker_shutter12 );
+		$windshutter1_2.rotateOnce( '-180 0 0' );
+		sys.waitFor($windshutter1_2);
+		windstatus1 = 1; // Closed
+		$windshutter1_gui.setGuiParm( "networkState" , windstatus1);
+		$mrdr_speaker_51.stopSound( SND_CHANNEL_ANY, true );
+	}
+}
+
+void windshutter1_open()
+{
+	if(windstatus1 == 1) {
+		windstatus1 = 3;
+		windshutter1_thread();
+	}
+}
+
+void windshutter1_close()
+{
+	if(windstatus1 == 2) {
+		windstatus1 = 4;
+		windshutter1_thread();
+	}
+}
+
+//--------------------------------------------------
+void windshutter2_thread()
+{
+	$windshutter2_gui.setGuiParm( "networkState" , windstatus2);
+
+	// ********* OPENING **********
+	if(windstatus2 == 3) {
+		// Fade light
+		$wils_light_320.fadeInLight(2);
+
+		// Going up
+		$mrdr_speaker_52.startSound( "snd_wind", SND_CHANNEL_ANY, true );
+		sys.trigger( $mrdr_speaker_shutter21 );
+		$windshutter2_1.rotateOnce( '180 0 0' );
+		sys.wait(0.5);
+		sys.trigger( $mrdr_speaker_shutter22 );
+		$windshutter2_2.rotateOnce( '180 0 0' );
+		sys.waitFor($windshutter2_2);
+		windstatus2 = 2; // Open
+		$windshutter2_gui.setGuiParm( "networkState" , windstatus2);
+	}
+
+	// ********* CLOSING **********
+	else if(windstatus2 == 4) {	
+		// Fade light
+		$wils_light_320.fadeOutLight(3);		
+
+		// Going down
+		sys.trigger( $mrdr_speaker_shutter21 );
+		$windshutter2_1.rotateOnce( '-180 0 0' );
+		sys.wait(0.25);
+		sys.trigger( $mrdr_speaker_shutter22 );
+		$windshutter2_2.rotateOnce( '-180 0 0' );
+		sys.waitFor($windshutter2_2);
+		windstatus2 = 1; // Closed
+		$windshutter2_gui.setGuiParm( "networkState" , windstatus2);
+		$mrdr_speaker_52.stopSound( SND_CHANNEL_ANY, true );
+	}
+}
+
+void windshutter2_open()
+{
+	if(windstatus2 == 1) {
+		windstatus2 = 3;
+		windshutter2_thread();
+	}
+}
+
+void windshutter2_close()
+{
+	if(windstatus2 == 2) {
+		windstatus2 = 4;
+		windshutter2_thread();
+	}
+}
+
+//--------------------------------------------------
+// Motion sensor lights
+//--------------------------------------------------
+
+void triggerfield_initfunc( entity ent );
+void triggerfield_checkfunc( entity ent );
+void triggerfield_callfunc( entity ent );
+void triggerfield_activateLight( entity ent );
+void triggerfield_deactivateLight( entity ent );
+
+void triggerfield_activateLight( entity ent ) {
+	string lightstr;
+	entity light;
+	float ison;
+	
+	lightstr = ent.getKey( "wrelay_on" );
+	ison = ent.getIntKey( "ison" );
+
+	light = sys.getEntity( lightstr );
+
+	if( ison == 0){
+		sys.trigger( light );
+		ent.setKey( "ison", "1" );
+	}
+}
+
+void triggerfield_deactivateLight( entity ent ) {
+	string lightstr;
+	entity light;
+	float ison;
+	
+	lightstr = ent.getKey( "wrelay_off" );
+	ison = ent.getIntKey( "ison" );
+	
+	light = sys.getEntity( lightstr );
+
+	if( ison == 1){
+		sys.trigger( light );
+		ent.setKey( "ison", "0" );
+	}
+}
+
+void triggerfield_initfunc( entity ent ) {
+	ent.setKey( "ison", "0" );
+	ent.setKey( "isenabled", "1" );
+}
+
+void triggerfield_enable( entity ent ) {
+	ent.setKey( "isenabled", "1" );
+}
+
+void triggerfield_disable( entity ent ){
+	ent.setKey( "isenabled", "0" );
+	triggerfield_deactivateLight( ent );
+}
+
+void triggerfield_checkfunc( entity ent ) {
+	float ison;
+	
+	ison = ent.getIntKey( "ison" );
+	if( ison == 1 ) {
+		float lasttouched, totaltime;
+		
+		lasttouched = ent.getFloatKey( "lasttouched" );
+		
+		totaltime = sys.getTime() - lasttouched;
+		
+		if( totaltime > 10) {
+			triggerfield_deactivateLight( ent );
+		}
+	}
+}
+
+void triggerfield_callfunc( entity ent ) {
+	float isenabled;
+	
+	isenabled = ent.getIntKey( "isenabled" );
+	if( isenabled == 1 ) {
+		float ison;
+	
+		ent.setKey( "lasttouched", sys.getTime() );
+	
+		ison = ent.getIntKey( "ison" );
+		if( ison == 0 ) {
+			triggerfield_activateLight( ent );
+		}
+	}
+}
+
+void wils_triggerfield1_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_1 );
+}
+
+void wils_triggerfield2_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_2 );
+}
+
+void wils_triggerfield3_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_3 );
+}
+
+void wils_triggerfield4_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_4 );
+}
+
+void wils_triggerfield5_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_5 );
+}
+
+void wils_triggerfield6_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_6 );
+}
+
+void wils_triggerfield7_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_20 );
+}
+
+void wils_triggerfield8_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_21 );
+}
+
+void wils_triggerfield9_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_22 );
+}
+
+void wils_triggerfield10_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_24 );
+}
+
+void wils_triggerfield11_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_25 );
+}
+
+void wils_triggerfield12_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_26 );
+}
+
+void wils_triggerfield13_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_27 );
+}
+
+void wils_triggerfield14_callfunc() {
+	triggerfield_callfunc( $wils_trigger_multiple_28 );
+}
+
+void nkd_triggerfield01_callfunc() {
+	triggerfield_callfunc( $nkd_trigger_multiple_1 );
+}
+
+void triggerfield_thread() {
+	
+	// middle corridor(split level room to stairwell)
+	triggerfield_initfunc( $wils_trigger_multiple_1 );
+	triggerfield_initfunc( $wils_trigger_multiple_2 );
+	triggerfield_initfunc( $wils_trigger_multiple_3 );
+	triggerfield_initfunc( $wils_trigger_multiple_4 );
+	triggerfield_initfunc( $wils_trigger_multiple_5 );
+	
+	// upper corridors(kitchen to fan room)
+	triggerfield_initfunc( $wils_trigger_multiple_20 );
+	triggerfield_initfunc( $wils_trigger_multiple_21 );
+	triggerfield_initfunc( $wils_trigger_multiple_22 );
+	triggerfield_initfunc( $wils_trigger_multiple_24 );
+	triggerfield_initfunc( $wils_trigger_multiple_25 );
+	triggerfield_initfunc( $wils_trigger_multiple_26 );
+	triggerfield_initfunc( $wils_trigger_multiple_27 );
+	triggerfield_initfunc( $wils_trigger_multiple_28 );
+	triggerfield_initfunc( $nkd_trigger_multiple_1 );
+	
+	while( 1 ) {	
+		// middle corridor
+		triggerfield_checkfunc( $wils_trigger_multiple_1 );
+		triggerfield_checkfunc( $wils_trigger_multiple_2 );
+		triggerfield_checkfunc( $wils_trigger_multiple_3 );
+		triggerfield_checkfunc( $wils_trigger_multiple_4 );
+		triggerfield_checkfunc( $wils_trigger_multiple_5 );
+		
+		// upper corridors
+		triggerfield_checkfunc( $wils_trigger_multiple_20 );
+		triggerfield_checkfunc( $wils_trigger_multiple_21 );
+		triggerfield_checkfunc( $wils_trigger_multiple_22 );
+		triggerfield_checkfunc( $wils_trigger_multiple_24 );
+		triggerfield_checkfunc( $wils_trigger_multiple_25 );
+		triggerfield_checkfunc( $wils_trigger_multiple_26 );
+		triggerfield_checkfunc( $wils_trigger_multiple_27 );
+		triggerfield_checkfunc( $wils_trigger_multiple_28 );
+		triggerfield_checkfunc( $nkd_trigger_multiple_1 );
+
+		sys.wait( 1 );
+	}
+}
+
+//--------------------------------------------------
+// Generator stuff
+//--------------------------------------------------
+
+// Set of thingys to turn lights OFF
+void lightsoff_generator_room()
+{
+	$wils_light_333.Off();
+	$nkd_light_673.Off();
+	$wils_light_259.Off();
+	$wils_light_87.Off();
+	$wils_light_241.Off();
+	$wils_light_242.Off();
+	
+	$wils_func_static_136.hide();
+	$wils_func_static_137.show();
+	$wils_func_static_138.hide();
+	$wils_func_static_139.show();
+	$wils_func_static_141.hide();
+	$wils_func_static_142.show();
+	$wils_func_static_143.hide();
+	$wils_func_static_144.show();
+	$wils_func_static_145.hide();
+	$wils_func_static_146.show();
+	$func_static_2623.hide();
+	$wils_func_static_147.hide();
+	$wils_func_static_148.show();
+}
+
+void lightsoff_kitchen()
+{
+	$wils_light_24.Off();
+	$wils_light_244.Off();
+	
+	$wils_func_static_186.hide();
+	$wils_func_static_187.show();
+}
+
+void lightsoff_stairwell()
+{
+	$wils_light_154.Off();
+	$qfraggel_light_1.Off();
+	$wils_light_32.Off();
+	$wils_light_307.Off();
+	$wils_light_308.Off();
+	$wils_light_36.Off();
+	$wils_light_130.Off();
+	$wils_light_88.Off();	
+
+	$wils_func_static_4.hide();
+	$wils_func_static_149.show();
+	$wils_func_static_150.hide();
+	$qfraggel_func_static_1.hide();
+	$wils_func_static_151.show();
+	$wils_func_static_250.show();
+	$llm_func_static_12.hide();
+	$llm_func_static_13.hide();
+	$llm_func_static_11.show();
+	$llm_func_static_14.show();
+	$wils_func_static_39.hide();
+	$wils_func_static_40.hide();
+	$nkd_func_static_6.hide();
+	$nkd_func_static_5.show();
+}
+
+void lightsoff_middle_corridor()
+{
+	triggerfield_disable( $wils_trigger_multiple_1 );
+	triggerfield_disable( $wils_trigger_multiple_2 );
+	triggerfield_disable( $wils_trigger_multiple_3 );
+	triggerfield_disable( $wils_trigger_multiple_4 );
+	triggerfield_disable( $wils_trigger_multiple_5 );
+
+	$wils_func_static_210.hide();
+
+	$wils_func_static_211.show();
+
+	$nkd_func_static_7.hide();
+	$nkd_func_static_8.show();
+	$nkd_func_static_32.hide();
+	$nkd_func_static_33.show();	
+	
+	$wils_func_static_216.hide();
+	$wils_func_static_217.show();
+}
+
+void lightsoff_upper_corridor()
+{
+	triggerfield_disable( $wils_trigger_multiple_20 );
+	triggerfield_disable( $wils_trigger_multiple_21 );
+	triggerfield_disable( $wils_trigger_multiple_22 );
+	triggerfield_disable( $wils_trigger_multiple_24 );
+	triggerfield_disable( $wils_trigger_multiple_25 );
+	triggerfield_disable( $wils_trigger_multiple_26 );
+	triggerfield_disable( $wils_trigger_multiple_27 );
+	triggerfield_disable( $wils_trigger_multiple_28 );	
+
+	$nkd_func_static_22.hide();
+	$nkd_func_static_20.show();
+	$nkd_func_static_21.hide();
+	$nkd_func_static_19.show();	
+
+	$nkd_func_static_26.hide();
+	$nkd_func_static_27.show();	
+
+	$wils_func_static_202.hide();
+
+	$wils_func_static_203.show();
+	$wils_func_static_212.hide();
+	$wils_func_static_213.show();	
+	$wils_func_static_214.hide();
+	$wils_func_static_215.show();
+	
+	$nkd_func_static_39.hide();
+	$nkd_func_static_40.show();
+	$nkd_light_563.Off();
+	$nkd_light_564.On();
+	$wils_light_353.On();
+}
+
+void lightsoff_cubicles_corridor()
+{
+	$wils_light_42.Off();
+	$wils_light_124.Off();
+	$wils_light_133.Off();
+	$wils_light_143.Off();
+	$wils_light_315.Off();
+	$wils_light_184.Off();
+	$wils_light_187.Off();
+	$wils_light_144.Off();
+	$wils_light_145.Off();
+	$wils_light_310.Off();
+	$wils_light_175.Off();
+	$wils_light_180.Off();
+	$nkd_light_534.Off();
+	$wils_light_181.Off();
+	$wils_light_316.Off();
+
+	$wils_func_static_154.hide();
+	$wils_func_static_155.show();
+	$wils_func_static_156.hide();
+	$wils_func_static_157.show();
+	$wils_func_static_208.hide();
+	$wils_func_static_209.show();	
+}
+
+void lightsoff_split_room()
+{
+	$wils_light_348.Off();
+	$wils_light_349.Off();
+	$tim_light_3468.Off();
+	$wils_light_317.Off();
+	$tim_light_3472.Off();
+	$tim_light_3281.Off();
+	$wils_light_218.Off();
+	$wils_light_219.Off();
+	$wils_light_166.Off();
+	$wils_light_167.Off();
+	$wils_light_168.Off();
+	$wils_light_169.Off();
+	
+	$wils_light_350.On();
+	$wils_light_351.On();	
+	
+
+	$nkd_func_static_14.hide();
+	$nkd_func_static_16.show();
+	$wils_func_static_202.hide();
+	$wils_func_static_203.show();
+	$wils_func_static_206.hide();
+	$wils_func_static_207.show();
+	$nkd_func_static_30.hide();
+	$nkd_func_static_31.show();
+}
+
+void lightsoff_fan_room()
+{
+	$light_1.Off();
+	$light_2.Off();
+	$light_3.Off();
+	$wils_light_209.Off();
+	$wils_light_210.Off();
+	$wils_light_211.Off();
+	$wils_light_190.Off();
+	$wils_light_192.Off();
+	$wils_light_193.Off();
+	$wils_light_194.Off();
+	$wils_light_305.Off();
+	$wils_light_220.Off();
+	$wils_light_221.Off();
+	$wils_light_201.Off();
+	
+	$nkd_func_static_22.hide();
+	$nkd_func_static_20.show();
+	$wils_func_static_75.hide();
+	$wils_func_static_76.hide();
+	$wils_func_static_77.hide();
+	$wils_func_static_78.hide();
+	$wils_func_static_180.hide();
+	$wils_func_static_181.show();
+	$wils_func_static_184.hide();
+	$wils_func_static_185.show();
+}
+
+void lightsoff_swinglight_room()
+{
+	$tim_light_3636.Off();
+	$tim_light_3399.Off();
+	$nkd_light_612.Off();
+	$nkd_light_613.Off();
+	$nkd_light_614.Off();
+	$nkd_light_615.Off();
+	$nkd_light_646.Off();
+	$nkd_light_647.Off();
+	$wils_light_326.Off();
+	$wils_light_321.Off();
+	$tim_light_3406.Off();
+	$tim_light_3407.Off();
+	$wils_light_319.Off();
+	$wils_light_109.Off();
+	
+	$tim_light_3408.Off();
+	$tim_light_3394.Off();	
+	$tim_light_3395.Off();	
+	$tim_light_3396.Off();
+	
+	$wils_func_static_160.hide();
+	$wils_func_static_161.show();
+	$wils_func_static_162.hide();
+	$wils_func_static_163.show();
+	$wils_func_static_164.hide();
+	$wils_func_static_165.show();
+	$wils_func_static_168.hide();
+	$wils_func_static_169.show();	
+	$wils_func_static_172.hide();
+	$wils_func_static_173.show();
+	$wils_func_static_174.hide();
+	$wils_func_static_175.show();	
+	$wils_func_static_112.hide();
+}
+
+void lightsoff_button_passage()
+{
+	$wils_light_102.Off();
+	$wils_light_103.Off();
+	$wils_light_104.Off();
+	
+	$nkd_func_static_15.hide();
+	$nkd_func_static_17.show();
+	$wils_func_static_178.hide();
+	$wils_func_static_179.show();
+}
+
+
+// Set of thingys to turn lights ON
+void lightson_generator_room()
+{
+	$wils_light_333.On();
+	$nkd_light_673.On();
+	$wils_light_259.On();
+	$wils_light_87.On();
+	$wils_light_241.On();
+	$wils_light_242.On();
+
+	$wils_func_static_136.show();
+	$wils_func_static_137.hide();
+	$wils_func_static_138.show();
+	$wils_func_static_139.hide();
+	$wils_func_static_141.show();
+	$wils_func_static_142.hide();
+	$wils_func_static_143.show();
+	$wils_func_static_144.hide();
+	$wils_func_static_145.show();
+	$wils_func_static_146.hide();
+	$func_static_2623.show();
+	$wils_func_static_147.show();
+	$wils_func_static_148.hide();
+}
+
+void lightson_kitchen()
+{
+	$wils_light_24.On();
+	$wils_light_244.On();
+	
+	$wils_func_static_186.show();
+	$wils_func_static_187.hide();
+}
+
+void lightson_stairwell()
+{
+	$wils_light_154.On();
+	$qfraggel_light_1.On();	
+	$wils_light_32.On();
+	$wils_light_307.On();
+	$wils_light_308.On();
+	$wils_light_36.On();
+	$wils_light_130.On();
+	$wils_light_88.On();	
+
+	$wils_func_static_4.show();
+	$wils_func_static_149.hide();
+	$wils_func_static_150.show();
+	$qfraggel_func_static_1.show();
+	$llm_func_static_12.show();
+	$llm_func_static_13.show();
+	$wils_func_static_151.hide();
+	$wils_func_static_250.hide();
+	$llm_func_static_11.hide();
+	$llm_func_static_14.hide();
+	$wils_func_static_39.show();
+	$wils_func_static_40.show();
+	$nkd_func_static_6.show();
+	$nkd_func_static_5.hide();
+}
+
+void lightson_middle_corridor()
+{
+	triggerfield_enable( $wils_trigger_multiple_1 );
+	triggerfield_enable( $wils_trigger_multiple_2 );
+	triggerfield_enable( $wils_trigger_multiple_3 );
+	triggerfield_enable( $wils_trigger_multiple_4 );
+	triggerfield_enable( $wils_trigger_multiple_5 );
+
+	$wils_func_static_210.show();
+	$wils_func_static_211.hide();
+	$nkd_func_static_7.show();
+	$nkd_func_static_8.hide();
+	$nkd_func_static_32.show();
+
+	$nkd_func_static_33.hide();
+	
+	$wils_func_static_216.show();
+	$wils_func_static_217.hide();	
+}
+
+void lightson_upper_corridor()
+{
+	triggerfield_enable( $wils_trigger_multiple_20 );
+	triggerfield_enable( $wils_trigger_multiple_21 );
+	triggerfield_enable( $wils_trigger_multiple_22 );
+	triggerfield_enable( $wils_trigger_multiple_24 );
+	triggerfield_enable( $wils_trigger_multiple_25 );
+	triggerfield_enable( $wils_trigger_multiple_26 );
+	triggerfield_enable( $wils_trigger_multiple_27 );
+	triggerfield_enable( $wils_trigger_multiple_28 );
+	
+	$nkd_func_static_22.show();
+	$nkd_func_static_20.hide();
+	$nkd_func_static_21.show();
+	$nkd_func_static_19.hide();
+	$nkd_func_static_26.show();
+
+	$nkd_func_static_27.hide();
+
+	$wils_func_static_202.show();
+	$wils_func_static_203.hide();
+	$wils_func_static_212.show();
+	$wils_func_static_213.hide();	
+	$wils_func_static_214.show();
+	$wils_func_static_215.hide();
+	
+	$nkd_func_static_39.show();
+	$nkd_func_static_40.hide();
+	$nkd_light_563.On();
+	$nkd_light_564.Off();
+	$wils_light_353.Off();
+}
+
+void lightson_cubicles_corridor()
+{
+	$wils_light_42.On();
+	$wils_light_124.On();
+	$wils_light_133.On();
+	$wils_light_143.On();
+	$wils_light_315.On();
+	$wils_light_184.On();
+	$wils_light_187.On();
+	$wils_light_144.On();
+	$wils_light_145.On();
+	$wils_light_310.On();
+	$wils_light_175.On();
+	$wils_light_180.On();
+	$nkd_light_534.On();
+	$wils_light_181.On();
+	$wils_light_316.On();
+
+	$wils_func_static_154.show();
+	$wils_func_static_155.hide();
+	$wils_func_static_156.show();
+	$wils_func_static_157.hide();
+	$wils_func_static_208.show();
+	$wils_func_static_209.hide();
+}
+
+void lightson_split_room()
+{
+	$wils_light_348.On();
+	$wils_light_349.On();
+	$tim_light_3468.On();
+	$wils_light_317.On();
+	$tim_light_3472.On();
+	$tim_light_3281.On();
+	$wils_light_218.On();
+	$wils_light_219.On();
+	$wils_light_166.On();
+	$wils_light_167.On();
+	$wils_light_168.On();
+	$wils_light_169.On();
+	
+	$wils_light_350.Off();
+	$wils_light_351.Off();	
+	
+	$nkd_func_static_14.show();
+	$nkd_func_static_16.hide();
+	$wils_func_static_202.show();
+	$wils_func_static_203.hide();
+	$wils_func_static_206.show();
+	$wils_func_static_207.hide();
+	$nkd_func_static_30.show();
+	$nkd_func_static_31.show();	
+	
+}
+
+void lightson_fan_room()
+{
+	$light_1.On();
+	$light_2.On();
+	$light_3.On();
+	$wils_light_209.On();
+	$wils_light_210.On();
+	$wils_light_211.On();
+	$wils_light_190.On();
+	$wils_light_192.On();
+	$wils_light_193.On();
+	$wils_light_194.On();
+	$wils_light_305.On();
+	$wils_light_220.On();
+	$wils_light_221.On();
+	$wils_light_201.On();
+	
+	$nkd_func_static_22.show();
+	$nkd_func_static_20.hide();
+	$wils_func_static_75.show();
+	$wils_func_static_76.show();
+	$wils_func_static_77.show();
+	$wils_func_static_78.show();
+	$wils_func_static_180.show();
+	$wils_func_static_181.hide();
+	$wils_func_static_184.show();
+	$wils_func_static_185.hide();	
+}
+
+void lightson_swinglight_room()
+{
+	$tim_light_3636.On();
+	$tim_light_3399.On();
+	$nkd_light_612.On();
+	$nkd_light_613.On();
+	$nkd_light_614.On();
+	$nkd_light_615.On();
+	$nkd_light_646.On();
+	$nkd_light_647.On();	
+	$wils_light_326.On();
+	$wils_light_321.On();
+	$tim_light_3406.On();
+	$tim_light_3407.On();
+	$wils_light_319.On();
+	$wils_light_109.On();
+	
+	$tim_light_3408.On();
+	$tim_light_3394.On();	
+	$tim_light_3395.On();	
+	$tim_light_3396.On();
+	
+	$wils_func_static_160.show();
+	$wils_func_static_161.hide();
+	$wils_func_static_162.show();
+	$wils_func_static_163.hide();
+	$wils_func_static_164.show();
+	$wils_func_static_165.hide();
+	$wils_func_static_168.show();
+	$wils_func_static_169.hide();
+	$wils_func_static_172.show();
+	$wils_func_static_173.hide();
+	$wils_func_static_174.show();
+	$wils_func_static_175.hide();	
+	$wils_func_static_112.show();
+}
+
+void lightson_button_passage()
+{
+	$wils_light_102.On();
+	$wils_light_103.On();
+	$wils_light_104.On();
+
+	$nkd_func_static_15.show();
+	$nkd_func_static_17.hide();
+	$wils_func_static_178.show();
+	$wils_func_static_179.hide();	
+}
+
+// Generator and controls	
+void generator_setup()
+{
+	$mrdr_speaker_gen.startSound( "snd_genOn", SND_CHANNEL_ANY, true );
+
+	$generator_barrel.rotate( '0 0 120' );	
+}
+
+void generator_restart()
+{
+	// trigger sounds
+	thread sound_generator_shutdown();
+
+	// Stop generator	
+	$generator_barrel.accelTime( 0 );
+	$generator_barrel.decelTime( 6 );
+	$generator_barrel.time( 7 );	// note: guis/multiplayer/generator.gui is synced to this even in -- windowDef TriggerButtonOff -- onTime 7000
+	$generator_barrel.rotate( '0 0 120' );
+	sys.waitFor( $generator_barrel );
+	
+	// trigger berserk
+	thread powerup_berserk_spawn();
+
+	// Turn lights OFF
+	sys.trigger( $nkd_speaker_7 ); // global sound
+	sys.trigger( $mrdr_speaker_22 );
+
+	lightsoff_generator_room();
+		
+	sys.trigger( $mrdr_speaker_23 );
+	sys.trigger( $mrdr_speaker_24 );
+	sys.trigger( $mrdr_speaker_25 );
+
+	lightsoff_kitchen();
+	lightsoff_stairwell();
+	lightsoff_middle_corridor();
+	
+	sys.trigger( $mrdr_speaker_26 );
+	sys.trigger( $mrdr_speaker_27 );
+	sys.trigger( $nkd_speaker_6 );
+	sys.trigger( $mrdr_speaker_28 );
+
+	lightsoff_upper_corridor();
+	lightsoff_cubicles_corridor();
+	lightsoff_split_room();
+	
+	sys.trigger( $mrdr_speaker_29 );
+	sys.trigger( $mrdr_speaker_30 );
+	sys.trigger( $mrdr_speaker_31 );
+
+	lightsoff_fan_room();
+	lightsoff_swinglight_room();
+	lightsoff_button_passage();
+	
+	// Open secret room
+	sys.trigger( $wils_func_static_218 );
+	sys.trigger( $wils_trigger_hurt_1 );	
+	$wils_func_door_15.open();
+	$wils_func_door_16.open();
+	
+	// Blackout time
+	sys.wait( 15 ); 
+	
+	// Restart Generator
+	$generator_barrel.accelTime( 3 );
+	$generator_barrel.decelTime( 0 );
+	$generator_barrel.rotate( '0 0 120' );
+	
+	// power up sound
+	thread sound_generator_startup();
+
+	// Turn lights ON
+	sys.wait( 1.5 );
+	
+	sys.trigger( $mrdr_speaker_22 );
+
+	lightson_generator_room();
+	
+	sys.trigger( $mrdr_speaker_23 );
+	sys.trigger( $mrdr_speaker_24 );
+	sys.trigger( $mrdr_speaker_25 );
+
+	lightson_kitchen();
+	lightson_stairwell();
+	lightson_middle_corridor();
+
+	// Close secret room
+	$wils_func_door_15.close();
+	$wils_func_door_16.close();
+
+	thread powerup_berserk_remove();
+
+	sys.trigger( $wils_func_static_218 );
+	sys.trigger( $wils_trigger_hurt_1 );
+	
+	sys.trigger( $mrdr_speaker_26 );
+	sys.trigger( $mrdr_speaker_27 );
+	sys.trigger( $nkd_speaker_6 );
+	sys.trigger( $mrdr_speaker_28 );
+
+	lightson_upper_corridor();
+	lightson_cubicles_corridor();
+	lightson_split_room();
+	
+	sys.trigger( $mrdr_speaker_29 );
+	sys.trigger( $mrdr_speaker_30 );
+	sys.trigger( $mrdr_speaker_31 );
+
+	lightson_fan_room();
+	lightson_swinglight_room();
+	lightson_button_passage();	
+}
+
+void generator_run()
+{
+	// don't put anything in here
+	// only runs if a player is accessing the GUI at the time it gets called
+}
+
+//--------------------------------------------------
+// MAIN
+//--------------------------------------------------
+void main()
+{
+	thread triggerfield_thread();
+	
+	thread sound_wind_init();
+
+	windshutter_setup(1,1);
+	windshutter_setup(1,2);
+	windstatus1 = 2; // Open
+	$windshutter1_gui.setGuiParm( "networkState" , windstatus1);
+
+	windshutter_setup(2,1);
+	windshutter_setup(2,2);
+	windstatus2 = 2; // Open
+	$windshutter2_gui.setGuiParm( "networkState" , windstatus2);
+	
+	generator_setup();
+}

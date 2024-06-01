@@ -1,0 +1,102 @@
+glprog megatexture/megarender
+{
+	vertex
+	{
+		
+		uniform vec4 programLocal[8];
+
+		void main() {
+    			// Masks have a scale and offset
+    			gl_TexCoord[0] = gl_MultiTexCoord0 * programLocal[0].w + programLocal[0];
+    			gl_TexCoord[1] = gl_MultiTexCoord0 * programLocal[1].w + programLocal[1];
+    			gl_TexCoord[2] = gl_MultiTexCoord0 * programLocal[2].w + programLocal[2];
+    			gl_TexCoord[3] = gl_MultiTexCoord0 * programLocal[3].w + programLocal[3];
+    			gl_TexCoord[4] = gl_MultiTexCoord0 * programLocal[4].w + programLocal[4];
+    			gl_TexCoord[5] = gl_MultiTexCoord0 * programLocal[5].w + programLocal[5];
+    			gl_TexCoord[6] = gl_MultiTexCoord0 * programLocal[6].w + programLocal[6];
+
+    			// Images just have a scale
+    			gl_TexCoord[7] = gl_MultiTexCoord0 * programLocal[7].w;
+
+    			// Set vertex position (ARB_position_invariant equivalent)
+    			gl_Position = ftransform();
+		}
+	}
+
+	pixel
+	{
+		#extension GL_ARB_texture_rectangle : enable
+
+        uniform sampler2DRect texture0;  // Border Clamp texture
+        uniform sampler2DRect texture1;  // 1/2 domain
+        uniform sampler2DRect texture2;  // 1/4 domain
+        uniform sampler2DRect texture3;  // 1/8 domain
+        uniform sampler2DRect texture4;  // 1/16 domain
+        uniform sampler2DRect texture5;  // Additional texture
+        uniform sampler2DRect texture6;  // Additional texture
+        uniform sampler2DRect texture7;  // Additional texture
+
+        void main() {
+            // Temporary variables
+            vec4 mask1, invMask1, mask2, invMask2, R2, combined, scaled;
+
+            // Load masks
+            mask1.x = texture2DRect(texture0, gl_TexCoord[0].xy).r;
+            mask1.y = texture2DRect(texture0, gl_TexCoord[1].xy).r;
+            mask1.z = texture2DRect(texture0, gl_TexCoord[2].xy).r;
+            mask1.w = texture2DRect(texture0, gl_TexCoord[3].xy).r;
+
+            mask2.x = texture2DRect(texture0, gl_TexCoord[4].xy).r;
+            mask2.y = texture2DRect(texture0, gl_TexCoord[5].xy).r;
+            mask2.z = texture2DRect(texture0, gl_TexCoord[6].xy).r;
+
+            // Calculate inverse masks
+            invMask1 = vec4(1.0) - mask1;
+            invMask2 = vec4(1.0) - mask2;
+
+            // Load the minimum quality image first
+            combined = vec4(0.0);
+
+            scaled = gl_TexCoord[7];
+
+            // Load the multi-resolution textures and sum up with the masks
+            R2 = texture2DRect(texture1, scaled.xy);  // Lowest quality moving image
+            scaled *= 2.0;
+            combined *= invMask1.x;
+            combined = R2 * mask1.x + combined;
+
+            R2 = texture2DRect(texture2, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask1.y;
+            combined = R2 * mask1.y + combined;
+
+            R2 = texture2DRect(texture3, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask1.z;
+            combined = R2 * mask1.z + combined;
+
+            R2 = texture2DRect(texture4, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask1.w;
+            combined = R2 * mask1.w + combined;
+
+            R2 = texture2DRect(texture5, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask2.x;
+            combined = R2 * mask2.x + combined;
+
+            R2 = texture2DRect(texture6, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask2.y;
+            combined = R2 * mask2.y + combined;
+
+            R2 = texture2DRect(texture7, scaled.xy);
+            scaled *= 2.0;
+            combined *= invMask2.z;
+            combined = R2 * mask2.z + combined;
+
+            // Output the final color
+            gl_FragColor = vec4(combined.xyz, 1.0);
+        }
+	}
+}

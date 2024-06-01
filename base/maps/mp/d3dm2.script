@@ -1,0 +1,123 @@
+/// =================================================
+// Map: D3DM2 ( M Lab )
+// =================================================
+//--------------------------------------------------
+// Script definitions and global variables
+//--------------------------------------------------
+
+float powerup_type;
+float powerupExists = 0;
+float powerupTimerFinished = 0;
+
+//--------------------------------------------------
+// Power-Up dispenser GUI controls
+//--------------------------------------------------
+void powerup_guicontrol(float gui_status)
+{
+	if (gui_status == 0) {
+		$powerup_dispenser_gui.setGuiParm ( "gui_parm2" , 1);	// reset the gui to default state
+	}
+	else if (gui_status == 1) {
+		$powerup_dispenser_gui.setGuiParm ( "gui_parm2" , 2);	// swith the gui to processing mode
+	}
+	else if (gui_status == 2) {
+		$powerup_dispenser_gui.setGuiParm ( "gui_parm2" , 3);	// switch the gui to standby mode (GUI blocked by power-up or timer)
+	}
+}
+
+// -------------------------------------------------
+// Thread that gets called by the trigger relay (name: powerup_relay)
+// -------------------------------------------------
+void powerup_guiblocked_trigger()
+{
+	powerupExists = 0;
+		
+	if( powerupTimerFinished ) {
+		thread powerup_guicontrol(0);	// reset the gui to default state
+	}
+
+	sys.wait(0.1);
+}
+
+// -------------------------------------------------
+// Run a timer
+// -------------------------------------------------
+void powerup_timer()
+{
+	powerupTimerFinished = 0;	
+	sys.wait( 60 );		// anti-spam delay
+	powerupTimerFinished = 1;
+	
+	if( powerupExists == 0 ) {
+		thread powerup_guicontrol(0);	// reset the gui to default state
+	}
+}
+
+//--------------------------------------------------
+// Spawn the Power-Up
+//--------------------------------------------------
+void powerup_spawn()
+{
+
+	powerupExists = 1;
+	thread powerup_timer();
+
+	$powerup_megahealth_triggered.respawn();
+}
+
+//--------------------------------------------------
+// TEMP thread for sound fx
+//--------------------------------------------------
+void temp_sound01()
+{
+	sys.trigger( $temp_speaker01 );
+}
+
+void temp_sound02()
+{
+	sys.trigger( $temp_speaker02 );
+}
+
+void temp_sound03()
+{
+	sys.trigger( $temp_speaker03 );
+}
+
+void temp_sounds()
+{
+	temp_sound01();
+	sys.wait(13);
+	temp_sound03();
+	sys.wait(1);
+	temp_sound02();
+}
+
+//--------------------------------------------------
+// Thread that the GUI calls
+//--------------------------------------------------
+void powerup_trigger()
+{
+
+	powerup_guicontrol(1);	// swith the gui to processing mode
+
+	sys.wait(0.1);
+	
+	temp_sounds();	// temp thread for sounds ... need new custom sound fx
+	
+	sys.wait( 2 );	// this is for the power-up creation fx timing
+	
+	powerup_spawn ();
+	powerup_guicontrol(2);	// switch the gui to standby mode (GUI blocked by power-up or timer)
+}
+
+//--------------------------------------------------
+// MAIN
+//--------------------------------------------------
+
+void main ()
+{
+
+}
+
+
+

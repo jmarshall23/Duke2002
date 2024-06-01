@@ -1,0 +1,885 @@
+/// =================================================
+// Map: D3DM1 ( Processor of Elimination )
+// =================================================
+
+	////////////////////////////////////////////////////
+	//
+	//	Setup binds and times etc...
+	//
+	////////////////////////////////////////////////////
+	void setup_objects()
+	{
+		//laser setup
+		$laser_bottom_right.time (3);
+		$laser_bottom_left.time (3);
+		$laser_bottom_right.accelTime (3);
+		$laser_bottom_right.decelTime (0);
+		$laser_bottom_left.accelTime (3);
+		$laser_bottom_left.decelTime (0);
+
+		$laser_top_right.time (3);
+		$laser_top_left.time (3);
+		$laser_top_right.accelTime (3);
+		$laser_top_right.decelTime (0);
+		$laser_top_left.accelTime (3);
+		$laser_top_left.decelTime (0);
+
+		//turn potty flare off
+		$potty_flare.setColor ( 0, 0, 0);
+		$potty_flare_mover.rotate ('0 10 0');
+		
+		$spin_light1.bind($spin_light_base);
+		$spin_light2.bind($spin_light_base);
+
+		$spin_light_base.rotate ( '0 120 0' );
+
+		sys.setShaderParm( 0, 1 );
+		sys.setShaderParm( 1, 1 );
+		sys.setShaderParm( 2, 1 );
+
+		//start cylinders in laser room rotating
+		$cylinder_disk1.rotate ( '0 40 0' );
+		$cylinder_disk2.rotate ( '0 -50 0' );
+		$cylinder_disk3.rotate ( '0 60 0' );
+
+		//snail 2 pole 1 binds and initial movements
+		$snl2_pl1_recep.bind ($snl2_pl1_anc);
+		$snl2_pl1.bind ($snl2_pl1_anc);
+		$snl2_pl1_spin_anc.bind ($snl2_pl1_anc);
+
+		$snl2_pl1_spin.bind ($snl2_pl1_spin_anc);	
+
+		$snl2_pl1_spin_arm1.bind ($snl2_pl1_spin);
+		$snl2_pl1_spin_arm2.bind ($snl2_pl1_spin);
+		$snl2_pl1_spin_arm3.bind ($snl2_pl1_spin);
+		$snl2_pl1_spin_arm4.bind ($snl2_pl1_spin);
+
+		$snl2_pl1_wire1.bind ($snl2_pl1_spin);
+		$snl2_pl1_wire2.bind ($snl2_pl1_spin);
+		$snl2_pl1_wire3.bind ($snl2_pl1_spin);
+		$snl2_pl1_wire4.bind ($snl2_pl1_spin);
+
+		//set times very fast for initial movement
+		$snl2_pl1_spin.time (.1);
+
+		$snl2_pl1_spin_arm1.time (.1);
+		$snl2_pl1_spin_arm2.time (.1);
+		$snl2_pl1_spin_arm3.time (.1);
+		$snl2_pl1_spin_arm4.time (.1);
+
+		//initial position movements
+		$snl2_pl1_anc.time (.1);
+		$snl2_pl1_anc.rotateOnce ( '-67.5 0 0');
+		sys.waitFor ($snl2_pl1_anc);
+
+		$snl2_pl1.move ( DOWN, 192 );
+
+		//set times to normal after initial move
+		$snl2_pl1_spin.time (1);
+
+		$snl2_pl1_spin_arm1.time (.6);
+		$snl2_pl1_spin_arm2.time (.6);
+		$snl2_pl1_spin_arm3.time (.6);
+		$snl2_pl1_spin_arm4.time (.6);
+
+		//snail 2 pole 2 binds and initial movements
+		$snl2_pl2_recep.bind ($snl2_pl2_anc);
+		$snl2_pl2.bind ($snl2_pl2_anc);
+		$snl2_pl2_spin_anc.bind ($snl2_pl2_anc);
+
+		$snl2_pl2_spin.bind ($snl2_pl2_spin_anc);	
+
+		$snl2_pl2_spin_arm1.bind ($snl2_pl2_spin);
+		$snl2_pl2_spin_arm2.bind ($snl2_pl2_spin);
+		$snl2_pl2_spin_arm3.bind ($snl2_pl2_spin);
+		$snl2_pl2_spin_arm4.bind ($snl2_pl2_spin);
+
+		$snl2_pl2_wire1.bind ($snl2_pl2_spin);
+		$snl2_pl2_wire2.bind ($snl2_pl2_spin);
+		$snl2_pl2_wire3.bind ($snl2_pl2_spin);
+		$snl2_pl2_wire4.bind ($snl2_pl2_spin);
+
+		//set times very fast for initial movement
+		$snl2_pl2_spin.time (.1);
+
+		$snl2_pl2_spin_arm1.time (.1);
+		$snl2_pl2_spin_arm2.time (.1);
+		$snl2_pl2_spin_arm3.time (.1);
+		$snl2_pl2_spin_arm4.time (.1);
+
+		//initial position movements
+		$snl2_pl2_anc.time (.1);
+		$snl2_pl2_anc.rotateOnce ( '-22.5 0 0');
+		sys.waitFor ($snl2_pl2_anc);
+
+		$snl2_pl2.move ( DOWN, 208 );
+
+		//set times to normal after initial movements
+		$snl2_pl2_spin.time (1);
+
+		$snl2_pl2_spin_arm1.time (.6);
+		$snl2_pl2_spin_arm2.time (.6);
+		$snl2_pl2_spin_arm3.time (.6);
+		$snl2_pl2_spin_arm4.time (.6);
+
+		//snail 2 shell times and initial movements
+		$snl2_shell1.time (.25);
+		$snl2_shell2.time (.5);
+		$snl2_shell3.time (.75);
+
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Global Parm (parm) from 1 to 0 in a specific time (time)
+	//
+	////////////////////////////////////////////////////
+	void globalparm_1to0(float parm, float blendtime)
+	{
+		float i,v,t;
+
+		t = blendtime * 60;
+
+		for ( i = t; i > 0; i-- ) {
+			v = ( i / t );
+			sys.setShaderParm( parm, v );
+			sys.wait( 1 / 60 );
+		}
+		sys.setShaderParm( parm, 0 );
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Global Parm (parm) from 0 to 1 in a specific time (time)
+	//
+	////////////////////////////////////////////////////
+	void globalparm_0to1(float parm, float blendtime)
+	{
+		float i,v,t;
+
+		t = blendtime * 60;
+
+		for ( i = 0; i < t; i++ ) {
+			v = ( i / t );
+			sys.setShaderParm( parm, v );
+			sys.wait( 1 / 60 );
+		}
+		sys.setShaderParm( parm, 1 );
+	}
+
+	
+
+	////////////////////////////////////////////////////
+	//
+	//	Comp Room - Lights off 
+	//
+	////////////////////////////////////////////////////
+	void comproom_off()
+	{
+		float i, t, v;		
+		
+		$comproom_switch_1.setGuiParm( "gui_parm3", 1 );
+
+		//sound for lights off
+		sys.trigger ($lightsoff_speaker);
+		
+		t = ( .75 * 60 );
+		for ( i = t; i > 0; i-- ) {
+			v = ( i / t );
+			sys.setShaderParm( 0, v );
+			sys.wait( 1 / 60 );
+		}
+		sys.setShaderParm( 0, 0 );
+
+		$comproom_switch_light.setColor (.84, .34, .20);
+
+		$lightsoff_door.open();
+		$lightsoff_door2.open();
+		$crusher.moveTo ($crushspot_up);
+	}
+
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Comp Room - Lights on 
+	//
+	////////////////////////////////////////////////////
+	void comproom_on()
+	{
+		float i, t, v;
+
+		$comproom_switch_1.setGuiParm( "gui_parm3", 0 );
+		
+		//sound for lights on
+		sys.trigger ($lightson_speaker);
+
+		$crusher.moveTo ($crushspot_down);
+
+		t = .75 * 60;
+		for ( i = 0; i < t; i++ ) {
+			v = ( i / t );
+			sys.setShaderParm( 0, v );
+			sys.wait( 1 / 60 );
+		}
+		sys.setShaderParm( 0, 1 );
+
+		$comproom_switch_light.setColor (.52, .84, .73);
+
+		$lightsoff_door.close();
+		$lightsoff_door2.close();
+		
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	move snail 2 pole 1 things up
+	//
+	////////////////////////////////////////////////////
+	void move_snail2_connect1_up()
+	{
+		$snl2_pl1.time (.5);
+		$snl2_pl1.move ( UP, 192 );
+		//pole1 move sound .5sec
+		sys.trigger ($snail2_pole1_speaker);
+		sys.waitFor ($snl2_pl1);
+
+		$snl2_pl1_spin_anc.move ( UP, 144 );
+		$snl2_pl1_spin.rotateOnce ( '0 540 0' );
+
+		//pole1 guts moveup sound 1sec
+		sys.trigger ($snail2_pole1guts_up_speaker);
+
+		sys.wait (.5);
+		$snl2_pl1_spin_arm1.rotateOnce ( '0 0 -180' );
+		$snl2_pl1_spin_arm2.rotateOnce ( '0 0 -180' );
+		$snl2_pl1_spin_arm3.rotateOnce ( '0 0 -180' );
+		$snl2_pl1_spin_arm4.rotateOnce ( '0 0 -180' );
+
+		sys.waitFor ($snl2_pl1_spin_arm4);
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	move snail 2 pole 1 things down
+	//
+	////////////////////////////////////////////////////
+	void move_snail2_connect1_down()
+	{
+		//pole1 guts movedown sound 1sec
+		sys.trigger ($snail2_pole1guts_down_speaker);
+
+		$snl2_pl1_spin_anc.move ( DOWN, 144 );
+		$snl2_pl1_spin.rotateOnce ( '0 -540 0' );
+
+		$snl2_pl1_spin_arm1.rotateOnce ( '0 0 180' );
+		$snl2_pl1_spin_arm2.rotateOnce ( '0 0 180' );
+		$snl2_pl1_spin_arm3.rotateOnce ( '0 0 180' );
+		$snl2_pl1_spin_arm4.rotateOnce ( '0 0 180' );
+
+		sys.waitFor ($snl2_pl1_spin_anc);
+
+		$snl2_pl1.time (.5);
+		$snl2_pl1.move ( DOWN, 192 );
+		//pole1 move sound .5sec
+		sys.trigger ($snail2_pole1_speaker);
+		sys.waitFor ($snl2_pl1);
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	move snail 2 pole 2 things up
+	//
+	////////////////////////////////////////////////////
+	void move_snail2_connect2_up()
+	{
+		$snl2_pl2.time (.5);
+		$snl2_pl2.move ( UP, 208 );
+		//pole2 move sound .5sec
+		sys.trigger ($snail2_pole2_speaker);
+		sys.waitFor ($snl2_pl2);
+
+		$snl2_pl2_spin_anc.move ( UP, 160 );
+		$snl2_pl2_spin.rotateOnce ( '0 540 0' );
+
+		//pole2 guts moveup sound 1sec
+		sys.trigger ($snail2_pole2guts_up_speaker);
+
+		sys.wait (.5);
+		$snl2_pl2_spin_arm1.rotateOnce ( '0 0 -180' );
+		$snl2_pl2_spin_arm2.rotateOnce ( '0 0 -180' );
+		$snl2_pl2_spin_arm3.rotateOnce ( '0 0 -180' );
+		$snl2_pl2_spin_arm4.rotateOnce ( '0 0 -180' );
+
+		sys.waitFor ($snl2_pl2_spin_arm4);
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	move snail 2 pole 2 things down
+	//
+	////////////////////////////////////////////////////
+	void move_snail2_connect2_down()
+	{
+		//pole2 guts movedown sound 1sec
+		sys.trigger ($snail2_pole2guts_down_speaker);
+
+		$snl2_pl2_spin_anc.move ( DOWN, 160 );
+		$snl2_pl2_spin.rotateOnce ( '0 -540 0' );
+
+		$snl2_pl2_spin_arm1.rotateOnce ( '0 0 180' );
+		$snl2_pl2_spin_arm2.rotateOnce ( '0 0 180' );
+		$snl2_pl2_spin_arm3.rotateOnce ( '0 0 180' );
+		$snl2_pl2_spin_arm4.rotateOnce ( '0 0 180' );
+
+		sys.waitFor ($snl2_pl2_spin_anc);
+
+		$snl2_pl2.time (.5);
+		$snl2_pl2.move ( DOWN, 208 );
+		//pole2 move sound .5sec
+		sys.trigger ($snail2_pole2_speaker);
+		sys.waitFor ($snl2_pl2);
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	open shells for snail 2 
+	//
+	////////////////////////////////////////////////////
+	void open_snail2_shells()
+	{
+		$snl2_shell3.rotateOnce ( '0 0 -132' );
+
+		sys.wait (.125);
+		$snl2_shell2.rotateOnce ( '0 0 -88' );
+
+		sys.wait (.125);
+		$snl2_shell1.rotateOnce ( '0 0 -44' );
+		
+		sys.trigger ( $snl2_steam );
+		sys.waitFor ($snl2_shell1);
+		sys.waitFor ($snl2_shell2);
+		sys.waitFor ($snl2_shell3);
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	close shells for snail 2 
+	//
+	////////////////////////////////////////////////////
+	void close_snail2_shells()
+	{
+		$snl2_shell3.rotateOnce ( '0 0 132' );
+
+		sys.wait (.125);
+		$snl2_shell2.rotateOnce ( '0 0 88' );
+
+		sys.wait (.125);
+		$snl2_shell1.rotateOnce ( '0 0 44' );
+		
+		sys.trigger ( $snl2_steam );
+		sys.waitFor ($snl2_shell1);
+		sys.waitFor ($snl2_shell2);
+		sys.waitFor ($snl2_shell3);
+	}
+
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Snail machine 2 LOOP
+	//
+	////////////////////////////////////////////////////
+	void go_snail2()
+	{
+		float thread3, thread4;
+
+		while (1)
+		{
+			thread3 = thread open_snail2_shells ();
+			//Shells opening sound 1sec
+			sys.trigger ($snail2_shells_open_speaker);
+			sys.waitForThread( thread3 );
+
+			thread3 = thread move_snail2_connect1_up ();
+			thread4 = thread move_snail2_connect2_up ();
+			sys.waitForThread( thread3 );
+			sys.waitForThread( thread4 );
+
+			sys.wait(1);
+			
+			thread3 = thread move_snail2_connect1_down ();
+			thread4 = thread move_snail2_connect2_down ();
+			sys.waitForThread( thread3 );
+			sys.waitForThread( thread4 );
+
+			thread3 = thread close_snail2_shells ();
+			//Shells closing sound 1sec
+			sys.trigger ($snail2_shells_close_speaker);
+			sys.waitForThread( thread3 );
+
+			sys.wait(1);
+		}
+	}
+
+	
+
+	////////////////////////////////////////////////////
+	//
+	//	Make stuff red
+	//
+	////////////////////////////////////////////////////
+	void tored()
+	{
+		float i, t, v;
+		entity	ent;
+
+		//time for fade
+		float fadetime;fadetime=1.5;
+
+		// twopass .54 .81 1
+		thread crossFadeEnt( $laserlights_twopass_1, $laserlights_twopass_1.getColor(), '1 0 0', fadetime );
+		thread crossFadeEnt( $laserlights_twopass_2, $laserlights_twopass_1.getColor(), '1 0 0', fadetime );
+		sys.wait(.5);
+				
+		// white lights 1 1 1
+		for (i=1; i<=19; i++){
+			ent=sys.getEntity ("laserlights_white_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// grey lights .4 .42 .5
+		for (i=1; i<=7; i++){
+			ent=sys.getEntity ("laserlights_grey_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// darkgrey lights .27 .28 .31
+		for (i=1; i<=6; i++){
+			ent=sys.getEntity ("laserlights_darkgrey_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// yellow lights 1 .75 .50
+		for (i=1; i<=4; i++){
+			ent=sys.getEntity ("laserlights_yellow_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// smallblue textures 0 1 .96
+		for (i=1; i<=4; i++){
+			ent=sys.getEntity ("lasertex_smallblue_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// blue lights inside potty .15 1 .96
+		for (i=1; i<=8; i++){
+			ent=sys.getEntity ("laserlights_blue_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// door stuff .68 .75 .9
+		for (i=1; i<=6; i++){
+			ent=sys.getEntity ("laserdoor_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 0 0', fadetime );
+		}
+
+		// fog .09 .95 .98
+		thread crossFadeEnt( $laserlights_fog, $laserlights_fog.getColor(), '1 0 0', fadetime );
+
+		//white under lights
+		thread crossFadeEnt( $underlights_white, $underlights_white.getColor(), '1 0 0', fadetime );
+
+		//potty flare
+		thread crossFadeEnt( $potty_flare, $potty_flare.getColor(), '1 .2 0', fadetime );
+						
+		thread globalparm_1to0(1,fadetime);
+		thread globalparm_1to0(2,fadetime);
+
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Make stuff not red
+	//
+	////////////////////////////////////////////////////
+	void fromred()
+	{	
+		float i, t, v;
+		entity	ent;
+
+		//time for fade
+		float fadetime;fadetime=3;
+
+		// twopass .54 .81 1
+		thread crossFadeEnt( $laserlights_twopass_1, $laserlights_twopass_1.getColor(), '.54 .81 1', fadetime );
+		thread crossFadeEnt( $laserlights_twopass_2, $laserlights_twopass_1.getColor(), '.54 .81 1', fadetime );
+						
+		// white lights 1 1 1
+		for (i=1; i<=19; i++){
+			ent=sys.getEntity ("laserlights_white_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 1 1', fadetime );
+		}
+
+		// grey lights .4 .42 .5
+		for (i=1; i<=7; i++){
+			ent=sys.getEntity ("laserlights_grey_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '.4 .42 .5', fadetime );
+		}
+
+		// darkgrey lights .27 .28 .31
+		for (i=1; i<=6; i++){
+			ent=sys.getEntity ("laserlights_darkgrey_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '.27 .28 .31', fadetime );
+		}
+
+		// yellow lights 1 .75 .50
+		for (i=1; i<=4; i++){
+			ent=sys.getEntity ("laserlights_yellow_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '1 .75 .5', fadetime );
+		}
+
+		// smallblue textures 0 1 .96
+		for (i=1; i<=4; i++){
+			ent=sys.getEntity ("lasertex_smallblue_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '0 1 .96', fadetime );
+		}
+
+		// blue lights inside potty .15 1 .96
+		for (i=1; i<=8; i++){
+			ent=sys.getEntity ("laserlights_blue_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '.15 1 .96', fadetime );
+		}
+
+		// door stuff .68 .75 .9
+		for (i=1; i<=6; i++){
+			ent=sys.getEntity ("laserdoor_" + i);
+			thread crossFadeEnt( ent, ent.getColor(), '.68 .75 .9', fadetime );
+		}
+
+		// fog .09 .95 .98
+		thread crossFadeEnt( $laserlights_fog, $laserlights_fog.getColor(), '.09 .95 .98', fadetime );
+
+		//white under lights
+		thread crossFadeEnt( $underlights_white, $underlights_white.getColor(), '1 1 1', fadetime );
+
+		//potty flare
+		thread crossFadeEnt( $potty_flare, $potty_flare.getColor(), '0 0 0', fadetime );
+			
+		thread globalparm_0to1(1,fadetime);
+		thread globalparm_0to1(2,fadetime+1);
+
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	shaker1 movement
+	//
+	////////////////////////////////////////////////////
+	void shaker1_move()
+	{
+		$shaker1.time (.075);
+		
+		while(1){
+			$shaker1.rotateOnce ( '.4 .2 .2' );
+			sys.waitFor ($shaker1);
+			$shaker1.rotateOnce ( '-.4 -.2 -.2' );
+			sys.waitFor ($shaker1);
+					
+		}
+	}
+
+
+	
+	////////////////////////////////////////////////////
+	//
+	//	laser beam on 
+	//
+	////////////////////////////////////////////////////
+	void initial_spec()
+	{
+		//move the initial spec up
+		thread crossFadeEnt( $spec_mover_initial_light, $spec_mover_initial_light.getColor(), '1 1 1', .1 );
+		$spec_mover_initial.move ( UP, 384 );
+
+		//set the initial back to black and restore
+		sys.waitFor($spec_mover_initial);
+		thread crossFadeEnt( $spec_mover_initial_light, $spec_mover_initial_light.getColor(), '0 0 0', .001 );
+		$spec_mover_initial.restorePosition();
+	}
+
+	////////////////////////////////////////////////////
+	//
+	//	laser beam on 
+	//
+	////////////////////////////////////////////////////
+	void laserbeam_on()
+	{
+		sys.wait(1);
+
+		//set color of laser to red
+		thread crossFadeEnt( $laserbeam_emitter, $laserbeam_emitter.getColor(), '1 0 0', .1 );
+		thread crossFadeEnt( $laserbeam_target, $laserbeam_target.getColor(), '1 0 0', .1 );
+		thread crossFadeEnt( $lasertex_main, $lasertex_main.getColor(), '1 0 0', 1 );
+		sys.wait(.1);
+
+		//damage on
+		sys.trigger ($potty_damage);
+		sys.trigger ($laser_damage);
+
+		thread initial_spec(); 
+
+		//set color of laser so it'll show up
+		thread crossFadeEnt( $laserbeam_emitter, $laserbeam_emitter.getColor(), '1 .7 .3', 1 );
+		thread crossFadeEnt( $laserbeam_target, $laserbeam_target.getColor(), '1 .7 .3', 1 );
+
+		//turn particles on
+		//sys.trigger ($laserfire);
+		//sys.trigger ($laserembers);
+
+		
+	}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	laser beam off 
+	//
+	////////////////////////////////////////////////////
+	void laserbeam_off()
+	{
+		//set color of laser to red
+		thread crossFadeEnt( $laserbeam_emitter, $laserbeam_emitter.getColor(), '0 0 0', 1 );
+		thread crossFadeEnt( $laserbeam_target, $laserbeam_target.getColor(), '0 0 0', 1 );
+		thread crossFadeEnt( $lasertex_main, $lasertex_main.getColor(), '0 1 .96', 1 );
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	laser sat thing ramp up
+	//
+	////////////////////////////////////////////////////
+	void lasersat_rampup()
+	{
+		float i,v,t,blendtime,velmult;
+		vector rotvector;
+
+		blendtime = 10;
+		velmult = .5;
+
+		t = blendtime * 60;
+
+		for ( i = 10; i < t; i++ ) {
+			v = (i * velmult);
+			rotvector_x=0 ;rotvector_y=v ; rotvector_z=0;
+			$laser_sat.rotate ( rotvector );
+			sys.wait( 1 / 60 );
+		}
+	}
+
+	
+	////////////////////////////////////////////////////
+	//
+	//	laser sat thing ramp down
+	//
+	////////////////////////////////////////////////////
+	void lasersat_rampdown()
+	{
+		float i,v,t,blendtime,velmult;
+		vector rotvector;
+
+		blendtime = 8;
+		velmult = .5;
+
+		t = blendtime * 60;
+
+		for ( i = t; i > 10; i-- ) {
+			v = (i * velmult);
+			rotvector_x=0 ;rotvector_y=v ; rotvector_z=0;
+			$laser_sat.rotate ( rotvector );
+			sys.wait( 1 / 60 );
+		}
+	}
+
+	
+	
+	////////////////////////////////////////////////////
+	//
+	//	laser mechanical movement firing position
+	//
+	////////////////////////////////////////////////////
+	void lasermechanical_move_fire()
+	{
+		//lower pieces move in
+		$laser_bottom_right.move ( FORWARD, 64 );
+		$laser_bottom_left.move ( FORWARD, 64 );
+		//sys.waitFor ($laser_bottom_left);
+
+		//top pieces move in
+		$laser_top_right.rotateOnce ( '-7 0 0' );
+		$laser_top_left.rotateOnce ( '-7 0 0' );
+		//sys.waitFor ($laser_top_left);
+
+		//lower pieces angle in
+		//$laser_bottom_anc.rotateOnce ( '0 720 0' );
+		$laser_bottom_right.rotateOnce ( '10 0 0' );
+		$laser_bottom_left.rotateOnce ( '10 0 0' );
+		sys.waitFor ($laser_bottom_left);
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	laser mechanical movement relax position
+	//
+	////////////////////////////////////////////////////
+	void lasermechanical_move_relax()
+	{
+		$laser_bottom_right.time (3);
+		$laser_bottom_left.time (3);
+		$laser_bottom_right.accelTime (3);
+		$laser_bottom_right.decelTime (0);
+		$laser_bottom_left.accelTime (3);
+		$laser_bottom_left.decelTime (0);
+
+		$laser_top_right.time (3);
+		$laser_top_left.time (3);
+		$laser_top_right.accelTime (3);
+		$laser_top_right.decelTime (0);
+		$laser_top_left.accelTime (3);
+		$laser_top_left.decelTime (0);
+
+		//lower pieces angle in
+		//$laser_bottom_anc.rotateOnce ( '0 -720 0' );
+		$laser_bottom_right.rotateOnce ( '-10 0 0' );
+		$laser_bottom_left.rotateOnce ( '-10 0 0' );
+		//sys.waitFor ($laser_bottom_left);
+
+		//top pieces move in
+		$laser_top_right.rotateOnce ( '7 0 0' );
+		$laser_top_left.rotateOnce ( '7 0 0' );
+		//sys.waitFor ($laser_top_left);
+
+		//lower pieces move out
+		$laser_bottom_right.move ( BACK, 64 );
+		$laser_bottom_left.move ( BACK, 64 );
+		sys.waitFor ($laser_bottom_left);
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Laser Loop
+	//
+	////////////////////////////////////////////////////
+	void laser_loop()
+	{
+		$spec_mover_outer.time (2);
+
+		while (1)
+		{
+			//laser sat ramp up
+			sys.trigger ($laser_sat_rampup_speaker);
+			thread lasersat_rampup();
+
+			//wait time before next firing
+			sys.wait (8);
+
+			//start the laser parts firing movement
+			sys.trigger ($lasermechanical_move_fire_speaker);
+			thread lasermechanical_move_fire();
+			sys.wait (3);
+
+			//start the red
+			//laser is on at this point
+			sys.trigger ($laserbeam_on_speaker);
+			thread laserbeam_on();
+			thread tored();
+
+			//move the outer spec up 3 more times
+			sys.wait(1.5);
+			sys.trigger ($laser_spec_pulses_speaker);
+			$spec_mover_outer.move ( UP, 3800 );
+			sys.waitFor($spec_mover_outer);
+			$spec_mover_outer.restorePosition();
+
+			sys.trigger ($laser_spec_pulses_speaker);
+			$spec_mover_outer.move ( UP, 3800 );
+			sys.waitFor($spec_mover_outer);
+			$spec_mover_outer.restorePosition();
+
+			sys.trigger ($laser_spec_pulses_speaker);
+			$spec_mover_outer.move ( UP, 3800 );
+			sys.waitFor($spec_mover_outer);
+			$spec_mover_outer.restorePosition();
+
+			//turn back to normal
+			//laser goes off at this point
+			sys.trigger ($laser_rampdown_speaker);
+			thread fromred();
+
+			//laser sat ramp down
+			thread lasersat_rampdown();
+
+			//laser off
+			thread laserbeam_off();
+
+			//damage off
+			sys.trigger ($potty_damage);
+			sys.trigger ($laser_damage);
+
+			//restore the specs positions
+			$spec_mover_outer.restorePosition();
+
+			sys.wait (2);
+
+			//movement of the laser parts back to normal
+			sys.trigger ($lasermechanical_move_relax_speaker);
+			thread lasermechanical_move_relax();
+
+			//wait time before next firing
+			sys.wait (10);
+
+		}
+	}
+
+
+
+	////////////////////////////////////////////////////
+	//
+	//	MAIN
+	//
+	////////////////////////////////////////////////////
+	void main()
+	{
+		setup_objects();
+		sys.wait(5);
+		thread go_snail2();
+		thread laser_loop();
+		thread shaker1_move();
+	}
+
+
+
+
+
