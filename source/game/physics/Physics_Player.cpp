@@ -35,35 +35,35 @@ CLASS_DECLARATION( idPhysics_Actor, idPhysics_Player )
 END_CLASS
 
 // movement parameters
-const float PM_STOPSPEED		= 100.0f;
-const float PM_SWIMSCALE		= 0.5f;
-const float PM_LADDERSPEED		= 100.0f;
-const float PM_STEPSCALE		= 1.0f;
+const float PM_STOPSPEED        = 100.0f;
+const float PM_SWIMSCALE        = 0.5f;
+const float PM_LADDERSPEED      = 100.0f;
+const float PM_STEPSCALE        = 1.0f;
 
-const float PM_ACCELERATE		= 10.0f;
-const float PM_AIRACCELERATE	= 1.0f;
-const float PM_WATERACCELERATE	= 4.0f;
-const float PM_FLYACCELERATE	= 8.0f;
+const float PM_ACCELERATE       = 15.0f;  // Increase acceleration for quicker movement response
+const float PM_AIRACCELERATE    = 10.0f;  // Increase air acceleration for better air control
+const float PM_WATERACCELERATE  = 4.0f;
+const float PM_FLYACCELERATE    = 8.0f;
 
-const float PM_FRICTION			= 6.0f;
-const float PM_AIRFRICTION		= 0.0f;
-const float PM_WATERFRICTION	= 1.0f;
-const float PM_FLYFRICTION		= 3.0f;
-const float PM_NOCLIPFRICTION	= 12.0f;
+const float PM_FRICTION         = 4.0f;   // Decrease friction for smoother movement
+const float PM_AIRFRICTION      = 0.0f;
+const float PM_WATERFRICTION    = 1.0f;
+const float PM_FLYFRICTION      = 3.0f;
+const float PM_NOCLIPFRICTION   = 12.0f;
 
-const float MIN_WALK_NORMAL		= 0.7f;		// can't walk on very steep slopes
-const float OVERCLIP			= 1.001f;
+const float MIN_WALK_NORMAL     = 0.7f;   // can't walk on very steep slopes
+const float OVERCLIP            = 1.001f;
 
 // movementFlags
-const int PMF_DUCKED			= 1;		// set when ducking
-const int PMF_JUMPED			= 2;		// set when the player jumped this frame
-const int PMF_STEPPED_UP		= 4;		// set when the player stepped up this frame
-const int PMF_STEPPED_DOWN		= 8;		// set when the player stepped down this frame
-const int PMF_JUMP_HELD			= 16;		// set when jump button is held down
-const int PMF_TIME_LAND			= 32;		// movementTime is time before rejump
-const int PMF_TIME_KNOCKBACK	= 64;		// movementTime is an air-accelerate only time
-const int PMF_TIME_WATERJUMP	= 128;		// movementTime is waterjump
-const int PMF_ALL_TIMES			= (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK);
+const int PMF_DUCKED            = 1;      // set when ducking
+const int PMF_JUMPED            = 2;      // set when the player jumped this frame
+const int PMF_STEPPED_UP        = 4;      // set when the player stepped up this frame
+const int PMF_STEPPED_DOWN      = 8;      // set when the player stepped down this frame
+const int PMF_JUMP_HELD         = 16;     // set when jump button is held down
+const int PMF_TIME_LAND         = 32;     // movementTime is time before rejump
+const int PMF_TIME_KNOCKBACK    = 64;     // movementTime is an air-accelerate only time
+const int PMF_TIME_WATERJUMP    = 128;    // movementTime is waterjump
+const int PMF_ALL_TIMES         = (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK);
 
 int c_pmove = 0;
 
@@ -1499,13 +1499,13 @@ idPhysics_Player::idPhysics_Player( void ) {
 	debugLevel = false;
 	clipModel = NULL;
 	clipMask = 0;
-	memset( &current, 0, sizeof( current ) );
+	memset(&current, 0, sizeof(current));
 	saved = current;
 	walkSpeed = 0;
 	crouchSpeed = 0;
 	maxStepHeight = 0;
 	maxJumpHeight = 0;
-	memset( &command, 0, sizeof( command ) );
+	memset(&command, 0, sizeof(command));
 	viewAngles.Zero();
 	framemsec = 0;
 	frametime = 0;
@@ -1514,7 +1514,7 @@ idPhysics_Player::idPhysics_Player( void ) {
 	viewRight.Zero();
 	walking = false;
 	groundPlane = false;
-	memset( &groundTrace, 0, sizeof( groundTrace ) );
+	memset(&groundTrace, 0, sizeof(groundTrace));
 	groundMaterial = NULL;
 	ladder = false;
 	ladderNormal.Zero();
