@@ -55,6 +55,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{814ec515-028f-487e-88cf-664ee18eb499}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compilers\MtrBuild">
+      <UniqueIdentifier>{6d0acf95-e0f2-4d1f-b6c5-8231a099e1c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tools\af\DialogAF.cpp">
@@ -649,6 +652,9 @@
       <Filter>Decl</Filter>
     </ClCompile>
     <ClCompile Include="idlib\precompiled.cpp" />
+    <ClCompile Include="tools\compilers\mtrbuild\MtrBuild.cpp">
+      <Filter>Compilers\MtrBuild</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="tools\comafx\riched20.tlh">
