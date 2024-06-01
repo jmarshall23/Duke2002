@@ -238,7 +238,7 @@ glprog interaction
 			}
 
 			// Compute final color
-			gl_FragColor = primaryColor * Cl * NdotL * (Cd + spec * 2.0 * texture(specularImage, specularST));
+			gl_FragColor = primaryColor * Cl * NdotL * Cd;
 			gl_FragColor *= shadow;
 		}
 	}
