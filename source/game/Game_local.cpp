@@ -278,8 +278,9 @@ void idGameLocal::Init( void ) {
 	Printf( "gamedate: %s\n", __DATE__ );
 
 	// register game specific decl types
-	declManager->RegisterDeclType( "model",				DECL_MODELDEF,		idDeclAllocator<idDeclModelDef> );
-	declManager->RegisterDeclType( "export",			DECL_MODELEXPORT,	idDeclAllocator<idDecl> );
+	declManager->RegisterDeclType( "model",				DECL_MODELDEF,		 idDeclAllocator<idDeclModelDef> );
+	declManager->RegisterDeclType( "export",			DECL_MODELEXPORT,	 idDeclAllocator<idDecl> );
+	declManager->RegisterDeclType( "vertmodel",			DECL_VERTEXMODELDEF, idDeclAllocator<dnDeclVertexAnim>);
 
 	// register game specific decl folders
 	declManager->RegisterDeclFolder( "def",				".def",				DECL_ENTITYDEF );

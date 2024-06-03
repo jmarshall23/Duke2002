@@ -1,0 +1,10 @@
+material models/md3/v_mightyfoot/MightyFoot_0 {
+    diffusemap models/md3/v_mightyfoot/MightyFoot_0
+    bumpmap models/md3/v_mightyfoot/MightyFoot_0_normal.tga
+    specularmap models/md3/v_mightyfoot/MightyFoot_0_spec.tga
+}
+material models/md3/v_mightyfoot/MightyFoot_1 {
+    diffusemap models/md3/v_mightyfoot/MightyFoot_1
+    bumpmap models/md3/v_mightyfoot/MightyFoot_1_normal.tga
+    specularmap models/md3/v_mightyfoot/MightyFoot_1_spec.tga
+}

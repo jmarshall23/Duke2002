@@ -84,6 +84,8 @@ public:
 	virtual void				ReadFromDemoFile( class idDemoFile *f );
 	virtual void				WriteToDemoFile( class idDemoFile *f );
 	virtual float				DepthHack() const;
+	virtual jointHandle_t		FindTag(const char* tagName) { return INVALID_JOINT; }
+	virtual md3Tag_t*			GetTag(int tagId, int frame) { return nullptr; }
 
 	void						MakeDefaultModel();
 	
@@ -207,18 +209,25 @@ private:
 struct md3Header_s;
 struct md3Surface_s;
 
+class idRenderModelMD3Frame_t {
+public:
+	idList<md3Tag_t>				tags;
+};
+
 class idRenderModelMD3 : public idRenderModelStatic {
 public:
 	virtual void				InitFromFile( const char *fileName );
 	virtual dynamicModel_t		IsDynamicModel() const;
 	virtual idRenderModel *		InstantiateDynamicModel( const struct renderEntity_s *ent, const struct viewDef_s *view, idRenderModel *cachedModel );
 	virtual idBounds			Bounds( const struct renderEntity_s *ent ) const;
-
+	virtual jointHandle_t		FindTag(const char* tagName);
+	virtual md3Tag_t*			GetTag(int tagId, int frame);
 private:
 	int							index;			// model = tr.models[model->index]
 	int							dataSize;		// just for listing purposes
 	struct md3Header_s *		md3;			// only if type == MOD_MESH
 	int							numLods;
+	idList<idRenderModelMD3Frame_t> frames;
 
 	void						LerpMeshVertexes( srfTriangles_t *tri, const struct md3Surface_s *surf, const float backlerp, const int frame, const int oldframe ) const;
 };

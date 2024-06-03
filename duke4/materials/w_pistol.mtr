@@ -1,0 +1,5 @@
+material models/md3/w_pistol/w_pistol_0 {
+    diffusemap models/md3/w_pistol/w_pistol_0
+    bumpmap models/md3/w_pistol/w_pistol_0_normal.tga
+    specularmap models/md3/w_pistol/w_pistol_0_spec.tga
+}

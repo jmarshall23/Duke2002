@@ -553,6 +553,8 @@ public:
 	virtual bool			LockMemory( void *ptr, int bytes ) = 0;
 	virtual bool			UnlockMemory( void *ptr, int bytes ) = 0;
 
+	virtual int				GetMilliseconds(void) = 0;
+
 	virtual void			GetCallStack( address_t *callStack, const int callStackSize ) = 0;
 	virtual const char *	GetCallStackStr( const address_t *callStack, const int callStackSize ) = 0;
 	virtual const char *	GetCallStackCurStr( int depth ) = 0;

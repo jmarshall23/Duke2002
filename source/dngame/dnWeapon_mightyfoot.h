@@ -1,11 +1,11 @@
 #pragma once
 
-class idWeaponFists : public idWeaponBase {
+class dnWeaponMightyFoot : public idWeaponBase {
 public:
-	CLASS_PROTOTYPE(idWeaponFists);
+	CLASS_PROTOTYPE(dnWeaponMightyFoot);
 
-	idWeaponFists();
-	virtual ~idWeaponFists() = default;
+	dnWeaponMightyFoot();
+	virtual ~dnWeaponMightyFoot() = default;
 
 	virtual void Init(idWeapon* owner) override;
 

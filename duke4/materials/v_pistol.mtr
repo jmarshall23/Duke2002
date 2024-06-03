@@ -1,0 +1,20 @@
+material models/md3/v_pistol/Pistol_0 {
+    diffusemap models/md3/v_pistol/Pistol_0
+    bumpmap models/md3/v_pistol/Pistol_0_normal.tga
+    specularmap models/md3/v_pistol/Pistol_0_spec.tga
+}
+material models/md3/v_pistol/Pistol_1 {
+    diffusemap models/md3/v_pistol/Pistol_1
+    bumpmap models/md3/v_pistol/Pistol_1_normal.tga
+    specularmap models/md3/v_pistol/Pistol_1_spec.tga
+}
+material models/md3/v_pistol/Pistol_2 {
+    diffusemap models/md3/v_pistol/Pistol_2
+    bumpmap models/md3/v_pistol/Pistol_2_normal.tga
+    specularmap models/md3/v_pistol/Pistol_2_spec.tga
+}
+material models/md3/v_pistol/Pistol_3 {
+    diffusemap models/md3/v_pistol/Pistol_3
+    bumpmap models/md3/v_pistol/Pistol_3_normal.tga
+    specularmap models/md3/v_pistol/Pistol_3_spec.tga
+}

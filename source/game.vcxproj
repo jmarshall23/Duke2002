@@ -575,10 +575,6 @@
     <ClCompile Include="game\Trigger.cpp" />
     <ClCompile Include="game\Weapon.cpp" />
     <ClCompile Include="game\weapons\Weapon_base.cpp" />
-    <ClCompile Include="game\weapons\Weapon_fists.cpp" />
-    <ClCompile Include="game\weapons\Weapon_machinegun.cpp" />
-    <ClCompile Include="game\weapons\Weapon_pistol.cpp" />
-    <ClCompile Include="game\weapons\Weapon_shotgun.cpp" />
     <ClCompile Include="game\Weapon_script.cpp" />
     <ClCompile Include="game\WorldSpawn.cpp" />
     <ClCompile Include="idlib\precompiled.cpp">
@@ -663,10 +659,6 @@
     <ClInclude Include="game\Target.h" />
     <ClInclude Include="game\Trigger.h" />
     <ClInclude Include="game\Weapon.h" />
-    <ClInclude Include="game\weapons\Weapon_fists.h" />
-    <ClInclude Include="game\weapons\Weapon_machinegun.h" />
-    <ClInclude Include="game\weapons\Weapon_pistol.h" />
-    <ClInclude Include="game\weapons\Weapon_shotgun.h" />
     <ClInclude Include="game\WorldSpawn.h" />
   </ItemGroup>
   <ItemGroup>

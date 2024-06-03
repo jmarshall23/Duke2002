@@ -1,0 +1,85 @@
+/***********************************************************************
+
+	weapon_mightfoot.def
+
+***********************************************************************/
+
+vertmodel viewmodel_mightyfoot {
+	model					models/md3/v_mightyfoot/MightyFoot.md3
+	anim idle				0 1
+	anim idle_empty				0 1
+	anim aim				0 1
+	anim fire				28 46
+
+}
+
+entityDef weapon_mightyfoot {
+	"model_view" 				"viewmodel_mightyfoot"
+
+	"inv_name"					"Fists"
+	"inv_weapon"				"weapon_fists"
+	"icon"						"guis/assets/hud/wpn_12"
+
+	"g_gunx"				"0"
+	"g_guny"				"0"
+	"g_gunz"				"-30"
+
+	"nativeclass"				"dnWeaponMightyFoot"
+	"def_melee"					"damage_foot"
+	"melee_distance"			"48"
+	"ammoType"					""
+	"ammoRequired"				"0"
+	"clipSize"					"0"
+	"mtr_flashShader"			""
+	"flashColor"				""
+	"flashRadius"				"0"
+	"silent_fire"				"1"
+
+	"hide_time"					"0.3"								// time to hide weapon when talking to npcs or looking at guis
+	"hide_distance"				"-15"								// distance to offset weapon when talking to npcs or looking at guis
+
+	"impact_damage_effect"		"1"
+
+	"snd_acquire"				"guisounds_weapon"
+	"skin_invisible"			"skins/fists_invis"
+	
+	"stealing"					"1"					// this weapon steals other player weapon
+}
+
+
+entityDef damage_foot {
+	"damage"			"20"
+	"kickDir"			"-1 0 0"
+
+	"mtr_blob"			"genericDamage"
+	"blob_time"			"300"
+	"blob_size"			"400"
+	"blob_offset_x"		"400"
+
+	"knockback"			"20"
+	"push"				"20000"
+
+	"gib"				"1"
+	"smoke_wound_flesh"	"burstysquirt.prt"
+	"mtr_wound_flesh"	"textures/decals/hurt02"
+
+	"kick_time"			"400"
+	"kick_amplitude"	"1"
+
+	"dv_time"			"100"
+
+	"snd_metal"			"fist_impact"
+	"snd_ricochet"		"fist_impact"
+	"snd_flesh"			"fist_impact_flesh"
+	"snd_stone"			"fist_impact"
+	"snd_wood"			"fist_impact"
+	"snd_cardboard"		"fist_impact"
+	"snd_glass"			"fist_impact"
+	"snd_liquid"		"fist_impact"
+	"snd_plastic"		"fist_impact"
+	"snd_shatter"		"melee_impact_glass"	
+	
+	"snd_hit"			"fist_impact"
+	"snd_miss"			"fist_whoosh"		
+	"snd_hit_berserk"	"fist_gorepunch"
+}

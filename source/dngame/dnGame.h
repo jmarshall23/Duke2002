@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "dnAnim_vertex.h"
+
 //
 // dnGameLocal
 //

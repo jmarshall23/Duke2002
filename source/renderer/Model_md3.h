@@ -54,7 +54,6 @@ Private structures used by the MD3 loader.
 #define MD3_MAX_FRAMES		1024	// per model
 #define	MD3_MAX_SURFACES	32		// per model
 #define MD3_MAX_TAGS		16		// per frame
-#define MAX_MD3PATH			64		// from quake3
 
 // vertex scales
 #define	MD3_XYZ_SCALE		(1.0/64)
@@ -65,12 +64,6 @@ typedef struct md3Frame_s {
 	float		radius;
 	char		name[16];
 } md3Frame_t;
-
-typedef struct md3Tag_s {
-	char		name[MAX_MD3PATH];	// tag name
-	idVec3		origin;
-	idVec3		axis[3];
-} md3Tag_t;
 
 /*
 ** md3Surface_t

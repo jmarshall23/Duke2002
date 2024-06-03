@@ -1236,10 +1236,9 @@ void idClass::RegisterClasses(void)
 	REGISTER(dnWorldspawn)
 	REGISTER(idAI_Vagary)
 	REGISTER(idWeaponBase)
-	REGISTER(idWeaponFists)
-	REGISTER(idWeaponPistol)
-	REGISTER(idWeaponShotgun)
-	REGISTER(idWeaponMachinegun)
+	REGISTER(dnWeaponMightyFoot)
+	REGISTER(dnWeaponPistol)
+
 #undef REGISTER
 }
 

@@ -162,6 +162,12 @@ public:
 	const idMD5Joint *			parent;
 };
 
+#define MAX_MD3PATH				64		// from quake3
+typedef struct md3Tag_s {
+	char		name[MAX_MD3PATH];	// tag name
+	idVec3		origin;
+	idVec3		axis[3];
+} md3Tag_t;
 
 // the init methods may be called again on an already created model when
 // a reloadModels is issued
@@ -172,6 +178,12 @@ public:
 
 	// Loads static models only, dynamic models must be loaded by the modelManager
 	virtual void				InitFromFile( const char *fileName ) = 0;
+
+	// Returns the id for a tag index in a md3 mesh.
+	virtual jointHandle_t		FindTag(const char* tagName) = 0;
+
+	// Returns a md3 tag for a given tagid and frame. 
+	virtual md3Tag_t*			GetTag(int tagId, int frame) = 0;
 
 	// renderBump uses this to load the very high poly count models, skipping the
 	// shadow and tangent generation, along with some surface cleanup to make it load faster

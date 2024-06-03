@@ -264,12 +264,6 @@ typedef struct md3Frame_s {
 	char		name[16];
 } md3Frame_t;
 
-typedef struct md3Tag_s {
-	char		name[MAX_Q3PATH];	// tag name
-	idVec3		origin;
-	idVec3		axis[3];
-} md3Tag_t;
-
 /*
 ** md3Surface_t
 **

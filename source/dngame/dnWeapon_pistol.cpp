@@ -1,12 +1,12 @@
-// Weapon_pistol.cpp
+// dnWeaponPistol.cpp
 //
 
 #include "precompiled.h"
 #pragma hdrstop
 
-#include "../Game_local.h"
+#include "../game/Game_local.h"
 
-CLASS_DECLARATION(idWeaponBase, idWeaponPistol)
+CLASS_DECLARATION(idWeaponBase, dnWeaponPistol)
 END_CLASS
 
 #define PISTOL_FIRERATE         0.4f
@@ -23,41 +23,41 @@ END_CLASS
 
 /*
 =====================
-idWeaponPistol::idWeaponPistol
+dnWeaponPistol::dnWeaponPistol
 =====================
 */
-idWeaponPistol::idWeaponPistol() :
+dnWeaponPistol::dnWeaponPistol() :
 	next_attack(0), spread(0.0f) {
 }
 
 /*
 =====================
-idWeaponPistol::Init
+dnWeaponPistol::Init
 =====================
 */
-void idWeaponPistol::Init(idWeapon* owner) {
+void dnWeaponPistol::Init(idWeapon* owner) {
 	idWeaponBase::Init(owner);
 
 	next_attack = 0;
 	spread = owner->CurrentWeaponDef()->dict.GetFloat("spread");
-	ChangeState(&idWeaponPistol::State_Raise, 0);	
+	ChangeState(&dnWeaponPistol::State_Raise, 0);
 }
 
 /*
 =====================
-idWeaponPistol::InitStates
+dnWeaponPistol::InitStates
 =====================
 */
-void idWeaponPistol::InitStates() {
+void dnWeaponPistol::InitStates() {
 	// Initialize state transitions
 }
 
 /*
 =====================
-idWeaponPistol::State_Idle
+dnWeaponPistol::State_Idle
 =====================
 */
-void idWeaponPistol::State_Idle() {
+void dnWeaponPistol::State_Idle() {
 	float currentTime;
 	float ammoClip;
 	float clip_size;
@@ -73,7 +73,7 @@ void idWeaponPistol::State_Idle() {
 	}
 
 	if (WEAPON_LOWERWEAPON) {
-		ChangeState(&idWeaponPistol::State_Lower, PISTOL_IDLE_TO_LOWER);
+		ChangeState(&dnWeaponPistol::State_Lower, PISTOL_IDLE_TO_LOWER);
 		return;
 	}
 
@@ -81,12 +81,12 @@ void idWeaponPistol::State_Idle() {
 	ammoClip = owner->AmmoInClip();
 	if ((currentTime >= next_attack) && WEAPON_ATTACK) {
 		if (ammoClip > 0) {
-			ChangeState(&idWeaponPistol::State_Fire, PISTOL_IDLE_TO_FIRE);
+			ChangeState(&dnWeaponPistol::State_Fire, PISTOL_IDLE_TO_FIRE);
 		}
 		else if (owner->AmmoAvailable() > 0) {
 			if (owner->NativeEvent_AutoReload()) {
 				owner->NativeEvent_NetReload();
-				ChangeState(&idWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
+				ChangeState(&dnWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
 			}
 		}
 		return;
@@ -94,70 +94,70 @@ void idWeaponPistol::State_Idle() {
 
 	if (WEAPON_RELOAD && (owner->AmmoAvailable() > ammoClip) && (ammoClip < clip_size)) {
 		owner->NativeEvent_NetReload();
-		ChangeState(&idWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
+		ChangeState(&dnWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
 		return;
 	}
 
 	if (WEAPON_NETRELOAD) {
 		WEAPON_NETRELOAD = false;
-		ChangeState(&idWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
+		ChangeState(&dnWeaponPistol::State_Reload, PISTOL_IDLE_TO_RELOAD);
 		return;
 	}
 }
 
 /*
 =====================
-idWeaponPistol::State_Lower
+dnWeaponPistol::State_Lower
 =====================
 */
-void idWeaponPistol::State_Lower() {
+void dnWeaponPistol::State_Lower() {
 	owner->NativeEvent_WeaponLowering();
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "putaway");
-	ChangeState(&idWeaponPistol::State_Lower_WaitForAnim, 0);
+	ChangeState(&dnWeaponPistol::State_Lower_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponPistol::State_Lower_WaitForAnim
+dnWeaponPistol::State_Lower_WaitForAnim
 =====================
 */
-void idWeaponPistol::State_Lower_WaitForAnim() {
+void dnWeaponPistol::State_Lower_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, 0)) {
 		owner->NativeEvent_WeaponHolstered();
 		if (WEAPON_RAISEWEAPON) {
-			ChangeState(&idWeaponPistol::State_Raise, 0);
+			ChangeState(&dnWeaponPistol::State_Raise, 0);
 		}
 	}
 }
 
 /*
 =====================
-idWeaponPistol::State_Raise
+dnWeaponPistol::State_Raise
 =====================
 */
-void idWeaponPistol::State_Raise() {
+void dnWeaponPistol::State_Raise() {
 	owner->NativeEvent_WeaponRising();
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "raise");
-	ChangeState(&idWeaponPistol::State_Raise_WaitForAnim, 0);
+	ChangeState(&dnWeaponPistol::State_Raise_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponPistol::State_Raise_WaitForAnim
+dnWeaponPistol::State_Raise_WaitForAnim
 =====================
 */
-void idWeaponPistol::State_Raise_WaitForAnim() {
+void dnWeaponPistol::State_Raise_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, PISTOL_RAISE_TO_IDLE)) {
-		ChangeState(&idWeaponPistol::State_Idle, PISTOL_RAISE_TO_IDLE);
+		ChangeState(&dnWeaponPistol::State_Idle, PISTOL_RAISE_TO_IDLE);
 	}
 }
 
 /*
 =====================
-idWeaponPistol::State_Fire
+dnWeaponPistol::State_Fire
 =====================
 */
-void idWeaponPistol::State_Fire() {
+void dnWeaponPistol::State_Fire() {
 	float ammoClip;
 
 	next_attack = gameLocal.time + PISTOL_FIRERATE;
@@ -169,39 +169,39 @@ void idWeaponPistol::State_Fire() {
 
 	owner->NativeEvent_LaunchProjectiles(PISTOL_NUMPROJECTILES, spread, 0, 1.0f, 1.0f);
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "fire");
-	ChangeState(&idWeaponPistol::State_Fire_WaitForAnim, 0);
+	ChangeState(&dnWeaponPistol::State_Fire_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponPistol::State_Fire_WaitForAnim
+dnWeaponPistol::State_Fire_WaitForAnim
 =====================
 */
-void idWeaponPistol::State_Fire_WaitForAnim() {
+void dnWeaponPistol::State_Fire_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, PISTOL_FIRE_TO_IDLE)) {
-		ChangeState(&idWeaponPistol::State_Idle, PISTOL_FIRE_TO_IDLE);
+		ChangeState(&dnWeaponPistol::State_Idle, PISTOL_FIRE_TO_IDLE);
 	}
 }
 
 /*
 =====================
-idWeaponPistol::State_Reload
+dnWeaponPistol::State_Reload
 =====================
 */
-void idWeaponPistol::State_Reload() {
+void dnWeaponPistol::State_Reload() {
 	owner->NativeEvent_WeaponReloading();
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "reload");
-	ChangeState(&idWeaponPistol::State_Reload_WaitForAnim, 0);
+	ChangeState(&dnWeaponPistol::State_Reload_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponPistol::State_Reload_WaitForAnim
+dnWeaponPistol::State_Reload_WaitForAnim
 =====================
 */
-void idWeaponPistol::State_Reload_WaitForAnim() {
+void dnWeaponPistol::State_Reload_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, PISTOL_RELOAD_TO_IDLE)) {
 		owner->NativeEvent_AddToClip(owner->NativeEvent_ClipSize());
-		ChangeState(&idWeaponPistol::State_Idle, PISTOL_RELOAD_TO_IDLE);
+		ChangeState(&dnWeaponPistol::State_Idle, PISTOL_RELOAD_TO_IDLE);
 	}
 }

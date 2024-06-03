@@ -106,10 +106,8 @@ ID_INLINE void idWeaponBase::ChangeState(void (T::* newState)(), int blendFrames
 	StateChangedEvent();
 }
 
-#include "weapons/Weapon_fists.h"
-#include "weapons/Weapon_pistol.h"
-#include "weapons/Weapon_shotgun.h"
-#include "weapons/Weapon_machinegun.h"
+#include "../dngame/dnWeapon_mightyfoot.h"
+#include "../dngame/dnWeapon_pistol.h"
 
 typedef enum {
 	WP_READY,
@@ -130,7 +128,7 @@ static const int LIGHTID_VIEW_MUZZLE_FLASH = 100;
 
 class idMoveableItem;
 
-class idWeapon : public idAnimatedEntity {
+class idWeapon : public idEntity {
 public:
 	friend class idWeaponBase;
 
@@ -452,6 +450,9 @@ protected:
 	void					Event_NetReload( void );
 	void					Event_IsInvisible( void );
 	void					Event_NetEndReload( void );
+
+private:
+	dnVertexAnimator		animator;
 };
 
 ID_INLINE bool idWeapon::IsWorldModelReady( void ) {

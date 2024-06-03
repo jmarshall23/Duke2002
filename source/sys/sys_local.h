@@ -42,6 +42,8 @@ public:
 	virtual void			DebugPrintf( const char *fmt, ... )id_attribute((format(printf,2,3)));
 	virtual void			DebugVPrintf( const char *fmt, va_list arg );
 
+	virtual int				GetMilliseconds(void) { return Sys_Milliseconds(); }
+
 	virtual double			GetClockTicks( void );
 	virtual double			ClockTicksPerSecond( void );
 	virtual cpuid_t			GetProcessorId( void );

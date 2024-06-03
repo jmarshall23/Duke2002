@@ -59,6 +59,8 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 	int					version;
 	int					size;
 
+	idStr modelPath = fileName;
+	modelPath.StripFilename();
 
 	name = fileName;
 
@@ -112,14 +114,22 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 
 	// swap all the tags
     tag = (md3Tag_t *) ( (byte *)md3 + md3->ofsTags );
-    for ( i = 0 ; i < md3->numTags * md3->numFrames ; i++, tag++) {
-        for ( j = 0 ; j < 3 ; j++ ) {
-			tag->origin[j] = LittleFloat( tag->origin[j] );
-			tag->axis[0][j] = LittleFloat( tag->axis[0][j] );
-			tag->axis[1][j] = LittleFloat( tag->axis[1][j] );
-			tag->axis[2][j] = LittleFloat( tag->axis[2][j] );
-        }
+
+	for (int d = 0; d < md3->numFrames; d++)
+	{
+		idRenderModelMD3Frame_t newFrame;
+		for (i = 0; i < md3->numTags; i++, tag++) {			
+			for (j = 0; j < 3; j++) {
+				tag->origin[j] = LittleFloat(tag->origin[j]);
+				tag->axis[0][j] = LittleFloat(tag->axis[0][j]);
+				tag->axis[1][j] = LittleFloat(tag->axis[1][j]);
+				tag->axis[2][j] = LittleFloat(tag->axis[2][j]);
+			}
+			newFrame.tags.Append(*tag);
+		}
+		frames.Append(newFrame);
 	}
+    
 
 	// swap all the surfaces
 	surf = (md3Surface_t *) ( (byte *)md3 + md3->ofsSurfaces );
@@ -166,8 +176,11 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
         shader = (md3Shader_t *) ( (byte *)surf + surf->ofsShaders );
         for ( j = 0 ; j < surf->numShaders ; j++, shader++ ) {
             const idMaterial *sh;
+			idStr shaderName = modelPath;
+			shaderName += "/";
+			shaderName += shader->name;
 
-            sh = declManager->FindMaterial( shader->name );
+            sh = declManager->FindMaterial(shaderName);
 			shader->shader = sh;
         }
 
@@ -207,6 +220,52 @@ void idRenderModelMD3::InitFromFile( const char *fileName ) {
 
 /*
 =================
+idRenderModelMD3::FindTag
+=================
+*/
+jointHandle_t idRenderModelMD3::FindTag(const char* tagName) {
+	if (frames.Num() <= 0)
+		return INVALID_JOINT;
+
+	if (frames[0].tags.Num() <= 0) {
+		return INVALID_JOINT;
+	}
+
+	for (int i = 0; i < frames[0].tags.Num(); i++) {
+		if (!strcmp(frames[0].tags[i].name, name)) {
+			return (jointHandle_t)i;
+		}
+	}
+
+	return INVALID_JOINT;
+}
+
+/*
+=================
+idRenderModelMD3::GetTag
+=================
+*/
+md3Tag_t* idRenderModelMD3::GetTag(int tagId, int frame) {
+	if (frames.Num() <= 0)
+		return nullptr;
+
+	if (frames[0].tags.Num() <= 0) {
+		return nullptr;
+	}
+
+	if (frame >= frames.Num()) {
+		return nullptr;
+	}
+
+	if (tagId >= frames[0].tags.Num()) {
+		return nullptr;
+	}
+
+	return &frames[frame].tags[tagId];
+}
+
+/*
+=================
 idRenderModelMD3::IsDynamicModel
 =================
 */
@@ -237,13 +296,11 @@ void idRenderModelMD3::LerpMeshVertexes ( srfTriangles_t *tri, const struct md3S
 		//
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++, newXyz += 4 ) {
 
-			idDrawVert *outvert = &tri->verts[tri->numVerts];
+			idDrawVert *outvert = &tri->verts[vertNum];
 
 			outvert->xyz.x = newXyz[0] * newXyzScale;
 			outvert->xyz.y = newXyz[1] * newXyzScale;
 			outvert->xyz.z = newXyz[2] * newXyzScale;
-
-			tri->numVerts++;
 		}
 	} else {
 		//
@@ -255,14 +312,12 @@ void idRenderModelMD3::LerpMeshVertexes ( srfTriangles_t *tri, const struct md3S
 
 		for (vertNum=0 ; vertNum < numVerts ; vertNum++, oldXyz += 4, newXyz += 4 ) {
 
-			idDrawVert *outvert = &tri->verts[tri->numVerts];
+			idDrawVert *outvert = &tri->verts[vertNum];
 
 			// interpolate the xyz
 			outvert->xyz.x = oldXyz[0] * oldXyzScale + newXyz[0] * newXyzScale;
 			outvert->xyz.y = oldXyz[1] * oldXyzScale + newXyz[1] * newXyzScale;
 			outvert->xyz.z = oldXyz[2] * oldXyzScale + newXyz[2] * newXyzScale;
-
-			tri->numVerts++;
 		}
    	}
 }
@@ -277,8 +332,6 @@ idRenderModel *idRenderModelMD3::InstantiateDynamicModel( const struct renderEnt
 	float			backlerp;
 	int *			triangles;
 	float *			texCoords;
-	int				indexes;
-	int				numVerts;
 	md3Surface_t *	surface;
 	int				frame, oldframe;
 	idRenderModelStatic	*staticModel;
@@ -298,6 +351,13 @@ idRenderModel *idRenderModelMD3::InstantiateDynamicModel( const struct renderEnt
 	oldframe = ent->shaderParms[SHADERPARM_MD3_LASTFRAME];
 	backlerp = ent->shaderParms[SHADERPARM_MD3_BACKLERP];
 
+	if (frame >= md3->numFrames || frame < 0 || oldframe < 0 || oldframe >= md3->numFrames || backlerp > 1 || backlerp < 0) {
+		common->Warning("idRenderModelMD3::InstantiateDynamicModel: Numframes out of range, defaulting!\n");
+		frame = 0;
+		oldframe = 0;
+		backlerp = 0;
+	}
+
 	for( i = 0; i < md3->numSurfaces; i++ ) {
 
 		srfTriangles_t *tri = R_AllocStaticTriSurf();
@@ -305,8 +365,12 @@ idRenderModel *idRenderModelMD3::InstantiateDynamicModel( const struct renderEnt
 		R_AllocStaticTriSurfIndexes( tri, surface->numTriangles * 3 );
 		tri->bounds.Clear();
 
+		tri->numVerts = surface->numVerts;
+		tri->numIndexes = surface->numTriangles * 3;
+
 		modelSurface_t	surf;
 
+		surf.id = i;
 		surf.geometry = tri;
 
 		md3Shader_t* shaders = (md3Shader_t *) ((byte *)surface + surface->ofsShaders);
@@ -315,16 +379,23 @@ idRenderModel *idRenderModelMD3::InstantiateDynamicModel( const struct renderEnt
 		LerpMeshVertexes( tri, surface, backlerp, frame, oldframe );
 
 		triangles = (int *) ((byte *)surface + surface->ofsTriangles);
-		indexes = surface->numTriangles * 3;
-		for (j = 0 ; j < indexes ; j++) {
-			tri->indexes[j] = triangles[j];
+		memset(tri->indexes, 0, sizeof(int) * tri->numIndexes);
+		int indexId = 0;
+		for (j = 0 ; j < tri->numIndexes; j+=3) {			
+			if (tri->indexes[j + 0] >= tri->numVerts || tri->indexes[j + 1] >= tri->numVerts || tri->indexes[j + 2] >= tri->numVerts)
+			{
+				continue;
+			}
+
+			tri->indexes[indexId + 2] = triangles[j];
+			tri->indexes[indexId + 1] = triangles[j + 1];
+			tri->indexes[indexId + 0] = triangles[j + 2];
+
+			indexId += 3;
 		}
-		tri->numIndexes += indexes;
 
 		texCoords = (float *) ((byte *)surface + surface->ofsSt);
-
-		numVerts = surface->numVerts;
-		for ( j = 0; j < numVerts; j++ ) {
+		for ( j = 0; j < tri->numVerts; j++ ) {
 			idDrawVert *stri = &tri->verts[j];
 			stri->st[0] = texCoords[j*2+0];
 			stri->st[1] = texCoords[j*2+1];

@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dngame\dnAnim_vertex.cpp" />
     <ClCompile Include="dngame\dnGame_local.cpp" />
+    <ClCompile Include="dngame\dnWeapon_mightyfoot.cpp" />
+    <ClCompile Include="dngame\dnWeapon_pistol.cpp" />
     <ClCompile Include="dngame\dnWorldSpawn.cpp" />
     <ClCompile Include="idlib\precompiled.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">precompiled.h</PrecompiledHeaderFile>
@@ -33,8 +36,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dngame\dnAnim_vertex.h" />
     <ClInclude Include="dngame\dnGame.h" />
     <ClInclude Include="dngame\dnGame_local.h" />
+    <ClInclude Include="dngame\dnWeapon_mightyfoot.h" />
+    <ClInclude Include="dngame\dnWeapon_pistol.h" />
     <ClInclude Include="dngame\dnWorldSpawn.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

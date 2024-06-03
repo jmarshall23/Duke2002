@@ -1,13 +1,13 @@
 #pragma once
 
-class idWeaponPistol : public idWeaponBase {
+class dnWeaponPistol : public idWeaponBase {
 public:
-	CLASS_PROTOTYPE(idWeaponPistol);
+	CLASS_PROTOTYPE(dnWeaponPistol);
 
-	idWeaponPistol();
-	virtual ~idWeaponPistol() = default;
+	dnWeaponPistol();
+	virtual ~dnWeaponPistol() = default;
 
-	virtual void Init(idWeapon *owner) override;
+	virtual void Init(idWeapon* owner) override;
 
 protected:
 	void InitStates() override;

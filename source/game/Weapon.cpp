@@ -483,6 +483,10 @@ void idWeapon::Clear( void ) {
 	renderEntity.shaderParms[6] = 0.0f;
 	renderEntity.shaderParms[7] = 0.0f;
 
+	renderEntity.shaderParms[SHADERPARM_MD3_FRAME] = 0;
+	renderEntity.shaderParms[SHADERPARM_MD3_LASTFRAME] = 0;
+	renderEntity.shaderParms[SHADERPARM_MD3_BACKLERP] = 0;
+
 	if ( refSound.referenceSound ) {
 		refSound.referenceSound->Free( true );
 	}
@@ -587,7 +591,7 @@ void idWeapon::Clear( void ) {
 
 	allowDrop			= true;
 
-	animator.ClearAllAnims( gameLocal.time, 0 );
+	animator.ClearAllAnims();
 	FreeModelDef();
 
 	sndHum				= NULL;
@@ -1053,16 +1057,11 @@ void idWeapon::SetModel( const char *modelname ) {
 		gameRenderWorld->RemoveDecals( modelDefHandle );
 	}
 
-	renderEntity.hModel = animator.SetModel( modelname );
-	if ( renderEntity.hModel ) {
-		renderEntity.customSkin = animator.ModelDef()->GetDefaultSkin();
-		animator.GetJoints( &renderEntity.numJoints, &renderEntity.joints );
-	} else {
-		renderEntity.customSkin = NULL;
-		renderEntity.callback = NULL;
-		renderEntity.numJoints = 0;
-		renderEntity.joints = NULL;
-	}
+	renderEntity.hModel = animator.SetModel(modelname);
+	renderEntity.customSkin = NULL;
+	renderEntity.callback = NULL;
+	renderEntity.numJoints = 0;
+	renderEntity.joints = NULL;
 
 	// hide the model until an animation is played
 	Hide();
@@ -1078,7 +1077,7 @@ This returns the offset and axis of a weapon bone in world space, suitable for a
 bool idWeapon::GetGlobalJointTransform( bool viewModel, const jointHandle_t jointHandle, idVec3 &offset, idMat3 &axis ) {
 	if ( viewModel ) {
 		// view model
-		if ( animator.GetJointTransform( jointHandle, gameLocal.time, offset, axis ) ) {
+		if ( animator.GetJointTransform( jointHandle, offset, axis ) ) {
 			offset = offset * viewWeaponAxis + viewWeaponOrigin;
 			axis = axis * viewWeaponAxis;
 			return true;
@@ -1120,6 +1119,11 @@ idWeapon::Think
 void idWeapon::Think( void ) {
 	scriptWeapon->Update();
 	scriptWeapon->WEAPON_RELOAD = false;
+
+	// set the render entity frames.
+	renderEntity.shaderParms[SHADERPARM_MD3_FRAME] = animator.GetCurrentFrame();
+	renderEntity.shaderParms[SHADERPARM_MD3_LASTFRAME] = animator.GetLastFrame();
+	renderEntity.shaderParms[SHADERPARM_MD3_BACKLERP] = animator.GetBacklerp();
 }
 
 /*
@@ -1667,7 +1671,7 @@ void idWeapon::PresentWeapon( bool showViewModel ) {
 	UpdateGUI();
 
 	// update animation
-	UpdateAnimation();
+	animator.Update();
 
 	// only show the surface in player view
 	renderEntity.allowSurfaceInViewID = owner->entityNumber+1;
@@ -2076,7 +2080,7 @@ idWeapon::ClientPredictionThink
 ===============
 */
 void idWeapon::ClientPredictionThink( void ) {
-	UpdateAnimation();	
+	animator.Update();
 }
 
 void idWeapon::NativeEvent_Clear() {
@@ -2162,55 +2166,15 @@ void idWeapon::NativeEvent_NetEndReload() {
 }
 
 void idWeapon::NativeEvent_PlayAnim(int channel, const char* animname) {
-	int anim;
-
-	anim = animator.GetAnim(animname);
-	if (!anim) {
-		gameLocal.Warning("missing '%s' animation on '%s' (%s)", animname, name.c_str(), GetEntityDefName());
-		animator.Clear(channel, gameLocal.time, FRAME2MS(animBlendFrames));
-		animDoneTime = 0;
-	}
-	else {
-		if (!(owner && owner->GetInfluenceLevel())) {
-			Show();
-		}
-		animator.PlayAnim(channel, anim, gameLocal.time, FRAME2MS(animBlendFrames));
-		animDoneTime = animator.CurrentAnim(channel)->GetEndTime();
-		if (worldModel.GetEntity()) {
-			anim = worldModel.GetEntity()->GetAnimator()->GetAnim(animname);
-			if (anim) {
-				worldModel.GetEntity()->GetAnimator()->PlayAnim(channel, anim, gameLocal.time, FRAME2MS(animBlendFrames));
-			}
-		}
-	}
-	animBlendFrames = 0;
+	animator.PlayAnim(animname, false);
 }
 
 void idWeapon::NativeEvent_PlayCycle(int channel, const char* animname) {
-	int anim;
-
-	anim = animator.GetAnim(animname);
-	if (!anim) {
-		gameLocal.Warning("missing '%s' animation on '%s' (%s)", animname, name.c_str(), GetEntityDefName());
-		animator.Clear(channel, gameLocal.time, FRAME2MS(animBlendFrames));
-		animDoneTime = 0;
-	}
-	else {
-		if (!(owner && owner->GetInfluenceLevel())) {
-			Show();
-		}
-		animator.CycleAnim(channel, anim, gameLocal.time, FRAME2MS(animBlendFrames));
-		animDoneTime = animator.CurrentAnim(channel)->GetEndTime();
-		if (worldModel.GetEntity()) {
-			anim = worldModel.GetEntity()->GetAnimator()->GetAnim(animname);
-			worldModel.GetEntity()->GetAnimator()->CycleAnim(channel, anim, gameLocal.time, FRAME2MS(animBlendFrames));
-		}
-	}
-	animBlendFrames = 0;
+	animator.PlayAnim(animname, true);
 }
 
 bool idWeapon::NativeEvent_AnimDone(int channel, int blendFrames) {
-	return animDoneTime - FRAME2MS(blendFrames) <= gameLocal.time;
+	return animator.IsAnimDone();
 }
 
 void idWeapon::NativeEvent_SetBlendFrames(int blendFrames) {
@@ -2527,7 +2491,7 @@ bool idWeapon::NativeEvent_Melee() {
 				else {
 					int type = tr.c.material->GetSurfaceType();
 					if (type == SURFTYPE_NONE) {
-						type = GetDefaultSurfaceType();
+						type = SURFTYPE_METAL;
 					}
 					const char* materialType = gameLocal.sufaceTypeNames[type];
 					hitSound = meleeDef->dict.GetString(va("snd_%s", materialType));

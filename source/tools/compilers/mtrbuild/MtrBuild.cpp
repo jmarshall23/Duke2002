@@ -251,7 +251,7 @@ void dnSaveMTRFile(const char* folderPath, const idList<idStr>& processedFiles) 
 	for (int i = 0; i < processedFiles.Num(); ++i) {
 		idStr albedoPath = processedFiles[i];
 		idStr normalPath = va("%s_normal.tga", albedoPath.c_str());
-		idStr specularPath = va("%s_specular.tga", albedoPath.c_str());
+		idStr specularPath = va("%s_spec.tga", albedoPath.c_str());
 
 		mtrFile->Printf("material %s {\n", albedoPath.c_str());
 		mtrFile->Printf("    diffusemap %s\n", albedoPath.c_str());

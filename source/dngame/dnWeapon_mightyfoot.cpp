@@ -4,9 +4,9 @@
 #include "precompiled.h"
 #pragma hdrstop
 
-#include "../Game_local.h"
+#include "../game/Game_local.h"
 
-CLASS_DECLARATION(idWeaponBase, idWeaponFists)
+CLASS_DECLARATION(idWeaponBase, dnWeaponMightyFoot)
 END_CLASS
 
 // blend times
@@ -17,134 +17,134 @@ END_CLASS
 
 /*
 =====================
-idWeaponFists::idWeaponFists
+dnWeaponMightyFoot::dnWeaponMightyFoot
 =====================
 */
-idWeaponFists::idWeaponFists() : side(0) {
+dnWeaponMightyFoot::dnWeaponMightyFoot() : side(0) {
 }
 
 /*
 =====================
-idWeaponFists::Init
+dnWeaponMightyFoot::Init
 =====================
 */
-void idWeaponFists::Init(idWeapon* owner) {
+void dnWeaponMightyFoot::Init(idWeapon* owner) {
 	idWeaponBase::Init(owner);
-	ChangeState(&idWeaponFists::State_Raise, 0);
+	ChangeState(&dnWeaponMightyFoot::State_Raise, 0);
 }
 
 /*
 =====================
-idWeaponFists::InitStates
+dnWeaponMightyFoot::InitStates
 =====================
 */
-void idWeaponFists::InitStates() {
+void dnWeaponMightyFoot::InitStates() {
 	// Initialize state transitions
 }
 
 /*
 =====================
-idWeaponFists::State_Idle
+dnWeaponMightyFoot::State_Idle
 =====================
 */
-void idWeaponFists::State_Idle() {
+void dnWeaponMightyFoot::State_Idle() {
 	owner->NativeEvent_WeaponReady();
 	owner->NativeEvent_PlayCycle(ANIMCHANNEL_ALL, "idle");
 
 	if (WEAPON_LOWERWEAPON) {
-		ChangeState(&idWeaponFists::State_Lower, FISTS_IDLE_TO_LOWER);
+		ChangeState(&dnWeaponMightyFoot::State_Lower, FISTS_IDLE_TO_LOWER);
 		return;
 	}
 	if (WEAPON_ATTACK) {
-		ChangeState(&idWeaponFists::State_Punch, FISTS_IDLE_TO_PUNCH);
+		ChangeState(&dnWeaponMightyFoot::State_Punch, FISTS_IDLE_TO_PUNCH);
 		return;
 	}
 }
 
 /*
 =====================
-idWeaponFists::State_Lower
+dnWeaponMightyFoot::State_Lower
 =====================
 */
-void idWeaponFists::State_Lower() {
+void dnWeaponMightyFoot::State_Lower() {
 	owner->NativeEvent_WeaponLowering();
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "putaway");
-	ChangeState(&idWeaponFists::State_Lower_WaitForAnim, 0);
+	ChangeState(&dnWeaponMightyFoot::State_Lower_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponFists::State_Lower_WaitForAnim
+dnWeaponMightyFoot::State_Lower_WaitForAnim
 =====================
 */
-void idWeaponFists::State_Lower_WaitForAnim() {
+void dnWeaponMightyFoot::State_Lower_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, 0)) {
 		owner->NativeEvent_WeaponHolstered();
 		if (WEAPON_RAISEWEAPON) {
-			ChangeState(&idWeaponFists::State_Raise, 0);
+			ChangeState(&dnWeaponMightyFoot::State_Raise, 0);
 		}
 	}
 }
 
 /*
 =====================
-idWeaponFists::State_Raise
+dnWeaponMightyFoot::State_Raise
 =====================
 */
-void idWeaponFists::State_Raise() {
+void dnWeaponMightyFoot::State_Raise() {
 	owner->NativeEvent_WeaponRising();
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, "raise");
-	ChangeState(&idWeaponFists::State_Raise_WaitForAnim, 0);
+	ChangeState(&dnWeaponMightyFoot::State_Raise_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponFists::State_Raise_WaitForAnim
+dnWeaponMightyFoot::State_Raise_WaitForAnim
 =====================
 */
-void idWeaponFists::State_Raise_WaitForAnim() {
+void dnWeaponMightyFoot::State_Raise_WaitForAnim() {
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, FISTS_RAISE_TO_IDLE)) {
-		ChangeState(&idWeaponFists::State_Idle, FISTS_RAISE_TO_IDLE);
+		ChangeState(&dnWeaponMightyFoot::State_Idle, FISTS_RAISE_TO_IDLE);
 	}
 }
 
 /*
 =====================
-idWeaponFists::State_Punch
+dnWeaponMightyFoot::State_Punch
 =====================
 */
-void idWeaponFists::State_Punch() {
+void dnWeaponMightyFoot::State_Punch() {
 	owner->NativeEvent_PlayAnim(ANIMCHANNEL_ALL, GetFireAnim());
-	ChangeState(&idWeaponFists::State_Punch_WaitForAnim, 0);
+	ChangeState(&dnWeaponMightyFoot::State_Punch_WaitForAnim, 0);
 }
 
 /*
 =====================
-idWeaponFists::State_Punch_WaitForAnim
+dnWeaponMightyFoot::State_Punch_WaitForAnim
 =====================
 */
-void idWeaponFists::State_Punch_WaitForAnim() {
+void dnWeaponMightyFoot::State_Punch_WaitForAnim() {
 	// Assuming `sys.wait(0.1)` is equivalent to some kind of delay or waiting mechanism.
 	if (owner->NativeEvent_AnimDone(ANIMCHANNEL_ALL, FISTS_PUNCH_TO_IDLE)) {
 		side = !side;
-		ChangeState(&idWeaponFists::State_Idle, FISTS_PUNCH_TO_IDLE);
+		ChangeState(&dnWeaponMightyFoot::State_Idle, FISTS_PUNCH_TO_IDLE);
 	}
 }
 
 /*
 =====================
-idWeaponFists::ExitCinematic
+dnWeaponMightyFoot::ExitCinematic
 =====================
 */
-void idWeaponFists::ExitCinematic() {
-	ChangeState(&idWeaponFists::State_Idle, 0);
+void dnWeaponMightyFoot::ExitCinematic() {
+	ChangeState(&dnWeaponMightyFoot::State_Idle, 0);
 }
 
 /*
 =====================
-idWeaponFists::GetFireAnim
+dnWeaponMightyFoot::GetFireAnim
 =====================
 */
-idStr idWeaponFists::GetFireAnim() {
-	return side ? "punch_left" : "punch_right";
+idStr dnWeaponMightyFoot::GetFireAnim() {
+	return "fire";
 }

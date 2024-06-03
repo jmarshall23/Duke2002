@@ -7095,6 +7095,25 @@ void idPlayer::CalculateViewWeaponPos( idVec3 &origin, idMat3 &axis ) {
 
 	// these cvars are just for hand tweaking before moving a value to the weapon def
 	idVec3	gunpos( g_gun_x.GetFloat(), g_gun_y.GetFloat(), g_gun_z.GetFloat() );
+	if (weapon.GetEntity()->IsLinked() && weapon.GetEntity()->CurrentWeaponDef() != NULL)
+	{
+		const idDeclEntityDef* weaponDef = weapon.GetEntity()->CurrentWeaponDef();
+
+		if (gunpos.x == 0.0f)
+		{
+			gunpos.x = weaponDef->dict.GetInt("g_gunx");
+		}
+
+		if (gunpos.y == 0.0f)
+		{
+			gunpos.y = weaponDef->dict.GetInt("g_guny");
+		}
+
+		if (gunpos.z == 0.0f)
+		{
+			gunpos.z = weaponDef->dict.GetInt("g_gunz");
+		}
+	}
 
 	// as the player changes direction, the gun will take a small lag
 	idVec3	gunOfs = GunAcceleratingOffset();

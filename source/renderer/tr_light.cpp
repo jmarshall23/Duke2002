@@ -997,7 +997,7 @@ idRenderModel *R_EntityDefDynamicModel( idRenderEntityLocal *def ) {
 	}
 
 	// if we don't have a snapshot of the dynamic model, generate it now
-	if ( !def->dynamicModel ) {
+	if ( !def->dynamicModel || (def->dynamicModel && def->dynamicModel->NumSurfaces() == 0)) {
 
 		// instantiate the snapshot of the dynamic model, possibly reusing memory from the cached snapshot
 		def->cachedDynamicModel = model->InstantiateDynamicModel( &def->parms, tr.viewDef, def->cachedDynamicModel );

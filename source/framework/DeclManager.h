@@ -82,6 +82,7 @@ typedef enum {
 	DECL_MAPDEF,
 	DECL_RENDERPROG,
 	DECL_ATMOSPHERE,
+	DECL_VERTEXMODELDEF,
 
 	// new decl types can be added here
 
