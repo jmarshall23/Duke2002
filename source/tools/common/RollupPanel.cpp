@@ -176,17 +176,17 @@ int rvRollupPanel::InsertItem ( const char* caption, HWND dialog, bool autoDestr
 	}
 
 	// Store data with the dialog window in its user data 
-	SetWindowLong ( dialog, GWL_USERDATA,	(LONG)item );
+	SetWindowLong ( dialog, GWL_USERDATA,	(intptr_t)item );
 
 	// Attach item to button through user data
-	SetWindowLong ( button, GWL_USERDATA,	(LONG)item );
+	SetWindowLong ( button, GWL_USERDATA,	(intptr_t)item );
 	SetWindowLong ( button, GWL_ID,			index );
 
 	// Subclass dialog
-	SetWindowLong ( dialog, DWL_DLGPROC, (LONG)DialogProc );
+	SetWindowLong ( dialog, DWL_DLGPROC, (intptr_t)DialogProc );
 
 	// SubClass button
-	SetWindowLong ( button, GWL_WNDPROC, (LONG)ButtonProc );
+	SetWindowLong ( button, GWL_WNDPROC, (intptr_t)ButtonProc );
 
 	// Update
 	mItemHeight += RP_PGBUTTONHEIGHT+(RP_GRPBOXINDENT/2);
@@ -796,7 +796,7 @@ LRESULT CALLBACK rvRollupPanel::WindowProc (HWND hWnd, UINT uMsg, WPARAM wParam,
 			// Attach the class to the window first
 			cs = (LPCREATESTRUCT) lParam;
 			panel = (rvRollupPanel*) cs->lpCreateParams;
-			SetWindowLong ( hWnd, GWL_USERDATA, (LONG)panel );
+			SetWindowLong ( hWnd, GWL_USERDATA, (intptr_t)panel );
 			break;
 		}
 		

@@ -1,0 +1,2562 @@
+material textures/hud_effects/am_antidote {
+	 {
+		blend blend
+		map textures/hud_effects/am_antidote
+	 }
+}
+material textures/hud_effects/am_battery {
+	 {
+		blend blend
+		map textures/hud_effects/am_battery
+	 }
+}
+material textures/hud_effects/am_burrito {
+	 {
+		blend blend
+		map textures/hud_effects/am_burrito
+	 }
+}
+material textures/hud_effects/am_c02 {
+	 {
+		blend blend
+		map textures/hud_effects/am_c02
+	 }
+}
+material textures/hud_effects/am_cash {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash
+	 }
+}
+material textures/hud_effects/am_cash_1 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_1
+	 }
+}
+material textures/hud_effects/am_cash_10 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_10
+	 }
+}
+material textures/hud_effects/am_cash_100 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_100
+	 }
+}
+material textures/hud_effects/am_cash_25 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_25
+	 }
+}
+material textures/hud_effects/am_cash_3 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_3
+	 }
+}
+material textures/hud_effects/am_cash_5 {
+	 {
+		blend blend
+		map textures/hud_effects/am_cash_5
+	 }
+}
+material textures/hud_effects/am_chainsaw {
+	 {
+		blend blend
+		map textures/hud_effects/am_chainsaw
+	 }
+}
+material textures/hud_effects/am_chips {
+	 {
+		blend blend
+		map textures/hud_effects/am_chips
+	 }
+}
+material textures/hud_effects/am_cowpie {
+	 {
+		blend blend
+		map textures/hud_effects/am_cowpie
+	 }
+}
+material textures/hud_effects/am_deserteagle {
+	 {
+		blend blend
+		map textures/hud_effects/am_deserteagle
+	 }
+}
+material textures/hud_effects/am_eaglehollow {
+	 {
+		blend blend
+		map textures/hud_effects/am_eaglehollow
+	 }
+}
+material textures/hud_effects/am_eaglenormal {
+	 {
+		blend blend
+		map textures/hud_effects/am_eaglenormal
+	 }
+}
+material textures/hud_effects/am_eaglepiercin {
+	 {
+		blend blend
+		map textures/hud_effects/am_eaglepiercin
+	 }
+}
+material textures/hud_effects/am_flamethrow {
+	 {
+		blend blend
+		map textures/hud_effects/am_flamethrow
+	 }
+}
+material textures/hud_effects/am_freezecannon {
+	 {
+		blend blend
+		map textures/hud_effects/am_freezecannon
+	 }
+}
+material textures/hud_effects/am_fuse {
+	 {
+		blend blend
+		map textures/hud_effects/am_fuse
+	 }
+}
+material textures/hud_effects/am_gascan {
+	 {
+		blend blend
+		map textures/hud_effects/am_gascan
+	 }
+}
+material textures/hud_effects/am_genkeycard {
+	 {
+		blend blend
+		map textures/hud_effects/am_genkeycard
+	 }
+}
+material textures/hud_effects/am_healing {
+	 {
+		blend blend
+		map textures/hud_effects/am_healing
+	 }
+}
+material textures/hud_effects/am_hypogun {
+	 {
+		blend blend
+		map textures/hud_effects/am_hypogun
+	 }
+}
+material textures/hud_effects/am_jetpack {
+	 {
+		blend blend
+		map textures/hud_effects/am_jetpack
+	 }
+}
+material textures/hud_effects/am_lkkeycard {
+	 {
+		blend blend
+		map textures/hud_effects/am_lkkeycard
+	 }
+}
+material textures/hud_effects/am_m16 {
+	 {
+		blend blend
+		map textures/hud_effects/am_m16
+	 }
+}
+material textures/hud_effects/am_m16grenades {
+	 {
+		blend blend
+		map textures/hud_effects/am_m16grenades
+	 }
+}
+material textures/hud_effects/am_m16nato {
+	 {
+		blend blend
+		map textures/hud_effects/am_m16nato
+	 }
+}
+material textures/hud_effects/am_medkit {
+	 {
+		blend blend
+		map textures/hud_effects/am_medkit
+	 }
+}
+material textures/hud_effects/am_mrereg {
+	 {
+		blend blend
+		map textures/hud_effects/am_mrereg
+	 }
+}
+material textures/hud_effects/am_mreveg {
+	 {
+		blend blend
+		map textures/hud_effects/am_mreveg
+	 }
+}
+material textures/hud_effects/am_multibomb {
+	 {
+		blend blend
+		map textures/hud_effects/am_multibomb
+	 }
+}
+material textures/hud_effects/am_powertrip {
+	 {
+		blend blend
+		map textures/hud_effects/am_powertrip
+	 }
+}
+material textures/hud_effects/am_rebreath {
+	 {
+		blend blend
+		map textures/hud_effects/am_rebreath
+	 }
+}
+material textures/hud_effects/am_rpg {
+	 {
+		blend blend
+		map textures/hud_effects/am_rpg
+	 }
+}
+material textures/hud_effects/am_rpgnuke {
+	 {
+		blend blend
+		map textures/hud_effects/am_rpgnuke
+	 }
+}
+material textures/hud_effects/am_rpgrockets {
+	 {
+		blend blend
+		map textures/hud_effects/am_rpgrockets
+	 }
+}
+material textures/hud_effects/am_sandwich {
+	 {
+		blend blend
+		map textures/hud_effects/am_sandwich
+	 }
+}
+material textures/hud_effects/am_shield {
+	 {
+		blend blend
+		map textures/hud_effects/am_shield
+	 }
+}
+material textures/hud_effects/am_shot12gauge {
+	 {
+		blend blend
+		map textures/hud_effects/am_shot12gauge
+	 }
+}
+material textures/hud_effects/am_shotacidshel {
+	 {
+		blend blend
+		map textures/hud_effects/am_shotacidshel
+	 }
+}
+material textures/hud_effects/am_shotgun {
+	 {
+		blend blend
+		map textures/hud_effects/am_shotgun
+	 }
+}
+material textures/hud_effects/am_shrinkray {
+	 {
+		blend blend
+		map textures/hud_effects/am_shrinkray
+	 }
+}
+material textures/hud_effects/am_shrinkraybrain {
+	 {
+		blend blend
+		map textures/hud_effects/am_shrinkraybrain
+	 }
+}
+material textures/hud_effects/am_sniper {
+	 {
+		blend blend
+		map textures/hud_effects/am_sniper
+	 }
+}
+material textures/hud_effects/am_sospcell {
+	 {
+		blend blend
+		map textures/hud_effects/am_sospcell
+	 }
+}
+material textures/hud_effects/am_sportsbar {
+	 {
+		blend blend
+		map textures/hud_effects/am_sportsbar
+	 }
+}
+material textures/hud_effects/am_sportsdrink {
+	 {
+		blend blend
+		map textures/hud_effects/am_sportsdrink
+	 }
+}
+material textures/hud_effects/am_steroids {
+	 {
+		blend blend
+		map textures/hud_effects/am_steroids
+	 }
+}
+material textures/hud_effects/am_tripmine {
+	 {
+		blend blend
+		map textures/hud_effects/am_tripmine
+	 }
+}
+material textures/hud_effects/bacteriadisp1 {
+	 {
+		blend blend
+		map textures/hud_effects/bacteriadisp1
+	 }
+}
+material textures/hud_effects/bartest {
+	 {
+		blend blend
+		map textures/hud_effects/bartest
+	 }
+}
+material textures/hud_effects/belloslash1A_01 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash1A_01
+	 }
+}
+material textures/hud_effects/belloslash1A_02 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash1A_02
+	 }
+}
+material textures/hud_effects/belloslash1A_03 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash1A_03
+	 }
+}
+material textures/hud_effects/belloslash2A_01 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash2A_01
+	 }
+}
+material textures/hud_effects/belloslash2A_02 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash2A_02
+	 }
+}
+material textures/hud_effects/belloslash2A_03 {
+	 {
+		blend blend
+		map textures/hud_effects/belloslash2A_03
+	 }
+}
+material textures/hud_effects/blackcircle1BC {
+	 {
+		blend blend
+		map textures/hud_effects/blackcircle1BC
+	 }
+}
+material textures/hud_effects/blooddualslash1A_01 {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash1A_01
+	 }
+}
+material textures/hud_effects/blooddualslash1A_02 {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash1A_02
+	 }
+}
+material textures/hud_effects/blooddualslash1ABC {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash1ABC
+	 }
+}
+material textures/hud_effects/blooddualslash2A_01 {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash2A_01
+	 }
+}
+material textures/hud_effects/blooddualslash2A_02 {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash2A_02
+	 }
+}
+material textures/hud_effects/blooddualslash2A_03 {
+	 {
+		blend blend
+		map textures/hud_effects/blooddualslash2A_03
+	 }
+}
+material textures/hud_effects/bloodslash1ABC {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslash1ABC
+	 }
+}
+material textures/hud_effects/bloodslash1BBC {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslash1BBC
+	 }
+}
+material textures/hud_effects/bloodslashA_01 {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashA_01
+	 }
+}
+material textures/hud_effects/bloodslashA_02 {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashA_02
+	 }
+}
+material textures/hud_effects/bloodslashA_03 {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashA_03
+	 }
+}
+material textures/hud_effects/bloodslashB_01 {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashB_01
+	 }
+}
+material textures/hud_effects/bloodslashB_02 {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashB_02
+	 }
+}
+material textures/hud_effects/bloodslashB_03s {
+	 {
+		blend blend
+		map textures/hud_effects/bloodslashB_03s
+	 }
+}
+material textures/hud_effects/bubb_highlight1 {
+	 {
+		blend blend
+		map textures/hud_effects/bubb_highlight1
+	 }
+}
+material textures/hud_effects/bubbcircle1BC {
+	 {
+		blend blend
+		map textures/hud_effects/bubbcircle1BC
+	 }
+}
+material textures/hud_effects/bubble1BC {
+	 {
+		blend blend
+		map textures/hud_effects/bubble1BC
+	 }
+}
+material textures/hud_effects/checkbox_offBC {
+	 {
+		blend blend
+		map textures/hud_effects/checkbox_offBC
+	 }
+}
+material textures/hud_effects/checkbox_onBC {
+	 {
+		blend blend
+		map textures/hud_effects/checkbox_onBC
+	 }
+}
+material textures/hud_effects/crosshair10BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair10BC
+	 }
+}
+material textures/hud_effects/crosshair11BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair11BC
+	 }
+}
+material textures/hud_effects/crosshair12BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair12BC
+	 }
+}
+material textures/hud_effects/crosshair13BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair13BC
+	 }
+}
+material textures/hud_effects/crosshair14BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair14BC
+	 }
+}
+material textures/hud_effects/crosshair1BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair1BC
+	 }
+}
+material textures/hud_effects/crosshair2BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair2BC
+	 }
+}
+material textures/hud_effects/crosshair3BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair3BC
+	 }
+}
+material textures/hud_effects/crosshair4BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair4BC
+	 }
+}
+material textures/hud_effects/crosshair5BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair5BC
+	 }
+}
+material textures/hud_effects/crosshair6BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair6BC
+	 }
+}
+material textures/hud_effects/crosshair7BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair7BC
+	 }
+}
+material textures/hud_effects/crosshair8BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair8BC
+	 }
+}
+material textures/hud_effects/crosshair9BC {
+	 {
+		blend blend
+		map textures/hud_effects/crosshair9BC
+	 }
+}
+material textures/hud_effects/dm_biochemical {
+	 {
+		blend blend
+		map textures/hud_effects/dm_biochemical
+	 }
+}
+material textures/hud_effects/dm_biochemical_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_biochemical_small
+	 }
+}
+material textures/hud_effects/dm_chainsaw {
+	 {
+		blend blend
+		map textures/hud_effects/dm_chainsaw
+	 }
+}
+material textures/hud_effects/dm_chainsaw_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_chainsaw_small
+	 }
+}
+material textures/hud_effects/dm_choking {
+	 {
+		blend blend
+		map textures/hud_effects/dm_choking
+	 }
+}
+material textures/hud_effects/dm_choking_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_choking_small
+	 }
+}
+material textures/hud_effects/dm_deserteagle {
+	 {
+		blend blend
+		map textures/hud_effects/dm_deserteagle
+	 }
+}
+material textures/hud_effects/dm_deserteagle_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_deserteagle_small
+	 }
+}
+material textures/hud_effects/dm_drown {
+	 {
+		blend blend
+		map textures/hud_effects/dm_drown
+	 }
+}
+material textures/hud_effects/dm_drown_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_drown_small
+	 }
+}
+material textures/hud_effects/dm_emp {
+	 {
+		blend blend
+		map textures/hud_effects/dm_emp
+	 }
+}
+material textures/hud_effects/dm_emp_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_emp_small
+	 }
+}
+material textures/hud_effects/dm_fall {
+	 {
+		blend blend
+		map textures/hud_effects/dm_fall
+	 }
+}
+material textures/hud_effects/dm_fall_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_fall_small
+	 }
+}
+material textures/hud_effects/dm_fire {
+	 {
+		blend blend
+		map textures/hud_effects/dm_fire
+	 }
+}
+material textures/hud_effects/dm_fire_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_fire_small
+	 }
+}
+material textures/hud_effects/dm_flamethrow {
+	 {
+		blend blend
+		map textures/hud_effects/dm_flamethrow
+	 }
+}
+material textures/hud_effects/dm_flamethrow_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_flamethrow_small
+	 }
+}
+material textures/hud_effects/dm_freezecannon {
+	 {
+		blend blend
+		map textures/hud_effects/dm_freezecannon
+	 }
+}
+material textures/hud_effects/dm_freezecannon_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_freezecannon_small
+	 }
+}
+material textures/hud_effects/dm_hypogun {
+	 {
+		blend blend
+		map textures/hud_effects/dm_hypogun
+	 }
+}
+material textures/hud_effects/dm_hypogun_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_hypogun_small
+	 }
+}
+material textures/hud_effects/dm_m16 {
+	 {
+		blend blend
+		map textures/hud_effects/dm_m16
+	 }
+}
+material textures/hud_effects/dm_m16_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_m16_small
+	 }
+}
+material textures/hud_effects/dm_m16ico {
+	 {
+		blend blend
+		map textures/hud_effects/dm_m16ico
+	 }
+}
+material textures/hud_effects/dm_m16ico_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_m16ico_small
+	 }
+}
+material textures/hud_effects/dm_mightyfoot {
+	 {
+		blend blend
+		map textures/hud_effects/dm_mightyfoot
+	 }
+}
+material textures/hud_effects/dm_mightyfoot_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_mightyfoot_small
+	 }
+}
+material textures/hud_effects/dm_nuke {
+	 {
+		blend blend
+		map textures/hud_effects/dm_nuke
+	 }
+}
+material textures/hud_effects/dm_nuke_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_nuke_small
+	 }
+}
+material textures/hud_effects/dm_pipebomb {
+	 {
+		blend blend
+		map textures/hud_effects/dm_pipebomb
+	 }
+}
+material textures/hud_effects/dm_pipebomb_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_pipebomb_small
+	 }
+}
+material textures/hud_effects/dm_radiation {
+	 {
+		blend blend
+		map textures/hud_effects/dm_radiation
+	 }
+}
+material textures/hud_effects/dm_radiation_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_radiation_small
+	 }
+}
+material textures/hud_effects/dm_rpg {
+	 {
+		blend blend
+		map textures/hud_effects/dm_rpg
+	 }
+}
+material textures/hud_effects/dm_rpg_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_rpg_small
+	 }
+}
+material textures/hud_effects/dm_shotgun {
+	 {
+		blend blend
+		map textures/hud_effects/dm_shotgun
+	 }
+}
+material textures/hud_effects/dm_shotgun_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_shotgun_small
+	 }
+}
+material textures/hud_effects/dm_shrinkray {
+	 {
+		blend blend
+		map textures/hud_effects/dm_shrinkray
+	 }
+}
+material textures/hud_effects/dm_shrinkray_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_shrinkray_small
+	 }
+}
+material textures/hud_effects/dm_sniper {
+	 {
+		blend blend
+		map textures/hud_effects/dm_sniper
+	 }
+}
+material textures/hud_effects/dm_sniper_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_sniper_small
+	 }
+}
+material textures/hud_effects/dm_steroidburnout {
+	 {
+		blend blend
+		map textures/hud_effects/dm_steroidburnout
+	 }
+}
+material textures/hud_effects/dm_steroidburnout_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_steroidburnout_small
+	 }
+}
+material textures/hud_effects/dm_suicide {
+	 {
+		blend blend
+		map textures/hud_effects/dm_suicide
+	 }
+}
+material textures/hud_effects/dm_suicide_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_suicide_small
+	 }
+}
+material textures/hud_effects/dm_tripmine {
+	 {
+		blend blend
+		map textures/hud_effects/dm_tripmine
+	 }
+}
+material textures/hud_effects/dm_tripmine_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_tripmine_small
+	 }
+}
+material textures/hud_effects/dm_turret {
+	 {
+		blend blend
+		map textures/hud_effects/dm_turret
+	 }
+}
+material textures/hud_effects/dm_turret_small {
+	 {
+		blend blend
+		map textures/hud_effects/dm_turret_small
+	 }
+}
+material textures/hud_effects/dmg_electric {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_electric
+	 }
+}
+material textures/hud_effects/dmg_expand {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_expand
+	 }
+}
+material textures/hud_effects/dmg_fire {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_fire
+	 }
+}
+material textures/hud_effects/dmg_freeze {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_freeze
+	 }
+}
+material textures/hud_effects/dmg_poison {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_poison
+	 }
+}
+material textures/hud_effects/dmg_radiation {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_radiation
+	 }
+}
+material textures/hud_effects/dmg_safemode {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_safemode
+	 }
+}
+material textures/hud_effects/dmg_shrink {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_shrink
+	 }
+}
+material textures/hud_effects/dmg_steroids {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_steroids
+	 }
+}
+material textures/hud_effects/dmg_toxicchem {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_toxicchem
+	 }
+}
+material textures/hud_effects/dmg_water {
+	 {
+		blend blend
+		map textures/hud_effects/dmg_water
+	 }
+}
+material textures/hud_effects/gameexpand_01A {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_01A
+	 }
+}
+material textures/hud_effects/gameexpand_01B {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_01B
+	 }
+}
+material textures/hud_effects/gameexpand_02A {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_02A
+	 }
+}
+material textures/hud_effects/gameexpand_02B {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_02B
+	 }
+}
+material textures/hud_effects/gameexpand_03A {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_03A
+	 }
+}
+material textures/hud_effects/gameexpand_03B {
+	 {
+		blend blend
+		map textures/hud_effects/gameexpand_03B
+	 }
+}
+material textures/hud_effects/gpf_degauss {
+	 {
+		blend blend
+		map textures/hud_effects/gpf_degauss
+	 }
+}
+material textures/hud_effects/gpf_degaussing {
+	 {
+		blend blend
+		map textures/hud_effects/gpf_degaussing
+	 }
+}
+material textures/hud_effects/gpf_overload {
+	 {
+		blend blend
+		map textures/hud_effects/gpf_overload
+	 }
+}
+material textures/hud_effects/heatblack1BC {
+	 {
+		blend blend
+		map textures/hud_effects/heatblack1BC
+	 }
+}
+material textures/hud_effects/heatglow1BC {
+	 {
+		blend blend
+		map textures/hud_effects/heatglow1BC
+	 }
+}
+material textures/hud_effects/heightangle {
+	 {
+		blend blend
+		map textures/hud_effects/heightangle
+	 }
+}
+material textures/hud_effects/hud_cursor1 {
+	 {
+		blend blend
+		map textures/hud_effects/hud_cursor1
+	 }
+}
+material textures/hud_effects/hudcall_answer {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_answer
+	 }
+}
+material textures/hud_effects/hudcall_baranim_000 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_000
+	 }
+}
+material textures/hud_effects/hudcall_baranim_001 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_001
+	 }
+}
+material textures/hud_effects/hudcall_baranim_002 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_002
+	 }
+}
+material textures/hud_effects/hudcall_baranim_003 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_003
+	 }
+}
+material textures/hud_effects/hudcall_baranim_004 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_004
+	 }
+}
+material textures/hud_effects/hudcall_baranim_005 {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_baranim_005
+	 }
+}
+material textures/hud_effects/hudcall_disconnectBC {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_disconnectBC
+	 }
+}
+material textures/hud_effects/hudcall_transmission01BC {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_transmission01BC
+	 }
+}
+material textures/hud_effects/hudcall_transmission02BC {
+	 {
+		blend blend
+		map textures/hud_effects/hudcall_transmission02BC
+	 }
+}
+material textures/hud_effects/humidlevels1BC {
+	 {
+		blend blend
+		map textures/hud_effects/humidlevels1BC
+	 }
+}
+material textures/hud_effects/infinityicon {
+	 {
+		blend blend
+		map textures/hud_effects/infinityicon
+	 }
+}
+material textures/hud_effects/ing_gradient1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ing_gradient1BC
+	 }
+}
+material textures/hud_effects/ing_greenp1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ing_greenp1BC
+	 }
+}
+material textures/hud_effects/ing_scanlines1B {
+	 {
+		blend blend
+		map textures/hud_effects/ing_scanlines1B
+	 }
+}
+material textures/hud_effects/ingame_cursorBC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_cursorBC
+	 }
+}
+material textures/hud_effects/ingame_example {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_example
+	 }
+}
+material textures/hud_effects/ingame_horzbar_ext {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_horzbar_ext
+	 }
+}
+material textures/hud_effects/ingame_itemslant1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_itemslant1BC
+	 }
+}
+material textures/hud_effects/ingame_itemslant_highlightBC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_itemslant_highlightBC
+	 }
+}
+material textures/hud_effects/ingame_main1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_main1BC
+	 }
+}
+material textures/hud_effects/ingame_main2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_main2BC
+	 }
+}
+material textures/hud_effects/ingame_main_repeat1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_main_repeat1BC
+	 }
+}
+material textures/hud_effects/ingame_miscbar1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_miscbar1BC
+	 }
+}
+material textures/hud_effects/ingame_miscbar2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_miscbar2BC
+	 }
+}
+material textures/hud_effects/ingame_miscbar_alert1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_miscbar_alert1BC
+	 }
+}
+material textures/hud_effects/ingame_numbercircleBC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_numbercircleBC
+	 }
+}
+material textures/hud_effects/ingame_rightslant1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_rightslant1BC
+	 }
+}
+material textures/hud_effects/ingame_solidfillBC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_solidfillBC
+	 }
+}
+material textures/hud_effects/ingame_statusbox1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox1BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox2BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox3BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox3BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox4BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox4BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox5BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox5BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox6BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox6BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox_fill1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox_fill1BC
+	 }
+}
+material textures/hud_effects/ingame_statusbox_fill2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusbox_fill2BC
+	 }
+}
+material textures/hud_effects/ingame_statusgradient2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusgradient2BC
+	 }
+}
+material textures/hud_effects/ingame_statusgradientBC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_statusgradientBC
+	 }
+}
+material textures/hud_effects/ingame_wepbar1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar1BC
+	 }
+}
+material textures/hud_effects/ingame_wepbar2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar2BC
+	 }
+}
+material textures/hud_effects/ingame_wepbar_botext {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar_botext
+	 }
+}
+material textures/hud_effects/ingame_wepbar_highlight1BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar_highlight1BC
+	 }
+}
+material textures/hud_effects/ingame_wepbar_highlight2BC {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar_highlight2BC
+	 }
+}
+material textures/hud_effects/ingame_wepbar_scan {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar_scan
+	 }
+}
+material textures/hud_effects/ingame_wepbar_topext {
+	 {
+		blend blend
+		map textures/hud_effects/ingame_wepbar_topext
+	 }
+}
+material textures/hud_effects/itemslant_scan {
+	 {
+		blend blend
+		map textures/hud_effects/itemslant_scan
+	 }
+}
+material textures/hud_effects/lenswater1BC {
+	 {
+		blend blend
+		map textures/hud_effects/lenswater1BC
+	 }
+}
+material textures/hud_effects/lenswater2BC {
+	 {
+		blend blend
+		map textures/hud_effects/lenswater2BC
+	 }
+}
+material textures/hud_effects/loadbat1BC {
+	 {
+		blend blend
+		map textures/hud_effects/loadbat1BC
+	 }
+}
+material textures/hud_effects/loadscreen1ABC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen1ABC
+	 }
+}
+material textures/hud_effects/loadscreen1BBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen1BBC
+	 }
+}
+material textures/hud_effects/loadscreen1CBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen1CBC
+	 }
+}
+material textures/hud_effects/loadscreen1DBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen1DBC
+	 }
+}
+material textures/hud_effects/loadscreen2ABC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen2ABC
+	 }
+}
+material textures/hud_effects/loadscreen2BBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen2BBC
+	 }
+}
+material textures/hud_effects/loadscreen2CBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen2CBC
+	 }
+}
+material textures/hud_effects/loadscreen2DBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen2DBC
+	 }
+}
+material textures/hud_effects/loadscreen3ABC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen3ABC
+	 }
+}
+material textures/hud_effects/loadscreen3BBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen3BBC
+	 }
+}
+material textures/hud_effects/loadscreen3CBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen3CBC
+	 }
+}
+material textures/hud_effects/loadscreen3DBC {
+	 {
+		blend blend
+		map textures/hud_effects/loadscreen3DBC
+	 }
+}
+material textures/hud_effects/mainpiece_scan {
+	 {
+		blend blend
+		map textures/hud_effects/mainpiece_scan
+	 }
+}
+material textures/hud_effects/mitem_antidote {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_antidote
+	 }
+}
+material textures/hud_effects/mitem_bigfuse {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_bigfuse
+	 }
+}
+material textures/hud_effects/mitem_chainsaw {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_chainsaw
+	 }
+}
+material textures/hud_effects/mitem_deagle {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_deagle
+	 }
+}
+material textures/hud_effects/mitem_digizoom {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_digizoom
+	 }
+}
+material textures/hud_effects/mitem_emp {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_emp
+	 }
+}
+material textures/hud_effects/mitem_flamethro {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_flamethro
+	 }
+}
+material textures/hud_effects/mitem_freezecannon {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_freezecannon
+	 }
+}
+material textures/hud_effects/mitem_fuse {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_fuse
+	 }
+}
+material textures/hud_effects/mitem_fuse100 {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_fuse100
+	 }
+}
+material textures/hud_effects/mitem_fuse200 {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_fuse200
+	 }
+}
+material textures/hud_effects/mitem_fuse50 {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_fuse50
+	 }
+}
+material textures/hud_effects/mitem_gencard {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_gencard
+	 }
+}
+material textures/hud_effects/mitem_healing {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_healing
+	 }
+}
+material textures/hud_effects/mitem_hypogun {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_hypogun
+	 }
+}
+material textures/hud_effects/mitem_jetpack {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_jetpack
+	 }
+}
+material textures/hud_effects/mitem_lkcard {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_lkcard
+	 }
+}
+material textures/hud_effects/mitem_m16 {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_m16
+	 }
+}
+material textures/hud_effects/mitem_medkit {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_medkit
+	 }
+}
+material textures/hud_effects/mitem_mightyboo {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_mightyboo
+	 }
+}
+material textures/hud_effects/mitem_multibomb {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_multibomb
+	 }
+}
+material textures/hud_effects/mitem_nightvisi {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_nightvisi
+	 }
+}
+material textures/hud_effects/mitem_noair {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_noair
+	 }
+}
+material textures/hud_effects/mitem_noammo {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_noammo
+	 }
+}
+material textures/hud_effects/mitem_rebreath {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_rebreath
+	 }
+}
+material textures/hud_effects/mitem_rpg {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_rpg
+	 }
+}
+material textures/hud_effects/mitem_safemode {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_safemode
+	 }
+}
+material textures/hud_effects/mitem_shield {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_shield
+	 }
+}
+material textures/hud_effects/mitem_shotgun {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_shotgun
+	 }
+}
+material textures/hud_effects/mitem_shrinkray {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_shrinkray
+	 }
+}
+material textures/hud_effects/mitem_sniper {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_sniper
+	 }
+}
+material textures/hud_effects/mitem_sniper2 {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_sniper2
+	 }
+}
+material textures/hud_effects/mitem_sospcell {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_sospcell
+	 }
+}
+material textures/hud_effects/mitem_steriods {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_steriods
+	 }
+}
+material textures/hud_effects/mitem_thermvisi {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_thermvisi
+	 }
+}
+material textures/hud_effects/mitem_todo {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_todo
+	 }
+}
+material textures/hud_effects/mitem_tripmines {
+	 {
+		blend blend
+		map textures/hud_effects/mitem_tripmines
+	 }
+}
+material textures/hud_effects/mnu_objectives {
+	 {
+		blend blend
+		map textures/hud_effects/mnu_objectives
+	 }
+}
+material textures/hud_effects/mover_bleft {
+	 {
+		blend blend
+		map textures/hud_effects/mover_bleft
+	 }
+}
+material textures/hud_effects/mover_bright {
+	 {
+		blend blend
+		map textures/hud_effects/mover_bright
+	 }
+}
+material textures/hud_effects/mover_continue {
+	 {
+		blend blend
+		map textures/hud_effects/mover_continue
+	 }
+}
+material textures/hud_effects/mover_continueH {
+	 {
+		blend blend
+		map textures/hud_effects/mover_continueH
+	 }
+}
+material textures/hud_effects/mover_quit {
+	 {
+		blend blend
+		map textures/hud_effects/mover_quit
+	 }
+}
+material textures/hud_effects/mover_quitHL {
+	 {
+		blend blend
+		map textures/hud_effects/mover_quitHL
+	 }
+}
+material textures/hud_effects/mover_tleft {
+	 {
+		blend blend
+		map textures/hud_effects/mover_tleft
+	 }
+}
+material textures/hud_effects/mover_tright {
+	 {
+		blend blend
+		map textures/hud_effects/mover_tright
+	 }
+}
+material textures/hud_effects/mplayerexpand_01A {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_01A
+	 }
+}
+material textures/hud_effects/mplayerexpand_01B {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_01B
+	 }
+}
+material textures/hud_effects/mplayerexpand_02A {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_02A
+	 }
+}
+material textures/hud_effects/mplayerexpand_02B {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_02B
+	 }
+}
+material textures/hud_effects/mplayerexpand_03A {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_03A
+	 }
+}
+material textures/hud_effects/mplayerexpand_03B {
+	 {
+		blend blend
+		map textures/hud_effects/mplayerexpand_03B
+	 }
+}
+material textures/hud_effects/nightblack1BC {
+	 {
+		blend blend
+		map textures/hud_effects/nightblack1BC
+	 }
+}
+material textures/hud_effects/nightglow1BC {
+	 {
+		blend blend
+		map textures/hud_effects/nightglow1BC
+	 }
+}
+material textures/hud_effects/nightlines1BC {
+	 {
+		blend blend
+		map textures/hud_effects/nightlines1BC
+	 }
+}
+material textures/hud_effects/nightlines2BC {
+	 {
+		blend blend
+		map textures/hud_effects/nightlines2BC
+	 }
+}
+material textures/hud_effects/nukesymspin_00 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_00
+	 }
+}
+material textures/hud_effects/nukesymspin_01 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_01
+	 }
+}
+material textures/hud_effects/nukesymspin_02 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_02
+	 }
+}
+material textures/hud_effects/nukesymspin_03 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_03
+	 }
+}
+material textures/hud_effects/nukesymspin_04 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_04
+	 }
+}
+material textures/hud_effects/nukesymspin_05 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_05
+	 }
+}
+material textures/hud_effects/nukesymspin_06 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_06
+	 }
+}
+material textures/hud_effects/nukesymspin_07 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_07
+	 }
+}
+material textures/hud_effects/nukesymspin_08 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_08
+	 }
+}
+material textures/hud_effects/nukesymspin_09 {
+	 {
+		blend blend
+		map textures/hud_effects/nukesymspin_09
+	 }
+}
+material textures/hud_effects/ob_select1bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select1bc
+	 }
+}
+material textures/hud_effects/ob_select2bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select2bc
+	 }
+}
+material textures/hud_effects/ob_select3bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select3bc
+	 }
+}
+material textures/hud_effects/ob_select4bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select4bc
+	 }
+}
+material textures/hud_effects/ob_select5bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select5bc
+	 }
+}
+material textures/hud_effects/ob_select6bc {
+	 {
+		blend blend
+		map textures/hud_effects/ob_select6bc
+	 }
+}
+material textures/hud_effects/objleft_loop {
+	 {
+		blend blend
+		map textures/hud_effects/objleft_loop
+	 }
+}
+material textures/hud_effects/objleft_start {
+	 {
+		blend blend
+		map textures/hud_effects/objleft_start
+	 }
+}
+material textures/hud_effects/objright_loop {
+	 {
+		blend blend
+		map textures/hud_effects/objright_loop
+	 }
+}
+material textures/hud_effects/objright_start {
+	 {
+		blend blend
+		map textures/hud_effects/objright_start
+	 }
+}
+material textures/hud_effects/overloadboot_loop {
+	 {
+		blend blend
+		map textures/hud_effects/overloadboot_loop
+	 }
+}
+material textures/hud_effects/overloadboot_start {
+	 {
+		blend blend
+		map textures/hud_effects/overloadboot_start
+	 }
+}
+material textures/hud_effects/overloadgpf_loop {
+	 {
+		blend blend
+		map textures/hud_effects/overloadgpf_loop
+	 }
+}
+material textures/hud_effects/overloadgpf_start {
+	 {
+		blend blend
+		map textures/hud_effects/overloadgpf_start
+	 }
+}
+material textures/hud_effects/raindrop1 {
+	 {
+		blend blend
+		map textures/hud_effects/raindrop1
+	 }
+}
+material textures/hud_effects/rightslant_scan {
+	 {
+		blend blend
+		map textures/hud_effects/rightslant_scan
+	 }
+}
+material textures/hud_effects/settingsexpand_01A {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_01A
+	 }
+}
+material textures/hud_effects/settingsexpand_01B {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_01B
+	 }
+}
+material textures/hud_effects/settingsexpand_02A {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_02A
+	 }
+}
+material textures/hud_effects/settingsexpand_02B {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_02B
+	 }
+}
+material textures/hud_effects/settingsexpand_03A {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_03A
+	 }
+}
+material textures/hud_effects/settingsexpand_03B {
+	 {
+		blend blend
+		map textures/hud_effects/settingsexpand_03B
+	 }
+}
+material textures/hud_effects/sniperarrow1BC {
+	 {
+		blend blend
+		map textures/hud_effects/sniperarrow1BC
+	 }
+}
+material textures/hud_effects/sniperblack1BC {
+	 {
+		blend blend
+		map textures/hud_effects/sniperblack1BC
+	 }
+}
+material textures/hud_effects/snp_innercircle1BC {
+	 {
+		blend blend
+		map textures/hud_effects/snp_innercircle1BC
+	 }
+}
+material textures/hud_effects/snp_innercircle2BC {
+	 {
+		blend blend
+		map textures/hud_effects/snp_innercircle2BC
+	 }
+}
+material textures/hud_effects/snp_innercircle3BC {
+	 {
+		blend blend
+		map textures/hud_effects/snp_innercircle3BC
+	 }
+}
+material textures/hud_effects/snpbootup1BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpbootup1BC
+	 }
+}
+material textures/hud_effects/snpbootup2BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpbootup2BC
+	 }
+}
+material textures/hud_effects/snpriflelink1BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpriflelink1BC
+	 }
+}
+material textures/hud_effects/snpriflelink2BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpriflelink2BC
+	 }
+}
+material textures/hud_effects/snpstats1bc {
+	 {
+		blend blend
+		map textures/hud_effects/snpstats1bc
+	 }
+}
+material textures/hud_effects/snpstats2BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpstats2BC
+	 }
+}
+material textures/hud_effects/snpzoom10BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpzoom10BC
+	 }
+}
+material textures/hud_effects/snpzoom1BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpzoom1BC
+	 }
+}
+material textures/hud_effects/snpzoom20BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpzoom20BC
+	 }
+}
+material textures/hud_effects/snpzoom40BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpzoom40BC
+	 }
+}
+material textures/hud_effects/snpzoom5BC {
+	 {
+		blend blend
+		map textures/hud_effects/snpzoom5BC
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_00 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_00
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_01 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_01
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_02 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_02
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_03 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_03
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_04 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_04
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_06 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_06
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_10 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_10
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_14 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_14
+	 }
+}
+material textures/hud_effects/stat_dwnlobj_18 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_dwnlobj_18
+	 }
+}
+material textures/hud_effects/stat_memobj_00 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_00
+	 }
+}
+material textures/hud_effects/stat_memobj_01 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_01
+	 }
+}
+material textures/hud_effects/stat_memobj_02 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_02
+	 }
+}
+material textures/hud_effects/stat_memobj_03 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_03
+	 }
+}
+material textures/hud_effects/stat_memobj_05 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_05
+	 }
+}
+material textures/hud_effects/stat_memobj_10 {
+	 {
+		blend blend
+		map textures/hud_effects/stat_memobj_10
+	 }
+}
+material textures/hud_effects/sunglassesBL {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesBL
+	 }
+}
+material textures/hud_effects/sunglassesBLglo {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesBLglo
+	 }
+}
+material textures/hud_effects/sunglassesBR {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesBR
+	 }
+}
+material textures/hud_effects/sunglassesBRglo {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesBRglo
+	 }
+}
+material textures/hud_effects/sunglassesTL {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesTL
+	 }
+}
+material textures/hud_effects/sunglassesTLglo {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesTLglo
+	 }
+}
+material textures/hud_effects/sunglassesTR {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesTR
+	 }
+}
+material textures/hud_effects/sunglassesTRglo {
+	 {
+		blend blend
+		map textures/hud_effects/sunglassesTRglo
+	 }
+}
+material textures/hud_effects/template_itemslant_scan {
+	 {
+		blend blend
+		map textures/hud_effects/template_itemslant_scan
+	 }
+}
+material textures/hud_effects/template_mainpiece_scan {
+	 {
+		blend blend
+		map textures/hud_effects/template_mainpiece_scan
+	 }
+}
+material textures/hud_effects/template_rightslant_scan {
+	 {
+		blend blend
+		map textures/hud_effects/template_rightslant_scan
+	 }
+}
+material textures/hud_effects/template_toppiece_scan {
+	 {
+		blend blend
+		map textures/hud_effects/template_toppiece_scan
+	 }
+}
+material textures/hud_effects/template_wepbar_scan {
+	 {
+		blend blend
+		map textures/hud_effects/template_wepbar_scan
+	 }
+}
+material textures/hud_effects/testhud1BC {
+	 {
+		blend blend
+		map textures/hud_effects/testhud1BC
+	 }
+}
+material textures/hud_effects/testhud2BC {
+	 {
+		blend blend
+		map textures/hud_effects/testhud2BC
+	 }
+}
+material textures/hud_effects/toppiece_scan {
+	 {
+		blend blend
+		map textures/hud_effects/toppiece_scan
+	 }
+}
+material textures/hud_effects/visionstaticB0 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB0
+	 }
+}
+material textures/hud_effects/visionstaticB1 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB1
+	 }
+}
+material textures/hud_effects/visionstaticB10 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB10
+	 }
+}
+material textures/hud_effects/visionstaticB11 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB11
+	 }
+}
+material textures/hud_effects/visionstaticB12 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB12
+	 }
+}
+material textures/hud_effects/visionstaticB13 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB13
+	 }
+}
+material textures/hud_effects/visionstaticB14 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB14
+	 }
+}
+material textures/hud_effects/visionstaticB15 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB15
+	 }
+}
+material textures/hud_effects/visionstaticB16 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB16
+	 }
+}
+material textures/hud_effects/visionstaticB17 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB17
+	 }
+}
+material textures/hud_effects/visionstaticB18 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB18
+	 }
+}
+material textures/hud_effects/visionstaticB19 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB19
+	 }
+}
+material textures/hud_effects/visionstaticB2 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB2
+	 }
+}
+material textures/hud_effects/visionstaticB20 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB20
+	 }
+}
+material textures/hud_effects/visionstaticB21 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB21
+	 }
+}
+material textures/hud_effects/visionstaticB22 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB22
+	 }
+}
+material textures/hud_effects/visionstaticB23 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB23
+	 }
+}
+material textures/hud_effects/visionstaticB24 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB24
+	 }
+}
+material textures/hud_effects/visionstaticB25 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB25
+	 }
+}
+material textures/hud_effects/visionstaticB26 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB26
+	 }
+}
+material textures/hud_effects/visionstaticB27 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB27
+	 }
+}
+material textures/hud_effects/visionstaticB3 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB3
+	 }
+}
+material textures/hud_effects/visionstaticB4 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB4
+	 }
+}
+material textures/hud_effects/visionstaticB5 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB5
+	 }
+}
+material textures/hud_effects/visionstaticB6 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB6
+	 }
+}
+material textures/hud_effects/visionstaticB7 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB7
+	 }
+}
+material textures/hud_effects/visionstaticB8 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB8
+	 }
+}
+material textures/hud_effects/visionstaticB9 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticB9
+	 }
+}
+material textures/hud_effects/visionstaticC0 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticC0
+	 }
+}
+material textures/hud_effects/visionstaticC1 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticC1
+	 }
+}
+material textures/hud_effects/visionstaticC2 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticC2
+	 }
+}
+material textures/hud_effects/visionstaticC3 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticC3
+	 }
+}
+material textures/hud_effects/visionstaticC4 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticC4
+	 }
+}
+material textures/hud_effects/visionstaticD00 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD00
+	 }
+}
+material textures/hud_effects/visionstaticD01 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD01
+	 }
+}
+material textures/hud_effects/visionstaticD02 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD02
+	 }
+}
+material textures/hud_effects/visionstaticD03 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD03
+	 }
+}
+material textures/hud_effects/visionstaticD04 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD04
+	 }
+}
+material textures/hud_effects/visionstaticD05 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD05
+	 }
+}
+material textures/hud_effects/visionstaticD06 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD06
+	 }
+}
+material textures/hud_effects/visionstaticD07 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD07
+	 }
+}
+material textures/hud_effects/visionstaticD08 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD08
+	 }
+}
+material textures/hud_effects/visionstaticD09 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD09
+	 }
+}
+material textures/hud_effects/visionstaticD10 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD10
+	 }
+}
+material textures/hud_effects/visionstaticD11 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD11
+	 }
+}
+material textures/hud_effects/visionstaticD12 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD12
+	 }
+}
+material textures/hud_effects/visionstaticD13 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD13
+	 }
+}
+material textures/hud_effects/visionstaticD14 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD14
+	 }
+}
+material textures/hud_effects/visionstaticD15 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD15
+	 }
+}
+material textures/hud_effects/visionstaticD16 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD16
+	 }
+}
+material textures/hud_effects/visionstaticD17 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD17
+	 }
+}
+material textures/hud_effects/visionstaticD18 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD18
+	 }
+}
+material textures/hud_effects/visionstaticD19 {
+	 {
+		blend blend
+		map textures/hud_effects/visionstaticD19
+	 }
+}
+material textures/hud_effects/warningRC {
+	 {
+		blend blend
+		map textures/hud_effects/warningRC
+	 }
+}
+material textures/hud_effects/weap_highlight1 {
+	 {
+		blend blend
+		map textures/hud_effects/weap_highlight1
+	 }
+}
+material textures/hud_effects/xy_position1BC {
+	 {
+		blend blend
+		map textures/hud_effects/xy_position1BC
+	 }
+}
+material textures/hud_effects/xy_position2BC {
+	 {
+		blend blend
+		map textures/hud_effects/xy_position2BC
+	 }
+}
+material textures/hud_effects/zoomblack1BC {
+	 {
+		blend blend
+		map textures/hud_effects/zoomblack1BC
+	 }
+}
+material textures/hud_effects/zoomblack1TESTBC {
+	 {
+		blend blend
+		map textures/hud_effects/zoomblack1TESTBC
+	 }
+}
+material textures/hud_effects/zoomglow1BC {
+	 {
+		blend blend
+		map textures/hud_effects/zoomglow1BC
+	 }
+}
+material textures/hud_effects/zoomglow2BC {
+	 {
+		blend blend
+		map textures/hud_effects/zoomglow2BC
+	 }
+}

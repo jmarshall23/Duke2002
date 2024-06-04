@@ -234,7 +234,7 @@ void dnGenerateNormalMap(const char* filePath) {
 dnSaveMTRFile
 ===========
 */
-void dnSaveMTRFile(const char* folderPath, const idList<idStr>& processedFiles) {
+void dnSaveMTRFile(const char* folderPath, bool diffuseOnly, const idList<idStr>& processedFiles) {
 	// Extract folder name from the folder path
 	idStr folderStr = folderPath;
 	folderStr.BackSlashesToSlashes();
@@ -250,18 +250,30 @@ void dnSaveMTRFile(const char* folderPath, const idList<idStr>& processedFiles) 
 
 	for (int i = 0; i < processedFiles.Num(); ++i) {
 		idStr albedoPath = processedFiles[i];
-		idStr normalPath = va("%s_normal.tga", albedoPath.c_str());
-		idStr specularPath = va("%s_spec.tga", albedoPath.c_str());
 
-		mtrFile->Printf("material %s {\n", albedoPath.c_str());
-		mtrFile->Printf("    diffusemap %s\n", albedoPath.c_str());
-		mtrFile->Printf("    bumpmap %s\n", normalPath.c_str());
-		mtrFile->Printf("    specularmap %s\n", specularPath.c_str());
-		mtrFile->Printf("}\n");
+		if (!diffuseOnly) {
+			idStr normalPath = va("%s_normal.tga", albedoPath.c_str());
+			idStr specularPath = va("%s_spec.tga", albedoPath.c_str());
+
+			mtrFile->Printf("material %s {\n", albedoPath.c_str());
+			mtrFile->Printf("    diffusemap %s\n", albedoPath.c_str());
+			mtrFile->Printf("    bumpmap %s\n", normalPath.c_str());
+			mtrFile->Printf("    specularmap %s\n", specularPath.c_str());
+			mtrFile->Printf("}\n");
+		}
+		else {
+			mtrFile->Printf("material %s {\n", albedoPath.c_str());
+			mtrFile->Printf("	 {\n");
+			mtrFile->Printf("		blend blend\n");
+			mtrFile->Printf("		map %s\n", albedoPath.c_str());
+			mtrFile->Printf("	 }\n");
+			mtrFile->Printf("}\n");
+		}
 	}
 
 	fileSystem->CloseFile(mtrFile);
 }
+
 
 /*
 ====================
@@ -269,28 +281,50 @@ MaterialBuild_f
 ====================
 */
 void MaterialBuild_f(const idCmdArgs& args) {
+	bool diffuseOnly = false;
+	char* folderPath;
+
 	if (args.Argc() != 2) {
-		common->Printf("Usage: mtrbuild <folder>\n");
-		return;
+		if (args.Argc() == 3) {
+			idStr options = args.Argv(1);
+			if (options == "diffuseonly") {
+				diffuseOnly = true;
+			}
+
+			folderPath = (char *)args.Argv(2);
+		}
+		else
+		{
+			common->Printf("Usage: mtrbuild <folder>\n");
+			return;
+		}
+	}
+	else
+	{
+		folderPath = (char*)args.Argv(1);
 	}
 
-	const char* folderPath = args.Argv(1);
 
 	idFileList* fileList = fileSystem->ListFiles(folderPath, ".tga", true, false);
 	idList<idStr> processedFiles;
 
 	for (int i = 0; i < fileList->GetNumFiles(); ++i) {
 		const char* filePath = va("%s/%s", folderPath, fileList->GetFile(i));
-		dnGenerateNormalMap(filePath);
-		dnGenerateSpecularMap(filePath);
-
+		if (!diffuseOnly)
+		{
+			dnGenerateNormalMap(filePath);
+			dnGenerateSpecularMap(filePath);
+		}
+		
 		idStr filePathFixed = filePath;
 		filePathFixed.StripFileExtension();
 
 		processedFiles.Append(filePathFixed);
 	}
 
-	dnSaveMTRFile(folderPath, processedFiles);
+	
+
+	dnSaveMTRFile(folderPath, diffuseOnly, processedFiles);
 
 	fileSystem->FreeFileList(fileList);
 }

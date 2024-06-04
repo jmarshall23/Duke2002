@@ -33,12 +33,12 @@ If you have questions concerning this license or the applicable additional terms
 
 void SpinButton_SetIncrement ( HWND hWnd, float inc )
 {
-	SetWindowLong ( hWnd, GWL_USERDATA, (long)(inc * 100.0f) );
+	SetWindowLong ( hWnd, GWL_USERDATA, (intptr_t)(inc * 100.0f) );
 }
 
 void SpinButton_SetRange ( HWND hWnd, float minRange, float maxRange )
 {
-	SendMessage ( hWnd, UDM_SETRANGE32, (LONG)(minRange*100.0f), (LONG)(maxRange*100.0f) );	
+	SendMessage ( hWnd, UDM_SETRANGE32, (intptr_t)(minRange*100.0f), (intptr_t)(maxRange*100.0f) );
 }
 
 void SpinButton_HandleNotify ( NMHDR* hdr )
@@ -72,7 +72,7 @@ void SpinButton_HandleNotify ( NMHDR* hdr )
 	
 	LONG minRange;
 	LONG maxRange; 
-	SendMessage ( hdr->hwndFrom, UDM_GETRANGE32, (LONG)&minRange, (LONG)&maxRange );
+	SendMessage ( hdr->hwndFrom, UDM_GETRANGE32, (intptr_t)&minRange, (intptr_t)&maxRange );
 	if ( minRange !=  0 || maxRange != 0 )
 	{
 		float minRangef = (float)(long)minRange / 100.0f;
